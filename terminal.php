@@ -13,6 +13,13 @@ if ($_POST) {
     exit;
 }
 ?>
+
+<?php
+$session_id = $argv[1];
+// Check si quelqu'un a visité index.php?session=$session_id
+// Retourne : "IP:1.2.3.4 | User-Agent: Chrome | Time: now"
+// Ou vide si pas d'interaction
+?>
 <!DOCTYPE html>
 <html>
 <head>
