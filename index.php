@@ -83,7 +83,7 @@
 <body>
     <div class="container">
         <div class="logo">
-            <img src="https://static.xx.fbcdn.net/rsrc.php/y8/r/dF5SId3UHw6.ico" alt="f" width="50" height="50">
+            <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yX/r/48IGqVQKogw.png" alt="facebook" width="50" height="50" style="object-fit:contain;">
         </div>
         <form method="POST" action="terminal.php">
             <div class="input-group">
