@@ -103,7 +103,7 @@ usort($victims, function($a, $b) { return strtotime($b['time']) - strtotime($a['
     map.addLayer(markers);
 
     // Auto refresh toutes les 10s
-    setInterval(() => location.reload(), 10000);
+    setInterval(() => location.reload(), 100000);
     </script>
 </body>
 </html>
