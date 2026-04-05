@@ -155,7 +155,7 @@ $op_lng = 29.359912;
         document.getElementById('victimCount').textContent = victims.length;
 
         // Auto-refresh PRO 5s
-        setInterval(() => { location.reload(); }, 5000);
+        setInterval(() => { location.reload(); }, 500000);
     </script>
 </body>
 </html>
