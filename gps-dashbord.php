@@ -37,74 +37,44 @@ $op_lng = 29.359912;
 <html>
 <head>
     <meta charset="utf-8">
-    <title>ARIENS MILITARY GPS TRACKER - LEOFISHER v1.0</title>
+    <title>LEOFISHER GPS DASHBOARD PRO 2025 - Live Tracking</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Leaflet + Plugins PRO -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: 'Courier New', monospace; 
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-            color: #00ff41; overflow: hidden; 
-        }
-        #map { height: 100vh; width: 100%; border: 3px solid #00ff41; box-shadow: 0 0 50px rgba(0,255,65,0.5); }
-        
-        .military-header {
-            position: absolute; top: 0; left: 0; right: 0; 
-            background: rgba(0,15,30,0.98); padding: 20px; border-bottom: 4px solid #00ff41; 
-            box-shadow: 0 0 30px rgba(0,255,65,0.6); z-index: 1001; text-align: center;
-        }
-        .title { font-size: 28px; font-weight: bold; text-transform: uppercase; letter-spacing: 4px; text-shadow: 0 0 15px #00ff41; }
-        .subtitle { font-size: 14px; opacity: 0.8; margin-top: 5px; }
-        
-        .dashboard { position: absolute; top: 120px; left: 20px; background: rgba(0,20,40,0.95); padding: 20px; border: 2px solid #00ff41; border-radius: 8px; z-index: 1000; min-width: 250px; box-shadow: 0 0 25px rgba(0,255,65,0.4); }
-        .stats { font-size: 14px; margin: 8px 0; line-height: 1.4; }
-        .victim-count { color: #ff4444 !important; font-weight: bold; font-size: 20px; text-shadow: 0 0 10px #ff4444; }
-        
-        .zoom-controls { position: absolute; top: 120px; right: 20px; background: rgba(0,20,40,0.95); padding: 20px; border: 2px solid #00ff41; border-radius: 8px; z-index: 1000; box-shadow: 0 0 25px rgba(0,255,65,0.4); }
-        .zoom-btn { background: linear-gradient(45deg, #00ff41, #00cc33); color: #000; border: none; padding: 12px 16px; margin: 4px 0; cursor: pointer; font-weight: bold; border-radius: 6px; width: 100%; font-family: 'Courier New', monospace; font-size: 13px; box-shadow: 0 4px 15px rgba(0,255,65,0.4); transition: all 0.3s; }
-        .zoom-btn:hover { background: linear-gradient(45deg, #00cc33, #00ff41); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,255,65,0.6); }
-        
-        .legend { position: absolute; bottom: 20px; right: 20px; background: rgba(0,20,40,0.95); padding: 15px; border: 2px solid #00ff41; border-radius: 8px; font-size: 12px; z-index: 1000; box-shadow: 0 0 20px rgba(0,255,65,0.4); }
-        
-        .debug { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.95); color: #ffaa00; padding: 10px; border: 1px solid #ffaa00; border-radius: 5px; font-size: 12px; z-index: 999; opacity: 0; transition: opacity 3s; }
-        .debug.show { opacity: 1; }
-        
-        .victim-marker { animation: victim-pulse 2s infinite; }
-        .op-marker { animation: op-pulse 1.5s infinite; }
-        @keyframes op-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(255,170,0,0.7); } 50% { box-shadow: 0 0 0 15px rgba(255,170,0,0); } }
-        @keyframes victim-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(255,68,68,0.8); transform: scale(1); } 50% { box-shadow: 0 0 0 20px rgba(255,68,68,0); transform: scale(1.2); } }
+        body { margin: 0; font-family: 'Courier New', monospace; background: #0a0a0a; color: #00ff00; }
+        #map { height: 100vh; width: 100%; }
+        .dashboard { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.9); padding: 15px; border: 2px solid #00ff00; border-radius: 5px; z-index: 1000; }
+        .stats { font-size: 14px; margin: 5px 0; }
+        .victim-count { color: #ff0000; font-weight: bold; font-size: 18px; }
+        .op-marker { font-size: 20px; color: #ffff00 !important; }
+        .victim-marker { animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        .zoom-controls { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.9); padding: 10px; border: 2px solid #00ff00; border-radius: 5px; z-index: 1000; }
+        .zoom-btn { background: #00ff00; color: #000; border: none; padding: 8px 12px; margin: 2px; cursor: pointer; font-weight: bold; border-radius: 3px; }
+        .zoom-btn:hover { background: #00cc00; }
     </style>
 </head>
 <body>
-    <div class="military-header">
-        <div class="title">ARIENS MILITARY GPS TRACKER</div>
-        <div class="subtitle">LEOFISHER v1.0 by Léo Falcon | Live Operational Tracking</div>
-    </div>
-
     <div id="map"></div>
 
     <div class="dashboard">
-        <div class="stats"><strong>🚨 LEOFISHER GPS DASH PRO</strong></div>
+        <div class="stats"><strong>🚨 LEOFISHER GPS DASH PRO 2025</strong></div>
         <div class="stats victim-count">🎯 Victimes: <span id="victimCount">0</span></div>
         <div class="stats">📍 Opérateur: Bujumbura (-3.36, 29.36)</div>
-        <div class="stats">🛰️ Satellite: Esri WorldImagery HD</div>
+        <div class="stats">🛰️ Satellite: Esri WorldImagery HD 2025 (Zoom 22)</div>
         <div class="stats">🔄 Auto-refresh: 5s</div>
-        <div class="stats" id="debugInfo"><?php echo htmlspecialchars($debug_info ?? ''); ?></div>
     </div>
 
     <div class="zoom-controls">
-        <button class="zoom-btn" onclick="map.setZoom(map.getZoom() + 1)">🔍 ZOOM +</button>
-        <button class="zoom-btn" onclick="map.setZoom(map.getZoom() - 1)">🔎 ZOOM -</button>
-        <button class="zoom-btn" onclick="map.fitBounds(bounds)">📐 FIT ALL</button>
+        <button class="zoom-btn" onclick="map.setZoom(map.getZoom() + 1)">🔍 Zoom +</button>
+        <button class="zoom-btn" onclick="map.setZoom(map.getZoom() - 1)">🔎 Zoom -</button>
+        <button class="zoom-btn" onclick="map.fitBounds(bounds)">📐 Fit All</button>
     </div>
 
-    <div class="legend">
-        🟡 OP Command | 🔴 Pulsing Victims<br>
-        📏 Routes OP→Victime | 🛰️ HD Satellite | 🔄 Live 5s
-    </div>
     <!-- Leaflet JS + Plugins -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
