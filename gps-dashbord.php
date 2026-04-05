@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ARIENS MILITARY GPS TRACKER v2.0</title>
+<title>ARIENS LEO-GPS TRACKER v3.0</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.6.0/dist/MarkerCluster.css"/>
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.6.0/dist/MarkerCluster.Default.css"/>
@@ -36,7 +36,7 @@ body{background:#0a0a0a;color:#00ff41;overflow:hidden;height:100vh}
 </head>
 <body>
 <div id="hud">
-<span>🛡️ ARIENS GPS TRACKER v2.0 | </span>
+<span>🛡️ LEO-GPS TRACKER v3.0 | </span
 <span id="victimCount">0</span>
 <span id="liveStatus">INITIALIZING</span>
 <span id="opPos">-</span>
